@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink ,RouterLinkActive, RouterOutlet } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { FooterComponent } from "./footer/footer.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, LoginComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
+   
 })
+
 export class AppComponent {
-  title = 'magazine-website';
+ tittle = 'Pagina Web de Revistas';
 }
