@@ -6,6 +6,7 @@ package backend.DBconnection;
 
 import backend.exception.ServerException;
 import backend.model.dto.Account;
+import backend.model.dto.ApiFile;
 import backend.model.dto.Credential;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
  */
 public class UserDBConnection extends DataBaseConnection {
     
-    public void saveNewAccount(Account account) throws ServerException{
+    public void saveNewAccount(Account account, ApiFile photo) throws ServerException{
          String sql = "insert into " + account.getUserType().name()
                 + " (user_name, password, tastes, photo, topic_of_interest, description, hobbies, photo_content_type)"
                 + " values ( ? , ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -28,11 +29,11 @@ public class UserDBConnection extends DataBaseConnection {
             ps.setString(1, account.getUserName());
             ps.setString(2, account.getPassword());
             ps.setString(3, account.getTastes());
-            ps.setBlob   (4, account.getPhoto());
+            ps.setBlob   (4, photo.getInputStream());
             ps.setString(5, account.getTopicOfInterest());
             ps.setString(6, account.getDescription());
             ps.setString(7, account.getHobbies());
-            ps.setString(8, account.getContentType());
+            ps.setString(8, photo.getContentType());
             ps.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
