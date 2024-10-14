@@ -1,0 +1,25 @@
+
+    <hr>
+    <h1>Perfil de: {{profile.userName}}</h1>
+        <!--
+        <hr>
+        <div class="ratio ratio-1x1" style="width: 200px;">
+        <img src="${pageContext.servletContext.contextPath}/displayPhotoControllerSv?userName=${profile.userName}&userType=${profile.type.toString()}" alt="Foto de perfil" class="img-fluid rounded-circle">
+        </div>
+        -->
+    <hr>
+    <h2>Gustos</h2>
+    <p>{{profile.tastes}}</p>
+    <hr>
+    <h2>Descripcion</h2>
+    <p>{{profile.description}}</p>
+    <hr>
+    <h2>Temas de Interes</h2>
+    <p>{{profile.topicOfInterest}}</p>
+    <hr>
+    <h2>Hobbies</h2>
+    <p>{{profile.hobbies}}</p>
+    <hr>
+    <!--validar con un if-->
+    <a href="#"  class="btn btn-success sm">Editar Perfil</a>
+   
