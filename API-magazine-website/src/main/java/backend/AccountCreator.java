@@ -8,7 +8,6 @@ import backend.DBconnection.UserDBConnection;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Account;
-import backend.model.dto.ApiFile;
 
 /**
  *
@@ -18,11 +17,10 @@ public class AccountCreator {
 
     private final Account account = new Account();
     private final UserDBConnection userDBConnection = new UserDBConnection();
-    private final ApiFile photo = new ApiFile();
 
     public void createNewAccount() throws InvalidDataException, ServerException{
             //account.seters
-            account.validate();
-            userDBConnection.saveNewAccount(account, photo);
+            account.getCredential().validate();
+            userDBConnection.saveNewAccount(account);
     }
 }
