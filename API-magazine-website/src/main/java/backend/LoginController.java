@@ -6,6 +6,7 @@ package backend;
 
 import backend.DBconnection.UserDBConnection;
 import backend.exception.InvalidDataException;
+import backend.exception.ServerException;
 import backend.model.dto.Credential;
 
 /**
@@ -13,11 +14,10 @@ import backend.model.dto.Credential;
  * @author brigidoalvarado
  */
 public class LoginController {
-    private Credential credential = new Credential();
     private UserDBConnection userDBConnection = new UserDBConnection();
     
-    public void validateLogin()throws InvalidDataException{
+    public void login(Credential credential)throws InvalidDataException, ServerException{
         credential.validate();
-        
+        userDBConnection.validateLogin(credential);
     }
 }
