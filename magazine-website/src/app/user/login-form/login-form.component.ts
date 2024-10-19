@@ -36,6 +36,7 @@ export class LoginFormComponent implements OnInit {
       this.loginService.doLogin(this.userCredential).subscribe({
         next: () => {
           this.created = true;
+          console.log('se econtro la sesion')
         },
         error: (error: any) => {
           console.log(error);
