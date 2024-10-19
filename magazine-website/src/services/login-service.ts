@@ -15,7 +15,8 @@ export class LoginService{
     this.restConstants = new RestConstants();
   }
     
-    public doLogin(credential: UserCredential): Observable<void>{
-        return this.httpClient.post<void>(this.restConstants.API_URL+'login',credential);
+    public doLogin(credential: UserCredential): Observable<{ token: string }> {
+        console.log('antes de enviar el request');
+        return this.httpClient.post<{ token: string }>(this.restConstants.API_URL+'login',credential);
     }
 }
