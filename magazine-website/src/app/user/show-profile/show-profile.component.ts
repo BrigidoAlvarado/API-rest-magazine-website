@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ProfileViewComponent } from '../profile-view/profile-view.component';
 import { Profile } from '../../../entities/profile';
+import { AdminHeaderComponent } from "../../admin/admin-header/admin-header.component";
 @Component({
   selector: 'app-show-profile',
   standalone: true,
-  imports: [ProfileViewComponent],
+  imports: [ProfileViewComponent, AdminHeaderComponent],
   templateUrl: './show-profile.component.html',
   styleUrl: './show-profile.component.css'
 })

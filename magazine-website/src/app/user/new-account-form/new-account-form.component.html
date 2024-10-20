@@ -1,0 +1,62 @@
+@if (!accepted) {
+  <div>
+    <h2 style="color: red;">El nombre de usuario es invalido</h2>
+  </div>
+}
+<form class="form-control" [formGroup]="uploadFileForm" (ngSubmit)="submit()">
+  
+    <!-- elegir el tipo de usuario --> 
+      <div class="mb-3">
+        <label for="userType">Tipo de Usuario</label> 
+        <select class="form-select" formControlName ="userType" [ngModel]="userType">
+          <option value="admin">Administrador</option>
+          <option value="special_user">Usuario Especial</option>
+          <option value="editor">Editor</option>
+          <option value="subscriber">Suscriptor</option>
+        </select>
+      </div>
+  
+       <!-- ingresar nombre de usuario -->
+      <div class="mb-3">
+        <label for="name">Nombre de usuario:</label> <br>
+        <input type="text" class="form-control" formControlName="userName" maxlength="45" required/>
+      </div>
+      
+      <!-- ingresar contaseña -->
+       <div class="mb-3">
+        <label for="password">Contraseña</label> <br>
+        <input class="form-control" formControlName="password" type="password" required/>
+       </div>
+      
+      <!-- ingresar gustos -->
+       <div class="mb-3">
+        <label for="tastes">Gustos</label>
+        <textarea class="form-control" formControlName="tastes" max="400" rows="3" ></textarea>
+       </div>
+     
+      <!-- ingresar temsas de interes -->
+      <div class="mb-3">
+        <label for="topicOfInterest">Temas de Interés</label>
+        <textarea  class="form-control" formControlName="topicOfInterest" max="400" rows="3" ></textarea>
+      </div>
+      
+      <!-- ingresar descripcion -->
+       <div class="mb-3">
+        <label for="description">Descripción</label>
+        <textarea class="form-control"  formControlName="description" max="400" rows="3"></textarea>
+       </div>
+      
+      <!-- ingresar hobbies -->
+       <div class="mb-3">
+        <label for="hobbies">Hobbies</label>
+        <textarea class="form-control" formControlName="hobbies" max="400" rows="3"></textarea>
+       </div>
+      
+      <!-- seleccionar foto de perfil -->
+       <div class="mb-3">
+        <label for="photoUpload">Seleccione una photo</label><br>
+        <input class="form-control" type="file" formControlName="photo" accept="image/png,image/jpeg"/>
+       </div>
+      
+      <button class="btn btn-primary" [disabled]="uploadFileForm.invalid">Crear Cuenta</button>
+  </form>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AdminHeaderComponent } from "../admin-header/admin-header.component";
+import { AdminHeaderComponent} from '../admin-header/admin-header.component';
 
 @Component({
   selector: 'app-admin-home',

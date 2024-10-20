@@ -13,7 +13,6 @@ public class Profile {
     private String tastes;
     private String topicOfInterest;
     private String hobbies;
-    private String contentType;
     private String Description;
 
     public String getDescription() {
@@ -36,11 +35,6 @@ public class Profile {
         return hobbies;
     }
 
-    public String getContentType() {
-        return contentType;
-    }
-    
-  
     public void setTastes(String tastes) {
         this.tastes = tastes;
     }
@@ -51,9 +45,5 @@ public class Profile {
 
     public void setHobbies(String hobbies) {
         this.hobbies = hobbies;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 }

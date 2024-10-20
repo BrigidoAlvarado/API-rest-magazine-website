@@ -1,3 +1,9 @@
+
+@if (!accepted) {
+  <div>
+    <h2 style="color: red;">El nombre de usuario o la Contraseña es invalido</h2>
+  </div>
+}
 <form [formGroup]="loginForm" (ngSubmit)="submit()">
 
     <!-- elegir el tipo de usuario --> 
