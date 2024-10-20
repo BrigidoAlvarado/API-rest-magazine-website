@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵdetectChangesInViewIfRequired } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../services/login-service';
 import { UserCredential} from '../../../entities/credential';
@@ -39,25 +39,7 @@ export class LoginFormComponent implements OnInit {
     
           //redifigir a la vista que corresponde a su rol
           console.log('HOLA MUNDO');
-
-          switch (this.userCredential.userType) {
-            case 'admin':
-              this.router.navigate(['/admin-home']);
-              break;
-            case 'advertiser':
-              this.router.navigate(['/advertiser-home']);
-              break;
-            case 'editor':
-              this.router.navigate(['/editor-home']);
-              break;
-            case 'subscriber':
-              this.router.navigate(['/subscriber-home']);
-              break;
-            default:
-              console.log('Tipo de usuario desconocido');
-              break;
-          }
-          
+          this.redirect();
           this.loginForm.reset();
           console.log('sesion iniciada con exito');
         },  
@@ -66,6 +48,26 @@ export class LoginFormComponent implements OnInit {
           this.created = false;
         }
       })
+    }
+  }
+
+  redirect(){
+    switch (this.userCredential.userType) {
+      case 'admin':
+        this.router.navigate(['/admin-home']);
+        break;
+      case 'advertiser':
+        this.router.navigate(['/advertiser-home']);
+        break;
+      case 'editor':
+        this.router.navigate(['/editor-home']);
+        break;
+      case 'subscriber':
+        this.router.navigate(['/subscriber-home']);
+        break;
+      default:
+        console.log('Tipo de usuario desconocido');
+        break;
     }
   }
 }

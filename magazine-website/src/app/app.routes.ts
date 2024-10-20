@@ -6,6 +6,7 @@ import { AdminHomeComponent} from '../app/admin/admin-home/admin-home.component'
 import { AdvertiserHomeComponent} from '../app/advertiser/advertiser-home/advertiser-home.component';
 import { EditorHomeComponent} from '../app/editor/editor-home/editor-home.component';
 import { SubscriberHomeComponent} from '../app/subscriber/subscriber-home/subscriber-home.component';
+import { ShowProfileComponent} from '../app/user/show-profile/show-profile.component';
 
 export const routes: Routes = [
     {
@@ -37,6 +38,11 @@ export const routes: Routes = [
         path: 'subscriber-home',
         title: 'home',
         component: SubscriberHomeComponent
+    },
+    {
+        path: 'profile',
+        title: 'Perfil',
+        component: ShowProfileComponent
     },
     {
         path: '',

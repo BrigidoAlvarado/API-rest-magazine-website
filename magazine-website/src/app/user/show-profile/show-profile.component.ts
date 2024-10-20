@@ -9,6 +9,6 @@ import { Profile } from '../../../entities/profile';
   styleUrl: './show-profile.component.css'
 })
 export class ShowProfileComponent {
-  profile?: Profile;
+  profile!: Profile;
 
 }
