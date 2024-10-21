@@ -5,12 +5,12 @@
 }
 <form class="form-control" [formGroup]="uploadFileForm" (ngSubmit)="submit()">
   
-    <!-- elegir el tipo de usuario --> 
+      <!-- elegir el tipo de usuario --> 
       <div class="mb-3">
         <label for="userType">Tipo de Usuario</label> 
-        <select class="form-select" formControlName ="userType" [ngModel]="userType">
+        <select class="form-select" formControlName ="userType">
           <option value="admin">Administrador</option>
-          <option value="special_user">Usuario Especial</option>
+          <option value="anunciante">Anunciante</option>
           <option value="editor">Editor</option>
           <option value="subscriber">Suscriptor</option>
         </select>
@@ -47,15 +47,19 @@
        </div>
       
       <!-- ingresar hobbies -->
-       <div class="mb-3">
+       <div class="form-group mb-3">
         <label for="hobbies">Hobbies</label>
         <textarea class="form-control" formControlName="hobbies" max="400" rows="3"></textarea>
        </div>
       
       <!-- seleccionar foto de perfil -->
-       <div class="mb-3">
-        <label for="photoUpload">Seleccione una photo</label><br>
-        <input class="form-control" type="file" formControlName="photo" accept="image/png,image/jpeg"/>
+       <div class="form-group mb-3">
+        <label for="photoUpload">Foto de pefil</label><br>
+        <input type="file" 
+               class="form-control" 
+               formControlName="photo" 
+               (change)="onFileChange($event)"
+               accept="image/png,image/jpeg"/>
        </div>
       
       <button class="btn btn-primary" [disabled]="uploadFileForm.invalid">Crear Cuenta</button>

@@ -47,10 +47,13 @@ public class Credential {
     
     public void validate() throws InvalidDataException {
         if (userName == null) {
+            System.out.println(userName);
             throw new InvalidDataException("el usuario ingresado es nulo");
         } else if (userType == null) {
+            System.out.println(userType);
             throw new InvalidDataException("el tipo de usuario es nulo");
         } else if (password == null) {
+            System.out.println(password);
             throw new InvalidDataException("el tipo de contraseña es nulo");
         }
     }

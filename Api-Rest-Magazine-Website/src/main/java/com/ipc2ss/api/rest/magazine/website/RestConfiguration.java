@@ -14,7 +14,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class RestConfiguration extends ResourceConfig {
     
     public RestConfiguration()  {
-        packages("com.ipc2ss.api.rest.magazine.website").register(MultiPartFeature.class);
+        packages("com.ipc2ss.api.rest.magazine.website.resources").register(MultiPartFeature.class);
     }
     
 }

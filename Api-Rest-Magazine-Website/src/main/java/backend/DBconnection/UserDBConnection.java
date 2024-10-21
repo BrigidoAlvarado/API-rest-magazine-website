@@ -6,7 +6,6 @@ package backend.DBconnection;
 
 import backend.exception.ServerException;
 import backend.model.dto.Account;
-import backend.model.dto.ApiFile;
 import backend.model.dto.Credential;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +21,7 @@ public class UserDBConnection extends DBConnection {
     public void saveNewAccount(Account account) throws ServerException{
          String sql = "insert into " + account.getCredential().getUserType().name()
                 + " (user_name, password, tastes, photo, topic_of_interest, description, hobbies, photo_content_type)"
-                + " values ( ? , ?, ?, ?, ?, ?, ?, ?, ?)";
+                + " values ( ? , ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = DBConnectionSingleton.getInstance().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -37,7 +36,7 @@ public class UserDBConnection extends DBConnection {
             ps.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
-            throw new  ServerException("El nombre de usuario: \"" + account.getCredential().getUserName() + "\" es invalido");
+            throw new  ServerException("El nombre de usuario: " + account.getCredential().getUserName() + " es invalido");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new ServerException("error al guardar en la base de datos");

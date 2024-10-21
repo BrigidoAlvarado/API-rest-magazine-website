@@ -11,6 +11,6 @@ package backend.model;
 public enum UserType {
     anunciante,
     admin,
-    suscriber,
+    subscriber,
     editor;
 }

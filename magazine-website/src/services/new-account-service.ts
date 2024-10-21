@@ -14,9 +14,8 @@ export class NewAccountService{
     constructor(private httpClient: HttpClient){
         this.restConstants = new RestConstants( );
     }
-
-    uploadFile(account: Account): Observable<{ token: string }>{
-        let formData: FormData = new FormData();
+    uploadFile(formData: FormData): Observable<{ token: string }>{
+        /*let formData: FormData = new FormData();
         formData.append('userType', account.userType);
         formData.append('userName', account.userName);
         formData.append('password', btoa(account.password));
@@ -26,7 +25,8 @@ export class NewAccountService{
         formData.append('hobbies', account.hobbies);
         if(account.photo != null){
             formData.append('photo', account.photo, account.photo.name);
-        } 
+        }
+        return this.httpClient.post<{ token: string }>(this.restConstants.API_URL+'new-account', formData);*/
         return this.httpClient.post<{ token: string }>(this.restConstants.API_URL+'new-account', formData);
     }
 }
