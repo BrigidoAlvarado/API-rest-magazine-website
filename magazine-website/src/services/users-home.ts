@@ -14,7 +14,7 @@ export class UsersHome {
           case 'admin':
             this.router.navigate(['/admin-home']);
             break;
-          case 'advertiser':
+          case 'anunciante':
             this.router.navigate(['/advertiser-home']);
             break;
           case 'editor':

@@ -4,6 +4,9 @@
  */
 package backend;
 
+import backend.exception.InvalidDataException;
+import backend.model.UserType;
+import backend.model.dto.Credential;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import java.util.Base64;
@@ -28,15 +31,32 @@ public class JwtUtil {
         return token;
     }
 
-    public String getUserName() {
-        return getClaims().getSubject();
-    }
-    
-    public String getUserType(){
-        return getClaims().get(USER_TYPE, String.class);
+    public void validateToken(String tokenToValidate) throws InvalidDataException {
+        try {
+            // Analizar y validar el token
+            getClaims(tokenToValidate);
+        } catch (Exception e) {
+            // Si hay una excepción, el token no es válido
+            throw new InvalidDataException("Token invalido");
+        }
     }
 
-    private Claims getClaims( ) {
+    public Credential getCredential() throws InvalidDataException{
+        Credential credential = new Credential();
+        credential.setUserName(getUserName());
+        credential.setUserType(UserType.valueOf(getUserType()));
+        return credential;
+    }
+
+    private String getUserName() {
+        return getClaims(token).getSubject();
+    }
+
+    private String getUserType() {
+        return getClaims(token).get(USER_TYPE, String.class);
+    }
+
+    private Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(Base64.getEncoder().encodeToString(SECRET_KEY.getBytes()))
                 .parseClaimsJws(token)

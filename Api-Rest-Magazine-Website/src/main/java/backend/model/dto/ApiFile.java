@@ -38,5 +38,6 @@ public class ApiFile {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+        System.out.println("el content type es: "+contentType);
     }
 }

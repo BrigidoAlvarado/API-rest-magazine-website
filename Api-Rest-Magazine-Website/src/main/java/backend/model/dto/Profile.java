@@ -10,10 +10,19 @@ package backend.model.dto;
  */
 public class Profile {
     
+    private String userName;
     private String tastes;
     private String topicOfInterest;
     private String hobbies;
     private String Description;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getDescription() {
         return Description;

@@ -19,7 +19,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.io.InputStream;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
@@ -40,10 +42,9 @@ public class NewAccountResource {
             @FormDataParam("topicOfInterest") String topicOfInterest,
             @FormDataParam("description") String description,
             @FormDataParam("hobbies") String hobbies,
-            @FormDataParam("photo") FormDataBodyPart bodyPart) {
-        System.out.println("se entro al recurso: new-account");
-        System.out.println("name: "+userName);
-        System.out.println("type: "+userType);
+            @FormDataParam("photo") FormDataBodyPart bodyPart,
+            @FormDataParam("photo") InputStream uploadedInputStream,
+            @FormDataParam("photo") FormDataContentDisposition contentDispotition) {
         JwtUtil jwtUtil = new JwtUtil();
         Credential credential = new Credential();
         Profile profile = new Profile();
@@ -51,7 +52,7 @@ public class NewAccountResource {
         try {
             //se inicializa el dto de credencial
             credential.setUserType(UserType.valueOf(userType));
-           credential.setUserName(userName);
+            credential.setUserName(userName);
             credential.setPassword(password);
             //se inicializa el dto del perfil
             profile.setDescription(description);
@@ -60,9 +61,14 @@ public class NewAccountResource {
             profile.setTopicOfInterest(topicOfInterest);
             //se inicializa el archivo
             try {
-                apiFile.setInputStream(bodyPart.getContent());
+                System.out.println("el nombre del archivo es: "+contentDispotition.getFileName());
+                System.out.println(bodyPart.getMediaType().getSubtype());
+                System.out.println(bodyPart.getMediaType().getType());
+                System.out.println(bodyPart.getMediaType().toString());
+                apiFile.setInputStream(uploadedInputStream);
                 apiFile.setContentType(bodyPart.getMediaType().toString());
             } catch (NullPointerException e) {
+                System.out.println("no hay foto de perfil");
                 apiFile.setInputStream(null);
                 apiFile.setContentType(null);
             }
@@ -80,9 +86,9 @@ public class NewAccountResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-    
+
     @GET
-    public Response ping(){
+    public Response ping() {
         return Response
                 .ok("ping Jakarta EE")
                 .build();

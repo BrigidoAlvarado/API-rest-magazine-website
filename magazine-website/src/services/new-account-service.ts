@@ -27,6 +27,15 @@ export class NewAccountService{
             formData.append('photo', account.photo, account.photo.name);
         }
         return this.httpClient.post<{ token: string }>(this.restConstants.API_URL+'new-account', formData);*/
+        const photo = formData.get('photo');
+        if (photo instanceof File) {
+        console.log('El archivo "photo" es de clase File');
+        console.log('Nombre del archivo:', photo.name);
+        console.log('Tipo de archivo:', photo.type);
+        console.log('Tamaño del archivo:', photo.size);
+        } else {
+        console.log('El archivo "photo" no es de clase File o no está presente');
+        }
         return this.httpClient.post<{ token: string }>(this.restConstants.API_URL+'new-account', formData);
     }
 }

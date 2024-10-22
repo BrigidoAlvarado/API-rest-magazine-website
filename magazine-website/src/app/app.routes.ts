@@ -6,9 +6,10 @@ import { AdminHomeComponent} from '../app/admin/admin-home/admin-home.component'
 import { AdvertiserHomeComponent} from '../app/advertiser/advertiser-home/advertiser-home.component';
 import { EditorHomeComponent} from '../app/editor/editor-home/editor-home.component';
 import { SubscriberHomeComponent} from '../app/subscriber/subscriber-home/subscriber-home.component';
-import { ShowProfileComponent} from '../app/user/show-profile/show-profile.component';
+import { AdProfileComponent} from "../app/admin/ad-profile/ad-profile.component";
 
 export const routes: Routes = [
+    //RUTAS GENERALES
     {
         path: 'login',
         title: 'Iniciar Sesion',
@@ -19,31 +20,36 @@ export const routes: Routes = [
         title: 'Crear Cuenta',
         component: NewAccountComponent
     },
+    //RUTAS DEL ADMINISTRADOR
     {
         path: 'admin-home',
         title: 'home',
         component: AdminHomeComponent
     },
     {
+        path: 'admin-profile',
+        title: 'Perfil',
+        component: AdProfileComponent
+    },
+    //RUTAS DEL ANUNCIANTE
+    {
         path: 'advertiser-home',
         title: 'home',
         component: AdvertiserHomeComponent
     },
+    //RUTAS DEL EDITOR
     {
         path: 'editor-home',
         title: 'home',
         component: EditorHomeComponent
     },
+    //RUTAS DEL SUSCRIPTOR
     {
         path: 'subscriber-home',
         title: 'home',
         component: SubscriberHomeComponent
     },
-    {
-        path: 'profile',
-        title: 'Perfil',
-        component: ShowProfileComponent
-    },
+    //EXTRAS
     {
         path: '',
         redirectTo: 'login',
