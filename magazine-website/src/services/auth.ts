@@ -23,7 +23,7 @@
       return headers;
     }
 
-    public getUserName(): string {
+    public getUserName(): string | null{
       const token = this.getToken();
       if(token){
         try {

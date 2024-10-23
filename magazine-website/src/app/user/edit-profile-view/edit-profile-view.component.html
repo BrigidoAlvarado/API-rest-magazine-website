@@ -1,0 +1,59 @@
+
+<form class="form-control" [formGroup]="uploadFileForm" (ngSubmit)="submit()">
+
+    <!-- ingresar gustos -->
+     <div class="mb-3">
+      <label for="tastes">Gustos</label>
+      <textarea 
+        class="form-control" 
+        formControlName="tastes" 
+        max="400" 
+        rows="3" >
+      </textarea>
+     </div>
+   
+    <!-- ingresar temsas de interes -->
+    <div class="mb-3">
+      <label for="topicOfInterest">Temas de Interés</label>
+      <textarea 
+        class="form-control" 
+        formControlName="topicOfInterest" 
+        max="400" 
+        rows="3">
+      </textarea>
+    </div>
+    
+    <!-- ingresar descripcion -->
+     <div class="mb-3">
+      <label for="description">Descripción</label>
+        <textarea 
+        class="form-control"  
+        formControlName="description" 
+        max="400" 
+        rows="3">
+      </textarea>
+     </div>
+    
+    <!-- ingresar hobbies -->
+     <div class="form-group mb-3">
+      <label for="hobbies">Hobbies</label>
+      <textarea 
+        class="form-control" 
+        formControlName="hobbies" 
+        max="400" 
+        rows="3">
+      </textarea>
+     </div>
+    
+    <!-- seleccionar foto de perfil -->
+     <div class="form-group mb-3">
+      <label for="photoUpload">Foto de pefil</label><br>
+      <input type="file" 
+             class="form-control" 
+             formControlName="photo" 
+             (change)="onFileChange($event)"
+             accept="image/png,image/jpeg"/>
+     </div>
+    
+    <button class="btn btn-primary">Guardar Cambios</button>
+</form>

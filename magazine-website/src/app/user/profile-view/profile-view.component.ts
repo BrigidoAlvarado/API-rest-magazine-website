@@ -9,16 +9,13 @@ import { AuthService } from '../../../services/auth';
   templateUrl: './profile-view.component.html',
   styleUrl: './profile-view.component.css'
 })
-export class ProfileViewComponent implements OnInit {
+export class ProfileViewComponent{
   @Input({required: true})
   profile!: Profile;
+  userName: string | null;
   edit: boolean = false;
 
-  constructor(private auth: AuthService){}
-
-  ngOnInit(): void {
-    console.log('el perfil del usuario es: ',this.auth.getUserName());  
-    let myProfile = this.auth.getUserName(); 
+  constructor(private auth: AuthService){
+    this.userName = auth.getUserName();
   }
-
 }

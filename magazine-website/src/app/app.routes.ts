@@ -1,12 +1,20 @@
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NewAccountComponent } from './user/new-account/new-account.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from '../app/user/login/login.component';
 import { AdminHomeComponent} from '../app/admin/admin-home/admin-home.component';
 import { AdvertiserHomeComponent} from '../app/advertiser/advertiser-home/advertiser-home.component';
 import { EditorHomeComponent} from '../app/editor/editor-home/editor-home.component';
 import { SubscriberHomeComponent} from '../app/subscriber/subscriber-home/subscriber-home.component';
-import { AdProfileComponent} from "../app/admin/ad-profile/ad-profile.component";
+import { AdminProfileComponent } from '../app/admin/admin-profile/admin-profile.component';
+import { AdvProfileComponent} from '../app/advertiser/adv-profile/adv-profile.component'
+import { EditorProfileComponent } from '../app/editor/editor-profile/editor-profile.component';
+import { SubsProfileComponent } from '../app/subscriber/subs-profile/subs-profile.component';
+import { AdminEditProfileComponent } from '../app/admin/admin-edit-profile/admin-edit-profile.component';
+import { RedirectToEditProfileComponent } from '../app/user/redirect-to-edit-profile/redirect-to-edit-profile.component'
+import { AdvertiserEditProfileComponent } from '../app/advertiser/advertiser-edit-profile/advertiser-edit-profile.component';
+import { EditorEditProfileComponent } from '../app/editor/editor-edit-profile/editor-edit-profile.component';
+import { SubscriberEditProfileComponent} from '../app/subscriber/subscriber-edit-profile/subscriber-edit-profile.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -20,34 +28,71 @@ export const routes: Routes = [
         title: 'Crear Cuenta',
         component: NewAccountComponent
     },
+    {
+        path: 'edit-profile',
+        title: 'Editar Perfil',
+        component: RedirectToEditProfileComponent
+    },
     //RUTAS DEL ADMINISTRADOR
     {
         path: 'admin-home',
-        title: 'home',
+        title: 'Home',
         component: AdminHomeComponent
     },
     {
         path: 'admin-profile',
         title: 'Perfil',
-        component: AdProfileComponent
+        component: AdminProfileComponent
+    },{
+        path: 'admin-edit-profile',
+        title: 'Editar Perfil',
+        component: AdminEditProfileComponent
     },
     //RUTAS DEL ANUNCIANTE
     {
         path: 'advertiser-home',
-        title: 'home',
+        title: 'Home',
         component: AdvertiserHomeComponent
+    },
+    {
+        path: 'advertiser-profile',
+        title: 'Perfil',
+        component: AdvProfileComponent
+    },
+    {
+        path: 'advertiser-edit-profile',
+        title: 'Editar Perfil',
+        component: AdvertiserEditProfileComponent
     },
     //RUTAS DEL EDITOR
     {
         path: 'editor-home',
-        title: 'home',
+        title: 'Home',
         component: EditorHomeComponent
+    },
+    {
+        path: 'editor-profile',
+        title: 'home',
+        component: EditorProfileComponent
+    },{
+        path: 'editor-edit-profile',
+        title: 'Editar Perfil',
+        component: EditorEditProfileComponent
     },
     //RUTAS DEL SUSCRIPTOR
     {
         path: 'subscriber-home',
         title: 'home',
         component: SubscriberHomeComponent
+    },
+    {
+        path: 'subscriber-profile',
+        title: 'home',
+        component: SubsProfileComponent
+    },{
+        path: 'subscriber-edit-profile',
+        title: 'Editar Perfil',
+        component: SubscriberEditProfileComponent
     },
     //EXTRAS
     {

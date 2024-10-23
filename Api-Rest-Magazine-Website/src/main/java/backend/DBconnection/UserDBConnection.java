@@ -23,7 +23,7 @@ public class UserDBConnection extends DBConnection {
                 + " (user_name, password, tastes, photo, topic_of_interest, description, hobbies, photo_content_type)"
                 + " values ( ? , ?, ?, ?, ?, ?, ?, ?)";
         try {
-            connection = DBConnectionSingleton.getInstance().getConnection();
+            getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, account.getCredential().getUserName());
             ps.setString(2, account.getCredential().getPassword());

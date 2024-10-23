@@ -4,6 +4,7 @@
  */
 package backend.DBconnection;
 
+import backend.exception.ServerException;
 import java.sql.Connection;
 
 /**
@@ -12,4 +13,9 @@ import java.sql.Connection;
  */
 public class DBConnection {
     protected Connection connection;
+    
+    protected Connection getConnection() throws ServerException{
+        connection = DBConnectionSingleton.getInstance().getConnection();
+        return connection;
+    }
 }

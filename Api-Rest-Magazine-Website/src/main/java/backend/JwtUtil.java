@@ -19,7 +19,7 @@ public class JwtUtil {
 
     private static final String SECRET_KEY = "ipc-2";
     private static final String USER_TYPE = "userType";
-    private String token;
+    private String token = null;
 
     public String generatedToken(String userName, String userType) {
 
@@ -34,7 +34,8 @@ public class JwtUtil {
     public void validateToken(String tokenToValidate) throws InvalidDataException {
         try {
             // Analizar y validar el token
-            getClaims(tokenToValidate);
+            token = tokenToValidate;
+            getClaims(token);
         } catch (Exception e) {
             // Si hay una excepción, el token no es válido
             throw new InvalidDataException("Token invalido");
@@ -43,16 +44,16 @@ public class JwtUtil {
 
     public Credential getCredential() throws InvalidDataException{
         Credential credential = new Credential();
-        credential.setUserName(getUserName());
-        credential.setUserType(UserType.valueOf(getUserType()));
+        credential.setUserName(getUserName(token));
+        credential.setUserType(UserType.valueOf(getUserType(token)));
         return credential;
     }
 
-    private String getUserName() {
+    private String getUserName(String token) {
         return getClaims(token).getSubject();
     }
 
-    private String getUserType() {
+    private String getUserType(String token) {
         return getClaims(token).get(USER_TYPE, String.class);
     }
 

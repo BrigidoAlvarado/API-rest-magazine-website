@@ -32,6 +32,7 @@ public class AuthTokenHandler {
     public Credential getCredential() throws InvalidDataException{
         return jwtUtil.getCredential();
     }
+    
     // Método para validar el token
     private  void validateToken(String token) throws InvalidDataException{
         jwtUtil.validateToken(token);

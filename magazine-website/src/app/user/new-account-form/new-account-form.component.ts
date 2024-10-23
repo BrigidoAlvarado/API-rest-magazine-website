@@ -15,7 +15,7 @@ export class NewAccountFormComponent implements OnInit {
 
   uploadFileForm!: FormGroup;
   accepted: boolean = true;
-  selectedFile: File | null = null; // Mantén una referencia al archivo seleccionado
+  selectedFile: File | null = null;
 
   constructor(private formBuilder: FormBuilder, private newAccountService: NewAccountService, private usersHome: UsersHome){}
   
@@ -60,36 +60,16 @@ export class NewAccountFormComponent implements OnInit {
         console.log('Tipo MIME del archivo despues del append:', this.selectedFile.type, this.selectedFile.name);
         formData.set('photo', this.selectedFile, this.selectedFile.name);
         console.log('form data: ',formData.get('photo'));
-        const photo = formData.get('photo');
-        if (photo instanceof File) {
-        console.log('El archivo "photo" es de clase File');
-        console.log('Nombre del archivo:', photo.name);
-        console.log('Tipo de archivo:', photo.type);
-        console.log('Tamaño del archivo:', photo.size);
-        } else {
-        console.log('(antes de entrar al servicio)El archivo "photo" no es de clase File o no está presente');
-        }
       }
 
-        const photo = formData.get('photo');
-        if (photo instanceof File) {
-        console.log('El archivo "photo" es de clase File');
-        console.log('Nombre del archivo:', photo.name);
-        console.log('Tipo de archivo:', photo.type);
-        console.log('Tamaño del archivo:', photo.size);
-        } else {
-        console.log('(antes de entrar al servicio)El archivo "photo" no es de clase File o no está presente');
-        }
-
       this.newAccountService.uploadFile(formData).subscribe({
-
 
         next: (response) => {
           this.accepted = true;
           localStorage.setItem('authToken', response.token);
           this.usersHome.redirect(this.uploadFileForm.get('userType')?.value);
           this.uploadFileForm.reset();
-          this.selectedFile = null; // Limpia la referencia del archivo
+          this.selectedFile = null;
         },
         error: (error: any) => {
           console.log(error);

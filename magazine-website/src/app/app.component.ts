@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink ,RouterLinkActive, RouterOutlet } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from '../app/user/login/login.component';
 import { FooterComponent } from "./footer/footer.component";
 
 @Component({

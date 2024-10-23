@@ -6,4 +6,5 @@ export interface Profile{
     hobbies: string,
     contentType: string,
     description: string,
+    photo: File
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdProfileComponent } from './ad-profile.component';
+import { ProfileRequestComponent } from './app-profile-request';
 
 describe('AdProfileComponent', () => {
-  let component: AdProfileComponent;
-  let fixture: ComponentFixture<AdProfileComponent>;
+  let component: ProfileRequestComponent;
+  let fixture: ComponentFixture<ProfileRequestComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdProfileComponent]
+      imports: [ProfileRequestComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdProfileComponent);
+    fixture = TestBed.createComponent(ProfileRequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

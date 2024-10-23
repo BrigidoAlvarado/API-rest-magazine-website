@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminHeaderComponent } from "../admin-header/admin-header.component";
+import { AdminHeaderComponent } from "../../admin/admin-header/admin-header.component";
 import { Profile } from "../../../entities/profile";
-import { ProfileViewComponent } from "../../../app/user/profile-view/profile-view.component";
+import { ProfileViewComponent } from "../profile-view/profile-view.component";
 import { ProfileService } from '../../../services/profile/profile-service';
 
 @Component({
-  selector: 'app-ad-profile',
+  selector: 'app-profile-request',
   standalone: true,
   imports: [AdminHeaderComponent, ProfileViewComponent],
-  templateUrl: './ad-profile.component.html',
+  templateUrl: './app-profile-request.html',
   styleUrl: './ad-profile.component.css'
 })
-export class AdProfileComponent implements OnInit {
+export class ProfileRequestComponent implements OnInit {
   profile!: Profile;
   public readonly PATH = 'admin-profile';
 
@@ -20,8 +20,9 @@ export class AdProfileComponent implements OnInit {
   ngOnInit(): void {
     console.log('se ha iniciado la peticion');
       this.profileService.getProfile().subscribe({
-        next: () => {
+        next: (profile: Profile) => {
           console.log('la peticion fue un exito');
+          this.profile = profile;
         },
         error: (error: any) => {
           console.log(error);
