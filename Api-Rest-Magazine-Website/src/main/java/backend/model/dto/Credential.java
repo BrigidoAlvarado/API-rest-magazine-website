@@ -4,7 +4,7 @@
  */
 package backend.model.dto;
 
-import backend.exception.InvalidDataException;
+import backend.exception.AccessException;
 import backend.model.UserType;
 
 /**
@@ -37,24 +37,24 @@ public class Credential {
         return userType;
     }
 
-    public void setUserType(UserType userType) throws InvalidDataException {
+    public void setUserType(UserType userType) throws AccessException {
         try {
             this.userType = userType;
         } catch (IllegalArgumentException e) {
-            throw new InvalidDataException("el usuario ingresado es invalido");
+            throw new AccessException("el usuario ingresado es invalido");
         }
     }
     
-    public void validate() throws InvalidDataException {
+    public void validate() throws AccessException {
         if (userName == null) {
             System.out.println(userName);
-            throw new InvalidDataException("el usuario ingresado es nulo");
+            throw new AccessException("el usuario ingresado es nulo");
         } else if (userType == null) {
             System.out.println(userType);
-            throw new InvalidDataException("el tipo de usuario es nulo");
+            throw new AccessException("el tipo de usuario es nulo");
         } else if (password == null) {
             System.out.println(password);
-            throw new InvalidDataException("el tipo de contraseña es nulo");
+            throw new AccessException("el tipo de contraseña es nulo");
         }
     }
 }

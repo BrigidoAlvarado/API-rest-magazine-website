@@ -4,7 +4,7 @@
  */
 package backend;
 
-import backend.exception.InvalidDataException;
+import backend.exception.AccessException;
 import backend.model.dto.Credential;
 
 /**
@@ -16,25 +16,25 @@ public class AuthTokenHandler {
     
     private  final JwtUtil jwtUtil = new JwtUtil();
     
-    public void authToken(String header) throws InvalidDataException{
+    public void authToken(String header) throws AccessException{
             validateToken(getTokenFromHeaders(header));
     }
     // Método para obtener el token de autorización desde los encabezados de la solicitud
-    private  String getTokenFromHeaders(String header)throws InvalidDataException{
+    private  String getTokenFromHeaders(String header)throws AccessException{
             // Retorna el token eliminando el prefijo "Bearer "
             try {
             return header.substring(BEARER_PREFIX.length());            
         } catch (Exception e) {
-            throw new InvalidDataException("el token no inicia con Bearer");
+            throw new AccessException ("el token no inicia con Bearer");
         }
     }
     
-    public Credential getCredential() throws InvalidDataException{
+    public Credential getCredential() throws AccessException{
         return jwtUtil.getCredential();
     }
     
     // Método para validar el token
-    private  void validateToken(String token) throws InvalidDataException{
+    private  void validateToken(String token) throws AccessException{
         jwtUtil.validateToken(token);
     }
 }

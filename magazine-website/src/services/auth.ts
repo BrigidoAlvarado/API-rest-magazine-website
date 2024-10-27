@@ -1,5 +1,6 @@
   import { HttpHeaders } from "@angular/common/http";
   import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
   import { jwtDecode } from "jwt-decode";
 
   @Injectable({
@@ -8,10 +9,31 @@
 
   export class AuthService{
 
-    constructor(){}
+    constructor(private router: Router){}
 
     private getToken(): string | null {
       return localStorage.getItem('authToken');
+    }
+
+    validate(error: any): void {
+      if(error.status === 401){
+        localStorage.clear;
+        window.alert('Sesion invalida!!');
+        this.router.navigate(['/login']);
+      }
+      this.validateWithOutRole(error);
+    }
+
+    validateWithOutRole(error: any):void {
+       if (error.status === 403){
+        window.alert('Tu rol de usuario no tiene permiso para esta actividad');
+      } else if ( error.status === 400){
+        window.alert('Se recibio informacion que el servidor no puede procesar');
+      } else if(error.status === 500) {
+        window.alert('Ha ocurrido un error en el servidor \n por favor intentalo de nuevo mas tarde');
+      } else {
+        window.alert('Ha ocurrido un error inesperado por favor intentalo de nuevo mas tarde');
+      }
     }
 
     public getHeader(): HttpHeaders {

@@ -4,6 +4,7 @@
  */
 package backend;
 
+import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.model.UserType;
 import backend.model.dto.Credential;
@@ -31,18 +32,18 @@ public class JwtUtil {
         return token;
     }
 
-    public void validateToken(String tokenToValidate) throws InvalidDataException {
+    public void validateToken(String tokenToValidate) throws AccessException {
         try {
             // Analizar y validar el token
             token = tokenToValidate;
             getClaims(token);
         } catch (Exception e) {
             // Si hay una excepción, el token no es válido
-            throw new InvalidDataException("Token invalido");
+            throw new AccessException("Token invalido");
         }
     }
 
-    public Credential getCredential() throws InvalidDataException{
+    public Credential getCredential() throws AccessException{
         Credential credential = new Credential();
         credential.setUserName(getUserName(token));
         credential.setUserType(UserType.valueOf(getUserType(token)));

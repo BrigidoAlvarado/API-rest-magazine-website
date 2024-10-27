@@ -15,6 +15,8 @@ import { RedirectToEditProfileComponent } from '../app/user/redirect-to-edit-pro
 import { AdvertiserEditProfileComponent } from '../app/advertiser/advertiser-edit-profile/advertiser-edit-profile.component';
 import { EditorEditProfileComponent } from '../app/editor/editor-edit-profile/editor-edit-profile.component';
 import { SubscriberEditProfileComponent} from '../app/subscriber/subscriber-edit-profile/subscriber-edit-profile.component';
+import { AdvertiserBusinessViewComponent } from '../app/advertiser/advertiser-business-view/advertiser-business-view.component';
+import { EditorBusinessViewComponent } from './editor/editor-business-view/editor-business-view.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -50,6 +52,11 @@ export const routes: Routes = [
     },
     //RUTAS DEL ANUNCIANTE
     {
+        path: 'advertiser-business',
+        title: 'Compra y Venta',
+        component: AdvertiserBusinessViewComponent
+    },
+    {
         path: 'advertiser-home',
         title: 'Home',
         component: AdvertiserHomeComponent
@@ -74,10 +81,16 @@ export const routes: Routes = [
         path: 'editor-profile',
         title: 'home',
         component: EditorProfileComponent
-    },{
+    },
+    {
         path: 'editor-edit-profile',
         title: 'Editar Perfil',
         component: EditorEditProfileComponent
+    },
+    {
+        path: 'editor-business',
+        title: 'Tienda',
+        component: EditorBusinessViewComponent
     },
     //RUTAS DEL SUSCRIPTOR
     {

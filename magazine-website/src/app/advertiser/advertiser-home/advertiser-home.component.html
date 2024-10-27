@@ -1,2 +1,12 @@
 <app-adv-header></app-adv-header>
-<p>advertiser-home works!</p>
+<main>
+    <section class="container" style="margin: 1%;">
+        @if (ads != null) {
+            <app-purchased-ads-list [ads]="ads"></app-purchased-ads-list>
+        } @else {
+            <div class="form-group">
+                <p>No hay auncios para mostrar</p>
+            </div>
+        }
+    </section>
+</main>

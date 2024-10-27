@@ -5,7 +5,8 @@
 package com.ipc2ss.api.rest.magazine.website.resources;
 
 import backend.JwtUtil;
-import backend.LoginController;
+import backend.controllers.LoginController;
+import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Credential;
@@ -38,7 +39,7 @@ public class LoginResources {
         } catch (ServerException e) {
           e.printStackTrace();
           return  Response.status(Response.Status.NOT_FOUND).build();
-        } catch(InvalidDataException e){
+        } catch(AccessException e){
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

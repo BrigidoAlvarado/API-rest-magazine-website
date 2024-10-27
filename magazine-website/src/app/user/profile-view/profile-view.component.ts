@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Profile } from '../../../entities/profile'
 import { AuthService } from '../../../services/auth';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile-view',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './profile-view.component.html',
   styleUrl: './profile-view.component.css'
 })

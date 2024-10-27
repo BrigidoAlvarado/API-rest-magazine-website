@@ -4,13 +4,11 @@
  */
 package com.ipc2ss.api.rest.magazine.website.resources;
 
-import backend.AccountCreator;
 import backend.AuthTokenHandler;
-import backend.JwtUtil;
-import backend.ProfileController;
+import backend.controllers.ProfileController;
+import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
-import backend.model.UserType;
 import backend.model.dto.ApiFile;
 import backend.model.dto.Credential;
 import backend.model.dto.Profile;
@@ -44,14 +42,12 @@ public class ProfileResource {
             Credential credential = authTokenHandler.getCredential();
             Profile profile = profileController.getProfile(credential);
             return Response.ok(profile).build();
-        } catch (InvalidDataException e) {
-            System.out.println("enviando no autoriazado");
-            e.printStackTrace();
-            return Response.status(Response.Status.UNAUTHORIZED).build();
         } catch (ServerException e) {
-            System.out.println("enviando internal server error");
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
     
@@ -96,9 +92,12 @@ public class ProfileResource {
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (InvalidDataException e) {
+        } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
     }
 }

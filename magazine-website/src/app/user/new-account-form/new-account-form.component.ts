@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Account} from '../../../entities/account';
 import { NewAccountService} from '../../../services/new-account-service';
 import { UsersHome } from '../../../services/users-home';
+import { Account } from '../../../entities/account';
 
 @Component({
   selector: 'app-new-account-form',
@@ -46,24 +46,12 @@ export class NewAccountFormComponent implements OnInit {
 
   submit(): void {
     if (this.uploadFileForm.valid) {
-      const formData = new FormData();
-
-      // Agrega todos los campos al FormData excepto la foto
-      Object.keys(this.uploadFileForm.controls).forEach(key => {
-        const controlValue = this.uploadFileForm.get(key)?.value;
-        formData.append(key, controlValue);
-      });
-
-      // Si se seleccionó un archivo, agrégalo al FormData
-      if (this.selectedFile instanceof File) {
-        console.log(this.selectedFile);
-        console.log('Tipo MIME del archivo despues del append:', this.selectedFile.type, this.selectedFile.name);
-        formData.set('photo', this.selectedFile, this.selectedFile.name);
-        console.log('form data: ',formData.get('photo'));
+      let account = this.uploadFileForm?.value as Account;
+      //aniadir el archivo a la cuenta
+      if(this.selectedFile instanceof File){
+        account.photo = this.selectedFile;
       }
-
-      this.newAccountService.uploadFile(formData).subscribe({
-
+      this.newAccountService.uploadFile(account).subscribe({
         next: (response) => {
           this.accepted = true;
           localStorage.setItem('authToken', response.token);

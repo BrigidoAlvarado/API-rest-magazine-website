@@ -4,8 +4,9 @@
  */
 package com.ipc2ss.api.rest.magazine.website.resources;
 
-import backend.AccountCreator;
+import backend.controllers.AccountCreator;
 import backend.JwtUtil;
+import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.UserType;
@@ -61,14 +62,9 @@ public class NewAccountResource {
             profile.setTopicOfInterest(topicOfInterest);
             //se inicializa el archivo
             try {
-                System.out.println("el nombre del archivo es: "+contentDispotition.getFileName());
-                System.out.println(bodyPart.getMediaType().getSubtype());
-                System.out.println(bodyPart.getMediaType().getType());
-                System.out.println(bodyPart.getMediaType().toString());
                 apiFile.setInputStream(uploadedInputStream);
                 apiFile.setContentType(bodyPart.getMediaType().toString());
             } catch (NullPointerException e) {
-                System.out.println("no hay foto de perfil");
                 apiFile.setInputStream(null);
                 apiFile.setContentType(null);
             }
@@ -81,7 +77,7 @@ public class NewAccountResource {
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (InvalidDataException e) {
+        } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
