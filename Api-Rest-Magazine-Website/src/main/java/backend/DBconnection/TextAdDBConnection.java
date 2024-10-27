@@ -5,10 +5,13 @@
 package backend.DBconnection;
 
 import backend.enums.GlobalCost;
+import backend.exception.InvalidDataException;
+import backend.exception.ServerException;
 import backend.model.dto.Credential;
 import backend.model.dto.TextAd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -30,5 +33,41 @@ public class TextAdDBConnection extends DBConnection {
             preparedStatement.setString(5, LocalDate.now().toString());
             preparedStatement.setString(6, ad.getText());
             preparedStatement.executeUpdate();
+    }
+    
+    public TextAd getById( int id) throws ServerException, InvalidDataException{
+        String sql = "select * from ad where ( id = ? and state = true and expire_status = false )";
+        try {
+            getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                TextAd ad = new TextAd();
+                ad.setId(id);
+                ad.setKind(GlobalCost.valueOf("kind"));
+                ad.setText("text");
+                return ad;
+            } else {
+                 throw new InvalidDataException("El anuncio no con id = "+id+" no existe, ha expirado o esta desactivado");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServerException("Error al obtener el anuncio de texto con id: "+id);
+        }
+    }
+    
+    public void update(TextAd ad) throws ServerException, InvalidDataException{
+        String sql = " update table ad set text  = ? where ( id = ?) ";
+        try {
+            getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, ad.getText());
+            st.setInt(2, ad.getId());
+            st.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServerException("Error al actualizar el anucio de texto con id = "+ad.getId());
+        }
     }
 }

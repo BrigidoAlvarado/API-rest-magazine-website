@@ -1,0 +1,14 @@
+<div class="card" style="margin: 2%;">
+    <div class="card-header">
+        <h5 class="card-title">Anuncio de Texto</h5>
+    </div>
+    <div class="card-body">
+        <form class="mb-3" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="form-control">
+                <label>Texto del Anuncio</label>
+                <textarea formControlName="text" class="form-control"></textarea>
+            </div>
+                <button style="margin: 1%;" [disabled]="form.invalid" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+</div>

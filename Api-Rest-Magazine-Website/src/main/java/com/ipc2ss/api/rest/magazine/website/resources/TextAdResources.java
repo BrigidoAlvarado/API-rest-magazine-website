@@ -6,7 +6,7 @@ package com.ipc2ss.api.rest.magazine.website.resources;
 
 import backend.AuthTokenHandler;
 import backend.controllers.BuyAdController;
-import backend.enums.GlobalCost;
+import backend.controllers.TextAdController;
 import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
@@ -17,6 +17,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -28,30 +29,75 @@ import jakarta.ws.rs.core.Response;
 @Path("ad-text")
 public class TextAdResources {
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSolicitudPorCodigo(
+    public Response getById(
             @HeaderParam("Authorization") String authorization,
-            TextAd textAd) {
-        AuthTokenHandler tokenHandler = new AuthTokenHandler();
-        BuyAdController buyAdController = new BuyAdController();
-        Amount amount = new Amount();
+            @PathParam("id") int id
+    ) {
+        AuthTokenHandler authTokenHandler = new AuthTokenHandler();
+        TextAdController textAdController = new TextAdController();
         try {
-            System.out.println("kind "+textAd.getKind());
-            System.out.println("time "+textAd.getTime().getDay());
-            System.out.println("text "+textAd.getText());
-            tokenHandler.authToken(authorization);
-            amount.setAmount(buyAdController.buyTextAd(textAd, tokenHandler.getCredential()));
-            return Response.ok(amount).build();
-
+            authTokenHandler.authToken(authorization);
+            TextAd ad = textAdController.getTextAdById(authTokenHandler.getCredential(), id);
+            return Response.ok(ad).build();
         } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }catch (InvalidDataException e) {
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buy(
+            @HeaderParam("Authorization") String authorization,
+            TextAd textAd) {
+        AuthTokenHandler tokenHandler = new AuthTokenHandler();
+        BuyAdController buyAdController = new BuyAdController();
+        Amount amount = new Amount();
+        try {
+            tokenHandler.authToken(authorization);
+            amount.setAmount(buyAdController.buyTextAd(textAd, tokenHandler.getCredential()));
+            return Response.ok(amount).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+    }
+
+    @POST
+    @Path("update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response update(
+            @HeaderParam("Authorization") String authorization,
+            TextAd ad) {
+        AuthTokenHandler authTokenHandler = new AuthTokenHandler();
+        TextAdController textAdController = new TextAdController();
+        try {
+            authTokenHandler.authToken(authorization);
+            textAdController.updateAd(ad);
+            return Response.status(Response.Status.ACCEPTED).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (InvalidDataException e) {
             e.printStackTrace();
             return Response.status(Response.Status.FORBIDDEN).build();
         }
