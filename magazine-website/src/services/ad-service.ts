@@ -39,6 +39,6 @@ export class AdService {
 
     postTextAd(textAd: TextAd): Observable<Amount>{
         const headers = this.auth.getHeader();
-        return this.http.post<Amount>(this.restConstants.API_URL+'ad-text',textAd,{ headers });
+        return this.http.post<Amount>(this.restConstants.API_URL+'text-ad',textAd,{ headers });
     }
 }

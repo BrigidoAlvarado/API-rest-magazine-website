@@ -7,7 +7,6 @@ package com.ipc2ss.api.rest.magazine.website.resources;
 import backend.JwtUtil;
 import backend.controllers.LoginController;
 import backend.exception.AccessException;
-import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Credential;
 import jakarta.ws.rs.Consumes;

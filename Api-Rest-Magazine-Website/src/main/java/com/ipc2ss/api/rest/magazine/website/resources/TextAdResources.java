@@ -26,7 +26,7 @@ import jakarta.ws.rs.core.Response;
  *
  * @author brigidoalvarado
  */
-@Path("ad-text")
+@Path("text-ad")
 public class TextAdResources {
 
     @GET
@@ -36,6 +36,7 @@ public class TextAdResources {
             @HeaderParam("Authorization") String authorization,
             @PathParam("id") int id
     ) {
+        System.out.println("en obtener anuncio de texto por id");
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         TextAdController textAdController = new TextAdController();
         try {
@@ -60,6 +61,7 @@ public class TextAdResources {
     public Response buy(
             @HeaderParam("Authorization") String authorization,
             TextAd textAd) {
+        System.out.println("en comprar auncio");
         AuthTokenHandler tokenHandler = new AuthTokenHandler();
         BuyAdController buyAdController = new BuyAdController();
         Amount amount = new Amount();
@@ -80,15 +82,18 @@ public class TextAdResources {
     }
 
     @POST
-    @Path("update")
+    @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response update(
             @HeaderParam("Authorization") String authorization,
+            @PathParam("id") int id,
             TextAd ad) {
+        System.out.println("en actualizar iformaciond del anuncio");
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         TextAdController textAdController = new TextAdController();
         try {
             authTokenHandler.authToken(authorization);
+            ad.setId(id);
             textAdController.updateAd(ad);
             return Response.status(Response.Status.ACCEPTED).build();
         } catch (AccessException e) {

@@ -21,9 +21,9 @@ export class TextAdService{
         return this.http.get<TextAd>(this.restConstants.API_URL+'text-ad/'+id, { headers });
     }
 
-    updateTextAd(textAd: TextAd): Observable<void> {
+    updateTextAd(textAd: TextAd, id: number): Observable<void> {
         const headers = this.auth.getHeader();
-        return this.http.post<void>(this.restConstants.API_URL+"text-ad",textAd, { headers });
+        return this.http.post<void>(this.restConstants.API_URL+"text-ad/"+id,textAd, { headers });
     }
 
 }

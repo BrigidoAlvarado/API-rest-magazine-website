@@ -35,8 +35,15 @@ public class TextAd extends Ad{
         this.text = text;
     }
 
+    @Override
     public void validate() throws InvalidDataException{
-        if ( time == null || text == null ) {
+        if ( time == null || text == null || this.kind == null ) {
+            throw new InvalidDataException("datos del anuncio de texto invalidos");
+        }
+    }
+    
+    public void validateUpdate()throws InvalidDataException{
+        if ( text  == null ) {
             throw new InvalidDataException("datos del anuncio de texto invalidos");
         }
     }

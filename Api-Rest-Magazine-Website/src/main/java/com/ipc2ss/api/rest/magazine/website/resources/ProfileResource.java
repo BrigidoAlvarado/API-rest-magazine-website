@@ -53,7 +53,7 @@ public class ProfileResource {
     
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response createNewAccount(
+    public Response editProfile(
             @HeaderParam("Authorization") String authorization,
             @FormDataParam("userName") String userName,
             @FormDataParam("tastes") String tastes,

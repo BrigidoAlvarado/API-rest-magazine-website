@@ -28,11 +28,13 @@ import java.util.List;
 @Path("ad")
 public class AdResources {
 
+    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAdById(
      @HeaderParam("Authorization") String authorization,
     @PathParam("id") int id){
+        System.out.println("en obtener informacion de un anuncio por id");
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         AdController adController = new AdController();
         try {
@@ -55,6 +57,7 @@ public class AdResources {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAds(
      @HeaderParam("Authorization") String authorization) {
+        System.out.println("en obener todos los anuncios");
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         AdController adController = new AdController();
         try {
@@ -67,6 +70,9 @@ public class AdResources {
         } catch (AccessException e){
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        }catch (InvalidDataException e){
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
     
@@ -75,6 +81,7 @@ public class AdResources {
     public Response updateStatus(
     @HeaderParam("Authorization") String authorization,
             Ad ad){
+        System.out.println("en actualizar estado");
         AuthTokenHandler authTokenHandler  = new AuthTokenHandler();
         AdController adController = new AdController();
         try {

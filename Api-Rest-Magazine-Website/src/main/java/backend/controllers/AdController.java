@@ -21,7 +21,7 @@ public class AdController {
     private final AdDBConnection adDBConnection = new AdDBConnection();
     private final ExpirationAd expirationAd = new ExpirationAd();
     
-    public List<Ad> getPurchasedAds(Credential credential) throws ServerException{
+    public List<Ad> getPurchasedAds(Credential credential) throws ServerException, InvalidDataException{
         expirationAd.validate();
         return adDBConnection.getPurchasedAds(credential);
     }

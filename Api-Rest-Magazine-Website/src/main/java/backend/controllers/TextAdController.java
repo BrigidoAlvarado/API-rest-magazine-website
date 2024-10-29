@@ -30,7 +30,7 @@ public class TextAdController {
     
     public void updateAd(TextAd ad) throws ServerException, InvalidDataException{
         expirationAd.validate();
-        ad.validate();
+        ad.validateUpdate();
         textAdDBConnection.update(ad);
     }
 }

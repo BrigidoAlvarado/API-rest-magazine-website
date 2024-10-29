@@ -27,11 +27,12 @@ export class AdStatusComponent implements OnInit{
 
   change():void {
     const confirm = window.confirm('Deseas actualizar el estado del anuncio');
-
+    
     if(confirm){
+      this.ad.status = this.form.get('activo')?.value;
+      console.log(this.ad.status)
       this.adService.updateStatus(this.ad).subscribe({
         next: () => {
-          this.ad.status = this.form.get('activo')?.value;
           window.alert('Cambio de estado exitoso');
         },
         error: (error: any) => {

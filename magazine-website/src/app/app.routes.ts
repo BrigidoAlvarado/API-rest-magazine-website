@@ -17,6 +17,7 @@ import { EditorEditProfileComponent } from '../app/editor/editor-edit-profile/ed
 import { SubscriberEditProfileComponent} from '../app/subscriber/subscriber-edit-profile/subscriber-edit-profile.component';
 import { AdvertiserBusinessViewComponent } from '../app/advertiser/advertiser-business-view/advertiser-business-view.component';
 import { EditorBusinessViewComponent } from './editor/editor-business-view/editor-business-view.component';
+import { EditAdViewComponent } from './ad/edit-ad-view/edit-ad-view.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -70,6 +71,11 @@ export const routes: Routes = [
         path: 'advertiser-edit-profile',
         title: 'Editar Perfil',
         component: AdvertiserEditProfileComponent
+    },
+    {
+        path: 'edit-ad/:id',
+        title: 'Editar Perfil',
+        component: EditAdViewComponent
     },
     //RUTAS DEL EDITOR
     {

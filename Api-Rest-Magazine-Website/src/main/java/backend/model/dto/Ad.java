@@ -15,7 +15,7 @@ import backend.exception.InvalidDataException;
 
 public class Ad {
     
-    private int id;
+    protected int idAd;
     protected boolean status;
     protected GlobalCost kindAd;
     protected AdTime adTime;
@@ -32,12 +32,15 @@ public class Ad {
         return status;
     };
     
-    public void setId(int id){
-        this.id = id;
+    public void setId(int id)throws InvalidDataException{
+        if (id < 0) {
+            throw  new InvalidDataException("El id es invalido");
+        }
+        this.idAd = id;
     }
     
     public int getId(){
-        return id;
+        return idAd;
     }
     
     public void setKindAd(GlobalCost kindAd){
@@ -57,7 +60,7 @@ public class Ad {
     }
     
     public void validate()throws InvalidDataException{
-        if (id < 0 ) {
+        if (idAd < 0 ) {
             throw new InvalidDataException("id invalido");
         }
     }

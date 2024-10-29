@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class AdDBConnection extends DBConnection {
 
-    public List<Ad> getExpiredAds() throws ServerException {
+    public List<Ad> getExpiredAds() throws ServerException, InvalidDataException {
         List<Ad> ads = new ArrayList<>();
         String sql
                 = "SELECT id FROM ad WHERE DATEDIFF(CURDATE(), date) > time ; ";
@@ -55,7 +55,7 @@ public class AdDBConnection extends DBConnection {
         }
     }
 
-    public List<Ad> getPurchasedAds(Credential credential) throws ServerException {
+    public List<Ad> getPurchasedAds(Credential credential) throws ServerException, InvalidDataException {
         List<Ad> ads = new ArrayList<>();
         String sql = "select id, kind, state from ad where ( expire_status = false and anunciante_name = ? ) ";
         try {
@@ -99,6 +99,7 @@ public class AdDBConnection extends DBConnection {
     
     public void updateStatus(Credential credential, Ad ad) throws InvalidDataException, ServerException{
         String sql = "update ad set state = ? where ( id = ? and kind = ?)";
+        System.out.println("se actualizara al estado: "+ad.getStatus());
         try {
             getConnection();
             PreparedStatement st = connection.prepareStatement(sql);

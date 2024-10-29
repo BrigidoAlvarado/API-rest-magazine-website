@@ -5,6 +5,7 @@
 package backend.model;
 
 import backend.DBconnection.AdDBConnection;
+import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Ad;
 import java.util.List;
@@ -17,7 +18,7 @@ public class ExpirationAd{
     
     private final AdDBConnection adDBConnection = new AdDBConnection();
     
-    public void validate() throws ServerException{
+    public void validate() throws ServerException, InvalidDataException{
         List<Ad> expiredAds = adDBConnection.getExpiredAds();
         if (expiredAds.isEmpty()) {
             System.out.println("No hay anuncios expirados");

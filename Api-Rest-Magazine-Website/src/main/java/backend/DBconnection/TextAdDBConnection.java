@@ -36,7 +36,7 @@ public class TextAdDBConnection extends DBConnection {
     }
     
     public TextAd getById( int id) throws ServerException, InvalidDataException{
-        String sql = "select * from ad where ( id = ? and state = true and expire_status = false )";
+        String sql = "select * from ad where ( id = ? and expire_status = false )";
         try {
             getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
@@ -45,11 +45,11 @@ public class TextAdDBConnection extends DBConnection {
             if (rs.next()) {
                 TextAd ad = new TextAd();
                 ad.setId(id);
-                ad.setKind(GlobalCost.valueOf("kind"));
-                ad.setText("text");
+                ad.setText(rs.getString("text"));
+                ad.setKind(GlobalCost.valueOf(rs.getString("kind")));
                 return ad;
             } else {
-                 throw new InvalidDataException("El anuncio no con id = "+id+" no existe, ha expirado o esta desactivado");
+                 throw new InvalidDataException("El anuncio no con id = "+id+" no existe o ha expirado");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,7 +58,8 @@ public class TextAdDBConnection extends DBConnection {
     }
     
     public void update(TextAd ad) throws ServerException, InvalidDataException{
-        String sql = " update table ad set text  = ? where ( id = ?) ";
+        String sql = " update  ad set text  = ? where ( id = ?) ";
+        String mm = "UPDATE ad SET  text = 'ANUNCIO DE TEXTO edit' WHERE (`id` = '1');";
         try {
             getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
