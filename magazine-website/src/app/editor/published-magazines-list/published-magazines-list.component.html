@@ -1,0 +1,21 @@
+<section class="container">
+    @if (magazineList.length === 0) {
+        <div class="alert alert-primary" role="alert">
+            Sin Publicaciones
+          </div>
+    }
+    <div class="form-control">
+        <h4>Publicaciones</h4>
+        @for (magazine of magazineList; track $index) {
+            <div style="margin: 1%;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{magazine.tittle}}</h5>
+                        <app-published-magazine-view [id]="magazine.id"></app-published-magazine-view>
+                    </div>
+                </div>
+            </div>
+            }
+    </div>
+    
+</section>

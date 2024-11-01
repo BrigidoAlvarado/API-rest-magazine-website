@@ -5,7 +5,7 @@
 package backend.controllers;
 
 import backend.model.AdStore;
-import backend.DBconnection.TransactionBuyAd;
+import backend.transactions.TransactionBuyAd;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Credential;

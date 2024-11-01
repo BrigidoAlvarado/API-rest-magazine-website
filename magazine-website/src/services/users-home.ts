@@ -10,9 +10,15 @@ export class UsersHome {
 
     constructor(private router: Router, private auth: AuthService){}
 
-    redirect(userType: string): void {
+    redirect(userType: string | null): void {
+
+      if(userType === null){
+        userType = this.auth.getUserType();
+        console.log(userType);
+      }
         switch (userType) {
           case 'admin':
+            console.log('redirigiendo admin');
             this.router.navigate(['/admin-home']);
             break;
           case 'anunciante':

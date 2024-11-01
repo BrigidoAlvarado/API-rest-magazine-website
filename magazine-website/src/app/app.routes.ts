@@ -18,6 +18,7 @@ import { SubscriberEditProfileComponent} from '../app/subscriber/subscriber-edit
 import { AdvertiserBusinessViewComponent } from '../app/advertiser/advertiser-business-view/advertiser-business-view.component';
 import { EditorBusinessViewComponent } from './editor/editor-business-view/editor-business-view.component';
 import { EditAdViewComponent } from './ad/edit-ad-view/edit-ad-view.component';
+import { PostViewComponent } from './editor/post-view/post-view.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -92,6 +93,10 @@ export const routes: Routes = [
         path: 'editor-edit-profile',
         title: 'Editar Perfil',
         component: EditorEditProfileComponent
+    },{
+        path: 'editor-post',
+        title: 'Publicar Revista',
+        component: PostViewComponent
     },
     {
         path: 'editor-business',

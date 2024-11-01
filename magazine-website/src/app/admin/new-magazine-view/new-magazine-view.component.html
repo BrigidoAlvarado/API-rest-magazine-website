@@ -1,0 +1,7 @@
+    <form [formGroup]="form" (submit)="submit()">
+        <div class="form-control">
+            <input type="number" formControlName="dailyCost">
+        </div>
+            <button [disabled]="form.invalid" class="btn btn-primary bm-3">Guardar Cambios</button>
+    </form>
+

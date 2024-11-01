@@ -2,7 +2,12 @@
     <main>
         <section>
             <div class="container">
-                <p>admin-home works!</p>
+                @if (magazineList === null || magazineList.length === 0) {
+                    <div><label>No hay revistas nuevas</label></div>
+                }
+                @else {
+                    <app-new-magazines-list [magazineList]="magazineList"></app-new-magazines-list>
+                }
             </div>
         </section>
     </main>

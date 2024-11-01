@@ -1,0 +1,12 @@
+<div class="container">
+    <h3>Nuevas Revistas Publicadas</h3>
+</div>
+@for (magazine of magazineList; track $index) {
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Id: {{magazine.id}}</h5>
+            <h6 class="card-title">{{magazine.tittle}}</h6>
+            <app-new-magazine-view [magazine]="magazine"></app-new-magazine-view>            
+        </div>
+    </div>
+}

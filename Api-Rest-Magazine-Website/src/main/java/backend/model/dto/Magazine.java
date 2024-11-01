@@ -1,0 +1,160 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package backend.model.dto;
+
+import backend.exception.InvalidDataException;
+import backend.model.Tag;
+import java.time.LocalDate;
+
+/**
+ *
+ * @author brigidoalvarado
+ */
+public class Magazine {
+    
+    private boolean commentStatus;
+    private boolean subscriptionStatus;
+    private boolean isLiked;
+    private double dailyCost;
+    private int likes;
+    private int id;
+    private String title;
+    private String category;
+    private LocalDate date;
+    private String description;
+    private String editor;
+    private String[] tags;
+    private ApiFile file;
+
+    public ApiFile getFile() {
+        return file;
+    }
+
+    public void setFile(ApiFile file) {
+        this.file = file;
+    }
+
+    
+    public boolean isCommentStatus() {
+        return commentStatus;
+    }
+
+    public void setCommentStatus(boolean commentStatus) {
+        this.commentStatus = commentStatus;
+    }
+
+    public boolean isSubscriptionStatus() {
+        return subscriptionStatus;
+    }
+
+    public void setSubscriptionStatus(boolean subscriptionStatus) {
+        this.subscriptionStatus = subscriptionStatus;
+    }
+
+    public boolean isIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    public double getDailyCost() {
+        return dailyCost;
+    }
+
+    public void setDailyCost(double dailyCost) {
+        this.dailyCost = dailyCost;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTittle() {
+        return title;
+    }
+
+    public void setTittle(String tittle) {
+        this.title = tittle;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = generateTags(tags);
+    }
+    
+    public void validate() throws InvalidDataException{
+        if (
+                title == null || 
+                category == null || 
+                description == null || 
+                tags == null || 
+                date == null || 
+                file == null || 
+                editor == null) {
+            throw new InvalidDataException("La revista no contiene toda la informacion necesaria para su manejo");
+        }
+        file.validate();
+    }
+    
+    public void validateCost() throws InvalidDataException{
+        if(dailyCost < 0){
+            throw new InvalidDataException("Costo diario asignado invalido");
+        }
+    }
+    
+    private String[] generateTags(String tagsText){
+        Tag tag = new Tag();
+        return tag.generateTags(tagsText);
+    }
+}

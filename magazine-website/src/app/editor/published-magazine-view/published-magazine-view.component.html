@@ -1,0 +1,21 @@
+<p class="d-inline-flex gap-1">
+    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Agregar Numero
+    </button>
+  </p>
+  <div class="collapse" id="collapseExample">
+    <form class="" [formGroup]="form" (ngSubmit)="submit()">
+        <label>Seleccione el arhivo pdf</label>
+        <div>
+            <input 
+                type="file" 
+                id="magazine" 
+                formControlName="file" 
+                (change)="onFileChange($event)" 
+                accept=".pdf"/>
+        </div>
+        <div style="margin: 1%;">
+          <button class="btn btn-primary" [disabled]="form.invalid">Agregar</button>
+        </div>
+    </form>
+  </div>

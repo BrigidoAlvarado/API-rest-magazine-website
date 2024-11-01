@@ -26,13 +26,13 @@ import { Router } from "@angular/router";
 
     validateWithOutRole(error: any):void {
        if (error.status === 403){
-        window.alert('Tu rol de usuario no tiene permiso para esta actividad');
+        window.alert('El servidor no tiene la informacin necesaria para procesar la peticion \n codigo de error: '+error.status);
       } else if ( error.status === 400){
-        window.alert('Se recibio informacion que el servidor no puede procesar');
+        window.alert('Se recibio informacion que el servidor no puede procesar\n codigo de error: '+error.status);
       } else if(error.status === 500) {
-        window.alert('Ha ocurrido un error en el servidor \n por favor intentalo de nuevo mas tarde');
+        window.alert('Ha ocurrido un error en el servidor \n por favor intentalo de nuevo mas tarde \n codigo de error: '+error.status);
       } else {
-        window.alert('Ha ocurrido un error inesperado por favor intentalo de nuevo mas tarde');
+        window.alert('Ha ocurrido un error inesperado por favor intentalo de nuevo mas tarde \n codigo de error: '+error.status);
       }
     }
 

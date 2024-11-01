@@ -1,0 +1,38 @@
+<section class="container-fluid">
+    <form  class="form-control p-4 shadow bg-light rounded" [formGroup]="form" (ngSubmit)="submit()">
+    <!-- titulo -->
+    <div class="form-floating">            
+        <input  class="form-control"  formControlName="title" >
+        <label class="form-label" for="title">Titulo</label>      
+    </div>
+    <!-- categoria -->
+    <div class="form-floating">
+        <input  class="form-control"  formControlName="category">
+        <label class="form-label" for="category">Categoria</label>
+    </div>
+    <!-- descripcion -->
+    <div class="form-floating">
+        <input  class="form-control"  formControlName="description">
+        <label class="form-label" for="description">Descripcion</label>
+    </div>
+    <!-- tags -->
+    <div class="form-floating">
+        <textarea  class="form-control"  formControlName="tags" cols="80" rows="10" ></textarea>
+        <label class="form-text" for="tags">Tags</label>
+    </div>
+    <!-- fecha -->
+    <div class="form-control">
+        <label class="form-text" for="chooseDate">Ingrese una fecha</label>
+        <br>
+        <input type="date" formControlName="date" class="rounded">
+    </div>
+    <!-- pdf -->
+    <div class="form-control mb-3">
+        <label class="form-text" for="pdfUpload">Seleccione la revista en formato pdf</label>
+        <br>
+        <input type="file" id="magazine" formControlName="magazine" (change)="onFileChange($event)" accept=".pdf"/>
+    </div>
+    <br>
+    <button class="btn btn-primary lg" [disabled]="form.invalid">PUBLICAR</button>
+</form>
+</section>  

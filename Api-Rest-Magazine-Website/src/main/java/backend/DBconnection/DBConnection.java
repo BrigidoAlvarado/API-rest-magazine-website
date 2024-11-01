@@ -18,4 +18,8 @@ public class DBConnection {
         connection = DBConnectionSingleton.getInstance().getConnection();
         return connection;
     }
+    
+    protected void SetConnection(Connection connection){
+        this.connection = connection;
+    }
 }

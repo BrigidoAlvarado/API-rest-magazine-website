@@ -2,8 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package backend.DBconnection;
+package backend.transactions;
 
+import backend.DBconnection.DBConnection;
+import backend.DBconnection.GlobalDBConnection;
+import backend.DBconnection.TextAdDBConnection;
+import backend.DBconnection.WalletDBConnection;
 import backend.exception.ServerException;
 import backend.model.dto.Credential;
 import backend.model.dto.TextAd;

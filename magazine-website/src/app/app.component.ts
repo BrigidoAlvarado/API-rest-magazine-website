@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { RouterLink ,RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LoginComponent } from '../app/user/login/login.component';
 import { FooterComponent } from "./footer/footer.component";
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +11,7 @@ import { FooterComponent } from "./footer/footer.component";
     RouterLinkActive, 
     RouterOutlet, 
     LoginComponent, 
-    FooterComponent,
-    /*BrowserAnimationsModule*/],
+    FooterComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
    

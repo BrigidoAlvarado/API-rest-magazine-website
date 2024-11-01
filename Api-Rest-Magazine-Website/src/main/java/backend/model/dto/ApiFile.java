@@ -4,6 +4,7 @@
  */
 package backend.model.dto;
 
+import backend.exception.InvalidDataException;
 import java.io.InputStream;
 
 /**
@@ -38,6 +39,11 @@ public class ApiFile {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
-        System.out.println("el content type es: "+contentType);
+    }
+    
+    public void validate() throws InvalidDataException{
+        if (contentType == null || fileName == null || this.binaryFile == null) {
+            throw  new InvalidDataException("Datos del archivo incompletos");
+        }
     }
 }
