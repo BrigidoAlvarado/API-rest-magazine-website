@@ -10,12 +10,13 @@ import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Ad;
 import backend.model.dto.Credential;
+import backend.model.dto.LockAd;
 
 /**
  *
  * @author brigidoalvarado
  */
-public class AdStore {
+public class Store {
     
     private final GlobalDBConnection globalDBConnection = new GlobalDBConnection();
     private final WalletDBConnection walletDBConnection = new WalletDBConnection();
@@ -23,6 +24,11 @@ public class AdStore {
     public double calculateCost(Ad ad)throws ServerException{
         double price = globalDBConnection.getCost(ad.getKindAd());
         return price * ad.getAdTime().getDay();
+    }
+    
+    public double calculateCost(LockAd lockAd)throws ServerException{
+        double price = globalDBConnection.getCost(lockAd.getKind());
+        return price * lockAd.getDays();
     }
     
     public double calculateChange(Credential credential, double cost) throws ServerException, InvalidDataException{

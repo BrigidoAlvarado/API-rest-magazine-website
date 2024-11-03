@@ -13,5 +13,6 @@ public enum GlobalCost {
         textAd,
         textImageAd,
         videoAd,
-        bank;
+        bank,
+        lockAd;
 }

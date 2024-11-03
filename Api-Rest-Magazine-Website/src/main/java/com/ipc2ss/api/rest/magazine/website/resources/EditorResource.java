@@ -10,7 +10,9 @@ import backend.controllers.MagazineNumberController;
 import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
+import backend.model.dto.Amount;
 import backend.model.dto.ApiFile;
+import backend.model.dto.LockAd;
 import backend.model.dto.Magazine;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -34,6 +36,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 public class EditorResource {
 
     private final AuthTokenHandler auth = new AuthTokenHandler();
+    private final EditorController controller = new EditorController();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -50,6 +53,29 @@ public class EditorResource {
         } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @POST
+    @Path("lockAd")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buyLockAd(
+            @HeaderParam("Authorization") String authorization,
+            LockAd lockAd) {
+        try {
+            auth.authToken(authorization);
+            Amount amount = controller.buyLockAd(auth.getCredential(), lockAd);
+            return Response.ok(amount).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
     }
 

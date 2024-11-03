@@ -36,7 +36,6 @@ public class TextAdResources {
             @HeaderParam("Authorization") String authorization,
             @PathParam("id") int id
     ) {
-        System.out.println("en obtener anuncio de texto por id");
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         TextAdController textAdController = new TextAdController();
         try {
@@ -61,7 +60,6 @@ public class TextAdResources {
     public Response buy(
             @HeaderParam("Authorization") String authorization,
             TextAd textAd) {
-        System.out.println("en comprar auncio");
         AuthTokenHandler tokenHandler = new AuthTokenHandler();
         BuyAdController buyAdController = new BuyAdController();
         Amount amount = new Amount();

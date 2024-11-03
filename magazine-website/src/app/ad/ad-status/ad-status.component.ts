@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AdService } from '../../../services/ad-service';
 import { Ad } from '../../../entities/ad/ad';
 import { AuthService } from '../../../services/auth';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ad-status',
@@ -47,7 +47,5 @@ export class AdStatusComponent implements OnInit{
     }
   }
 
-  submit():void {
-    console.log('soy invisible xd');
-  }
+  submit():void {  }
 }

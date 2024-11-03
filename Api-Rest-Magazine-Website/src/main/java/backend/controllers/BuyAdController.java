@@ -4,7 +4,7 @@
  */
 package backend.controllers;
 
-import backend.model.AdStore;
+import backend.model.Store;
 import backend.transactions.TransactionBuyAd;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
@@ -18,7 +18,7 @@ import backend.model.dto.TextAd;
 public class BuyAdController {
     
     private final TransactionBuyAd transactionBuyAd = new TransactionBuyAd();
-    private final AdStore adStore = new  AdStore();
+    private final Store adStore = new  Store();
     
     public double buyTextAd(TextAd ad, Credential credential)throws ServerException, InvalidDataException{
         ad.validate();
