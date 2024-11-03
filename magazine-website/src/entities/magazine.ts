@@ -10,6 +10,7 @@ export interface Magazine {
     description: string,
     editor: string,
     tags:string,
+    tagsList: string []
     date: string,
     file: File
 }

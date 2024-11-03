@@ -1,0 +1,26 @@
+<div class="card" >
+    <div class="card-body">
+        <h5 class="card-title">Revistas Suscritas</h5>
+        @if (magazineList.length > 0) {
+            <ul class="list-group">
+                @for (magazine of magazineList; track $index) {
+                    <li class="list-group-item">
+                        <ul class="list-inline d-flex justify-content-between align-items-center">
+                            <li class="list-inline-item">
+                                <label class="text-primary">{{magazine.id}}) {{magazine.tittle}}</label>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn btn-outline-secondary" routerLink="/magazine/{{magazine.id}}" role="button">
+                                    Ver
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        }
+        @else {
+            <h6 class="card-subtitle mb-2 text-body-secondary">No hay revistas disponibles</h6>
+        }
+    </div>
+</div>

@@ -1,6 +1,7 @@
 
 export interface Profile{
     userName: string,
+    userType: string,
     tastes: string,
     topicOfInterest: string,
     hobbies: string,

@@ -6,6 +6,7 @@ package backend.controllers;
 
 import backend.DBconnection.ProfileDBConnection;
 import backend.exception.ServerException;
+import backend.model.UserType;
 import backend.model.dto.ApiFile;
 import backend.model.dto.Credential;
 import backend.model.dto.Profile;
@@ -19,8 +20,8 @@ public class ProfileController {
     private final ProfileDBConnection profileDBConnection = new ProfileDBConnection();
 
     //creo que deberia de tener un crud para el perfll aca
-    public Profile getProfile(Credential credential) throws ServerException {
-        return profileDBConnection.getProfile(credential);
+    public Profile getProfile(String userName, UserType userType) throws ServerException {
+        return profileDBConnection.getProfile(userName, userType);
     }
 
     public void editProfile(Credential credential, Profile profile, ApiFile photo) throws ServerException {

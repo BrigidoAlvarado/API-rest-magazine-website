@@ -9,14 +9,15 @@ import backend.controllers.ProfileController;
 import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
+import backend.model.UserType;
 import backend.model.dto.ApiFile;
-import backend.model.dto.Credential;
 import backend.model.dto.Profile;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -32,15 +33,18 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 public class ProfileResource {
 
     @GET
+    @Path("{userName}/{userType}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProfile(
-            @HeaderParam("Authorization") String authorization) {
+            @HeaderParam("Authorization") String authorization,
+            @PathParam("userName") String userName,
+            @PathParam("userType") String userType) {
+        System.out.println("en get profile");
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         ProfileController profileController = new ProfileController();
         try {
             authTokenHandler.authToken(authorization);
-            Credential credential = authTokenHandler.getCredential();
-            Profile profile = profileController.getProfile(credential);
+            Profile profile = profileController.getProfile(userName, UserType.valueOf(userType));
             return Response.ok(profile).build();
         } catch (ServerException e) {
             e.printStackTrace();

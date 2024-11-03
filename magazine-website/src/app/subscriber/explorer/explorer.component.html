@@ -1,0 +1,37 @@
+<app-subscriber-header></app-subscriber-header>
+<main class="container" style="margin: 1%;">
+
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <form class="d-flex" role="search" [formGroup]="form" (ngSubmit)="submit()">
+                    <input  
+                        formControlName="category" 
+                        class="form-control me-2" 
+                        type="search" 
+                        placeholder="Categoria" 
+                        aria-label="Search"
+                        >
+                    <input
+                        formControlName="tag" 
+                        class="form-control me-2" 
+                        type="search" 
+                        placeholder="Etiqueta" 
+                        aria-label="Search"
+                        >
+                    <button class="btn btn-outline-primary">Buscar</button>
+                </form>
+            </div>
+        </nav>
+
+    <div class="card">
+        <div class="card-body">
+            <ul class="list-group">
+                @for (magazine of magazineList; track $index) {
+                    <li class="list-group-item">
+                        <app-magazine-explorer-view [magazine]="magazine"></app-magazine-explorer-view>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</main>

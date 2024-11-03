@@ -1,14 +1,17 @@
-    <app-admin-header></app-admin-header>
+    @if (magazineList === null || magazineList.length === 0) {
+        <app-admin-header></app-admin-header>
     <main>
         <section>
             <div class="container">
-                @if (magazineList === null || magazineList.length === 0) {
-                    <div><label>No hay revistas nuevas</label></div>
-                }
-                @else {
-                    <app-new-magazines-list [magazineList]="magazineList"></app-new-magazines-list>
-                }
+                <div><label>No hay revistas nuevas</label></div>
             </div>
         </section>
     </main>
-
+    }
+    @else {
+        <main class="container">
+            <section class="section">
+                <app-new-magazines-list [magazineList]="magazineList"></app-new-magazines-list>
+            </section>
+        </main>
+    }

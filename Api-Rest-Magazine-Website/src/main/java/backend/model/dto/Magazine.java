@@ -7,6 +7,7 @@ package backend.model.dto;
 import backend.exception.InvalidDataException;
 import backend.model.Tag;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -26,7 +27,20 @@ public class Magazine {
     private String description;
     private String editor;
     private String[] tags;
+    private List<String> tagsList;
     private ApiFile file;
+
+    public List<String> getTagsList() {
+        return tagsList;
+    }
+
+    public void setTagsList(List<String> tagsList) {
+        System.out.println("seteando");
+        this.tagsList = tagsList;
+        for (String string : tagsList) {
+            System.out.println(string);
+        }
+    }
 
     public ApiFile getFile() {
         return file;
@@ -133,6 +147,14 @@ public class Magazine {
         this.tags = generateTags(tags);
     }
     
+    public void setTags(List<String> tags){
+        String[] tagss = new String[tags.size()];
+        for (int i = 0; i < tagss.length; i++) {
+            tagss[i] = tags.get(i);
+        }
+        this.tags = tagss;
+    }
+    
     public void validate() throws InvalidDataException{
         if (
                 title == null || 
@@ -150,6 +172,12 @@ public class Magazine {
     public void validateCost() throws InvalidDataException{
         if(dailyCost < 0){
             throw new InvalidDataException("Costo diario asignado invalido");
+        }
+    }
+    
+    public void validateSubscription()throws InvalidDataException{
+        if(date == null || id < 0 ){
+            throw new InvalidDataException("Datos para una suscripcion invalidos");
         }
     }
     

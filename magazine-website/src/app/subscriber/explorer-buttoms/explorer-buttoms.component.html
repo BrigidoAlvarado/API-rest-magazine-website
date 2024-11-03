@@ -1,0 +1,5 @@
+<p class="d-inline-flex gap-1">
+    <app-preview-magazine [id]="magazine.id"></app-preview-magazine>
+    <a class="btn btn-success" routerLink="/autor-profile/{{magazine.editor}}" role="button">Autor</a>
+    <app-subscribe [magazine]="magazine"></app-subscribe>
+</p>

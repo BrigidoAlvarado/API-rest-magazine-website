@@ -1,7 +1,11 @@
 <main>
     <section class="container">
         <div>
-            <app-profile-view [profile]="profile"></app-profile-view> 
+            <app-profile-view
+             [profile]="profile" 
+             [profileName]="profile.userName" 
+             [profileType]="profile.userType">
+            </app-profile-view> 
         </div>
     </section>
 </main>

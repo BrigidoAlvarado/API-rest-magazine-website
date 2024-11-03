@@ -1,0 +1,6 @@
+@if (isLiked) {
+    <button class="btn btn-danger" [disabled]="!commentStatus">Me gusta</button>
+}
+@else {
+    <button class="btn btn-outline-danger" [disabled]="!commentStatus" (click)="submit()">Dar Me Gusta</button>
+}

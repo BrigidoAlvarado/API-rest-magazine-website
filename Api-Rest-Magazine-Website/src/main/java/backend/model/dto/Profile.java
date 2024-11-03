@@ -4,6 +4,8 @@
  */
 package backend.model.dto;
 
+import backend.model.UserType;
+
 /**
  *
  * @author brigidoalvarado
@@ -11,11 +13,22 @@ package backend.model.dto;
 public class Profile {
     
     private String userName;
+    private UserType userType;
     private String tastes;
     private String topicOfInterest;
     private String hobbies;
     private String Description;
 
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    
+    
     public String getUserName() {
         return userName;
     }

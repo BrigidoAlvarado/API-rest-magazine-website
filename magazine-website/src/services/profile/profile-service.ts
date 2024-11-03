@@ -29,8 +29,8 @@ export class ProfileService{
         return this.httpClient.post<any>(this.restConstants.API_URL+'profile',formData,{ headers });
     }
 
-    public getProfile(): Observable<Profile>{
+    public getProfile(userName: string| null, userType:string | null): Observable<Profile>{
         const headers = this.authServive.getHeader();
-        return this.httpClient.get<Profile>(this.restConstants.API_URL+'profile',{ headers });
+        return this.httpClient.get<Profile>(`${this.restConstants.API_URL}profile/${userName}/${userType}`, { headers });
     }           
 }

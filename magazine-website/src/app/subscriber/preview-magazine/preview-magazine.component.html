@@ -1,0 +1,48 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" [attr.data-bs-target]="'#preview-modal-' + id.toString()">
+    Previsualizar
+</button>      
+  
+  <!-- Modal -->
+  <div class="modal fade" [id]="'preview-modal-' + id.toString()" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Suscripcion</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <h2 class="fs-5">Autor</h2>
+          <p>{{magazine.editor}}</p>
+          <hr>
+          <h2 class="fs-5">Me gusta: {{magazine.likes}}%></h2>
+          <hr>
+          <h2 class="fs-5">Descripcion</h2>
+          <p>{{magazine.description}}</p>
+          <hr>
+          <h2 class="fs-5">Categoria</h2>
+          <p>{{magazine.category}}</p>
+          <hr>
+          <h2 class="fs-5">Etiquetas</h2>
+          <p>
+          @if (magazine.tagsList.length > 0) {
+              @for (tag of magazine.tagsList; track $index) {
+                <span class="badge bg-secondary">{{tag}}</span>
+              }
+          }
+          @else {
+           <span>No hay etiquetas disponibles</span>
+          }
+          </p>
+          </div>
+                            
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!--
+  <p class="d-inline-flex gap-1"></p>
+  -->

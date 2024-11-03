@@ -9,6 +9,7 @@ import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Magazine;
 import backend.transactions.MagazineTransaction;
+import java.util.List;
 
 /**
  *
@@ -27,5 +28,9 @@ public class MagazineController {
     public void setCost(Magazine magazine) throws ServerException, InvalidDataException {
         magazine.validateCost();
         magazineDBConnection.setCost(magazine.getId(), magazine.getDailyCost());
+    }
+    
+    public Magazine getMagazineById(int id) throws ServerException{
+       return magazineDBConnection.getById(id);
     }
 }

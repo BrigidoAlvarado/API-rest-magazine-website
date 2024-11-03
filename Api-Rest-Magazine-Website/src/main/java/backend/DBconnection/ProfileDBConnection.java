@@ -5,6 +5,7 @@
 package backend.DBconnection;
 
 import backend.exception.ServerException;
+import backend.model.UserType;
 import backend.model.dto.ApiFile;
 import backend.model.dto.Credential;
 import backend.model.dto.Profile;
@@ -18,13 +19,13 @@ import java.sql.SQLException;
  */
 public class ProfileDBConnection extends DBConnection{
     
-    public Profile getProfile(Credential credential) throws ServerException{
+    public Profile getProfile( String userName, UserType userType) throws ServerException{
         Profile profile = null;
-        String sqlSelect = "select * from " + credential.getUserType().name() + " where user_name = ? ";
+        String sqlSelect = "select * from " + userType.name() + " where user_name = ? ";
         try {
             getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect);
-            preparedStatement.setString(1, credential.getUserName());
+            preparedStatement.setString(1, userName);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 profile = new Profile();
@@ -33,15 +34,16 @@ public class ProfileDBConnection extends DBConnection{
                 profile.setTopicOfInterest(resultSet.getString("topic_of_interest"));
                 profile.setDescription(resultSet.getString("description"));
                 profile.setHobbies(resultSet.getString("hobbies"));
+                profile.setUserType(userType);
             }
             if (profile == null) {
-                throw new ServerException("El perfil del usuario: "+credential.getUserName()+" no existe en la base de datos");
+                throw new ServerException("El perfil del usuario: "+userName+" no existe en la base de datos");
             } else {
                 return profile;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new ServerException("Error al cargar el perfil del usuario: "+credential.getUserName());
+            throw new ServerException("Error al cargar el perfil del usuario: "+userName);
         }
     }
     

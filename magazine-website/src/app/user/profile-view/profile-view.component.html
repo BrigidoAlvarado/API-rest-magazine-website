@@ -1,11 +1,13 @@
-
     <hr>
     <h1>Perfil de: {{profile.userName}}</h1>
     <hr>
-    <!--<div class="ratio ratio-1x1" style="width: 200px;">
-        <img src="${pageContext.servletContext.contextPath}/displayPhotoControllerSv?userName=${profile.userName}&userType=${profile.type.toString()}" alt="Foto de perfil" class="img-fluid rounded-circle">
-        </div>
-    -->
+    <div class="ratio ratio-1x1" style="width: 200px;">
+        <img
+            *ngIf="profileImageUrl" 
+            [src]="profileImageUrl" 
+            alt="Foto de perfil" 
+            class="img-fluid rounded-circle">
+    </div>
     <hr>
     <h2>Gustos</h2>
     <p>{{profile.tastes}}</p>

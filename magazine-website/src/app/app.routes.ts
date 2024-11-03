@@ -19,6 +19,9 @@ import { AdvertiserBusinessViewComponent } from '../app/advertiser/advertiser-bu
 import { EditorBusinessViewComponent } from './editor/editor-business-view/editor-business-view.component';
 import { EditAdViewComponent } from './ad/edit-ad-view/edit-ad-view.component';
 import { PostViewComponent } from './editor/post-view/post-view.component';
+import { ExplorerComponent } from './subscriber/explorer/explorer.component';
+import { MagazineViewComponent } from './subscriber/magazine-view/magazine-view.component';
+import { AutorProfileComponent } from './subscriber/autor-profile/autor-profile.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -117,6 +120,18 @@ export const routes: Routes = [
         path: 'subscriber-edit-profile',
         title: 'Editar Perfil',
         component: SubscriberEditProfileComponent
+    },{
+        path: 'subscriber-explorer',
+        title: 'Buscar Revistas',
+        component: ExplorerComponent
+    },{
+        path: 'magazine/:id',
+        title: 'Revista',
+        component: MagazineViewComponent
+    },{
+        path: 'autor-profile/:userName',
+        title: 'Perfil de Autor',
+        component: AutorProfileComponent
     },
     //EXTRAS
     {

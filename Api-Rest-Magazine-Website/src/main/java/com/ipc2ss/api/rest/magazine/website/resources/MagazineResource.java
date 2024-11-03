@@ -5,6 +5,7 @@
 package com.ipc2ss.api.rest.magazine.website.resources;
 
 import backend.AuthTokenHandler;
+import backend.DBconnection.MagazineDBConnection;
 import backend.controllers.MagazineController;
 import backend.controllers.MagazinesController;
 import backend.exception.AccessException;
@@ -17,6 +18,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -35,7 +37,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 public class MagazineResource {
 
     private final AuthTokenHandler auth = new AuthTokenHandler();
-    
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response postMagazine(
@@ -111,11 +113,10 @@ public class MagazineResource {
             Magazine magazine) {
         MagazineController magazineController = new MagazineController();
         try {
-            System.out.println("en set magazine cost");
             auth.authToken(authorization);
             magazineController.setCost(magazine);
             return Response.status(Response.Status.ACCEPTED).build();
-        }catch (ServerException e) {
+        } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (AccessException e) {
@@ -124,6 +125,26 @@ public class MagazineResource {
         } catch (InvalidDataException e) {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMagazineById(
+            @HeaderParam("Authorization") String authorization,
+            @PathParam("id") int id) {
+        MagazineController controller = new MagazineController();
+        try {
+            auth.authToken(authorization);
+            Magazine magazine = controller.getMagazineById(id);
+            return Response.ok(magazine).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 }

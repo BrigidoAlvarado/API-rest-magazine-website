@@ -28,6 +28,11 @@ export class MagazineService {
         return this.http.post<void>(this.constants.API_URL+'magazine', formData, { headers });
     }
 
+    getMagazineById(id: number): Observable<Magazine> {
+        const headers = this.auth.getHeader();
+        return this.http.get<Magazine>(`${this.constants.API_URL}magazine/id/${id}`,{ headers });
+    }
+
     getMagazineList(): Observable<Magazine []> {
         const headers = this.auth.getHeader();
         return this.http.get<Magazine[]>(this.constants.API_URL+'magazine', { headers });
