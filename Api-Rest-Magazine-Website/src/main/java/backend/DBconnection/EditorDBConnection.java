@@ -24,7 +24,7 @@ public class EditorDBConnection extends DBConnection {
     public List<Magazine> getPublisedMagazineList(String userName) throws ServerException{
         List<Magazine> list = new ArrayList<>();
         String sql = 
-                "SELECT id, tittle FROM magazine WHERE ( editor_user_name = ? )";
+                "SELECT id, tittle, comment_status, subscription_status FROM magazine WHERE ( editor_user_name = ? )";
         try {
             getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -36,6 +36,8 @@ public class EditorDBConnection extends DBConnection {
                 magazine.setId(rs.getInt("id"));
                 magazine.setTittle(rs.getString("tittle"));
                 magazine.setEditor(userName);
+                magazine.setCommentStatus(rs.getBoolean("comment_status"));
+                magazine.setSubscriptionStatus(rs.getBoolean("subscription_status"));
                 list.add(magazine);
             }
             return list;
@@ -53,5 +55,33 @@ public class EditorDBConnection extends DBConnection {
         ps.setString(3, lockAd.getDate().toString());
         ps.setString(4, LocalDate.now().toString());
         ps.executeUpdate();
+    }
+    
+    public void updateCommentAndLikesStatus(Magazine magazine) throws ServerException{
+        String sql = " UPDATE magazine SET comment_status = ?  WHERE ( id = ? )";
+        try {
+            getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setBoolean(1, magazine.isCommentStatus());
+            ps.setInt(2, magazine.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServerException("Error al cambiar el estado de comentarios y me gusta de la revista con id: "+magazine.getId());
+        }
+    }
+    
+    public void updateSubscriptionStatus(Magazine magazine) throws ServerException{
+        String sql = " UPDATE magazine SET subscription_status = ?  WHERE ( id = ? )";
+        try {
+            getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setBoolean(1, magazine.isSubscriptionStatus());
+            ps.setInt(2, magazine.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServerException("Error al cambiar el estado las suscripciones de la revista con id: "+magazine.getId());
+        }
     }
 }

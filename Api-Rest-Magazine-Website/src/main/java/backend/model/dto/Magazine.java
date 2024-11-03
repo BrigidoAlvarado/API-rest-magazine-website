@@ -35,11 +35,8 @@ public class Magazine {
     }
 
     public void setTagsList(List<String> tagsList) {
-        System.out.println("seteando");
         this.tagsList = tagsList;
-        for (String string : tagsList) {
-            System.out.println(string);
-        }
+        
     }
 
     public ApiFile getFile() {
@@ -183,6 +180,9 @@ public class Magazine {
     
     private String[] generateTags(String tagsText){
         Tag tag = new Tag();
+        if (tagsText == null) {
+            return null;
+        }
         return tag.generateTags(tagsText);
     }
 }

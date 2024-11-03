@@ -3,11 +3,12 @@ import { Magazine } from '../../../entities/magazine';
 import { EditorService } from '../../../services/editor-service';
 import { PublishedMagazineViewComponent } from "../published-magazine-view/published-magazine-view.component";
 import { CommentLikeStatusComponent } from "../comment-like-status/comment-like-status.component";
+import { SubscriptionStatusComponent } from "../subscription-status/subscription-status.component";
 
 @Component({
   selector: 'app-published-magazines-list',
   standalone: true,
-  imports: [PublishedMagazineViewComponent, CommentLikeStatusComponent],
+  imports: [PublishedMagazineViewComponent, CommentLikeStatusComponent, SubscriptionStatusComponent],
   templateUrl: './published-magazines-list.component.html',
   styleUrl: './published-magazines-list.component.css'
 })

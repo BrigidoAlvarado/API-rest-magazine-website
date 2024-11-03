@@ -107,4 +107,49 @@ public class EditorResource {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
     }
+
+    @POST
+    @Path("status")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateCommentLikeStatus(
+            @HeaderParam("Authorization") String authorization,
+            Magazine magazine) {
+        try {
+            System.out.println("en status");
+            auth.authToken(authorization);
+            controller.lockCommentsAndLikes(magazine);
+            return Response.status(Response.Status.ACCEPTED).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+    }
+
+    @POST
+    @Path("suscription-status")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateSubscriptionStatus(
+            @HeaderParam("Authorization") String authorization,
+            Magazine magazine) {
+        try {
+            auth.authToken(authorization);
+            controller.updateSubscriptionStatus(magazine);
+            return Response.status(Response.Status.ACCEPTED).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+    }
 }

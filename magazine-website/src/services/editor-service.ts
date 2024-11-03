@@ -19,6 +19,11 @@ export class EditorService {
         this.URL = `${this.constants.API_URL}editor`;
     }
 
+    updateSubscriptionStatus(magazine: Magazine): Observable<void> {
+        const headers = this.auth.getHeader();
+        return this.http.post<void>(`${this.URL}/suscription-status`, magazine, { headers });
+    }
+
     updateCommentLikeStatus(magazine: Magazine): Observable<void> {
         const headers = this.auth.getHeader();
         return this.http.post<void>(`${this.URL}/status`, magazine, { headers });

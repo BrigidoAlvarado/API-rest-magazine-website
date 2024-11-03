@@ -39,6 +39,7 @@ export class AdStatusComponent implements OnInit{
           this.form.patchValue({ activo: this.ad.status })
           console.log(error);
           this.auth.validate(error);
+          window.location.reload();
         }
       });
       //enviar request

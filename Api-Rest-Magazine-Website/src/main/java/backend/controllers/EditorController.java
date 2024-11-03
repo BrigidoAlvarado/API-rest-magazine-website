@@ -5,7 +5,6 @@
 package backend.controllers;
 
 import backend.DBconnection.EditorDBConnection;
-import backend.DBconnection.WalletDBConnection;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.Store;
@@ -23,12 +22,12 @@ import java.util.List;
 public class EditorController {
 
     private final EditorDBConnection editorDBConnection = new EditorDBConnection();
-    
-    public List<Magazine> getPublishedMagazineList(Credential credential) throws ServerException{
+
+    public List<Magazine> getPublishedMagazineList(Credential credential) throws ServerException {
         return editorDBConnection.getPublisedMagazineList(credential.getUserName());
     }
-    
-    public Amount buyLockAd(Credential credential, LockAd lockAd) throws ServerException, InvalidDataException{
+
+    public Amount buyLockAd(Credential credential, LockAd lockAd) throws ServerException, InvalidDataException {
         Amount amount = new Amount();
         LockAdTransaction transaction = new LockAdTransaction();
         Store store = new Store();
@@ -38,5 +37,29 @@ public class EditorController {
         transaction.buyLockAdTransaction(credential, lockAd, change, cost);
         amount.setAmount(change);
         return amount;
+    }
+
+    public void lockCommentsAndLikes(Magazine magazine) throws ServerException, InvalidDataException {
+        if (magazine.getId() > 0) {
+            editorDBConnection.updateCommentAndLikesStatus(magazine);
+        } else {
+            throw new InvalidDataException("Datos de la revista invalidos ");
+        }
+    }
+    
+    public void updateCommentsAndLikesStatus(Magazine magazine)throws ServerException, InvalidDataException {
+        if (magazine.getId() > 0) {
+            editorDBConnection.updateCommentAndLikesStatus(magazine);
+        } else {
+            throw new InvalidDataException("Datos de la revista invalidos ");
+        }
+    }
+    
+    public void updateSubscriptionStatus(Magazine magazine)throws ServerException, InvalidDataException {
+        if (magazine.getId() > 0) {
+            editorDBConnection.updateSubscriptionStatus(magazine);
+        } else {
+            throw new InvalidDataException("Datos de la revista invalidos ");
+        }
     }
 }
