@@ -10,6 +10,7 @@ import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Credential;
 import backend.model.dto.TextAd;
+import backend.model.dto.VideoAd;
 
 /**
  *
@@ -23,6 +24,16 @@ public class BuyAdController {
     public double buyTextAd(TextAd ad, Credential credential)throws ServerException, InvalidDataException{
         ad.validate();
         double cost = adStore.calculateCost(ad);
+        ad.setCost(cost);
+        double change = adStore.calculateChange(credential, cost);
+        transactionBuyAd.buyAd(ad, credential,change,cost);
+        return change;
+    }
+    
+    public double buyAd(VideoAd ad, Credential credential)throws ServerException, InvalidDataException{
+        ad.validate();
+        double cost = adStore.calculateCost(ad);
+        ad.setCost(cost);
         double change = adStore.calculateChange(credential, cost);
         transactionBuyAd.buyAd(ad, credential,change,cost);
         return change;

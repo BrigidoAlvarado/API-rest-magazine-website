@@ -13,7 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 /**
  *
@@ -23,15 +22,16 @@ public class TextAdDBConnection extends DBConnection {
    
     public void saveTextAd(TextAd ad, Credential credential, Connection connection) throws SQLException{
         String sql = 
-                "INSERT INTO ad ( kind, time, state, anunciante_name, date, text) VALUES ( ?, ?, ?, ?, ?, ?)";
+                "INSERT INTO ad ( kind, time, state, anunciante_name, date, text, cost ) VALUES ( ?, ?, ?, ?, ?, ?, ?) ";
   
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, Global.textAd.name());
             preparedStatement.setInt(2, ad.getTime().getDay());
             preparedStatement.setBoolean(3, true);
             preparedStatement.setString(4, credential.getUserName());
-            preparedStatement.setString(5, LocalDate.now().toString());
+            preparedStatement.setString(5, ad.getDate().toString());
             preparedStatement.setString(6, ad.getText());
+            preparedStatement.setDouble(7, ad.getCost());
             preparedStatement.executeUpdate();
     }
     

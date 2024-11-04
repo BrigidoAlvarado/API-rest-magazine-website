@@ -57,7 +57,6 @@ public class AdResources {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAds(
      @HeaderParam("Authorization") String authorization) {
-        System.out.println("en obener todos los anuncios");
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         AdController adController = new AdController();
         try {
@@ -81,7 +80,6 @@ public class AdResources {
     public Response updateStatus(
     @HeaderParam("Authorization") String authorization,
             Ad ad){
-        System.out.println("en actualizar estado");
         AuthTokenHandler authTokenHandler  = new AuthTokenHandler();
         AdController adController = new AdController();
         try {

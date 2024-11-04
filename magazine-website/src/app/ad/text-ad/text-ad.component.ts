@@ -4,6 +4,7 @@ import { TextAd } from '../../../entities/ad/text-ad'
 import { Amount } from '../../../entities/amount';
 import { AdService } from '../../../services/ad-service';
 import { AuthService } from '../../../services/auth';
+import { TextAdService } from '../../../services/ad/text-ad-service';
 
 @Component({
   selector: 'app-text-ad',
@@ -20,7 +21,8 @@ export class TextAdComponent implements OnInit{
   constructor(
     private formBuilder: FormBuilder,
     private adService: AdService,
-    private auth: AuthService){
+    private auth: AuthService,
+    private service: TextAdService){
       this.chargeAmmount();}
   
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class TextAdComponent implements OnInit{
     if(this.form.valid){
       let textAd = this.form?.value as TextAd;
       textAd.kind = 'textAd';
-      this.adService.postTextAd(textAd).subscribe({
+      this.service.postTextAd(textAd).subscribe({
         next: (amount: Amount) => {
           alert('compra exitosa\n saldo actual: '+amount.amount);
           this.form.reset();

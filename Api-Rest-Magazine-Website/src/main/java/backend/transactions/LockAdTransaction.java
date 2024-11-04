@@ -9,7 +9,6 @@ import backend.DBconnection.EditorDBConnection;
 import backend.DBconnection.WalletDBConnection;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
-import backend.model.dto.Amount;
 import backend.model.dto.Credential;
 import backend.model.dto.LockAd;
 import java.sql.SQLException;

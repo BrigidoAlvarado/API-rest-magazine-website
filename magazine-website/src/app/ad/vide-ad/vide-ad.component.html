@@ -1,20 +1,22 @@
-<div class="d-grid gap-2 mt-3 shadow">
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseText" aria-expanded="false" aria-controls="collapseExample">
-        Comprar anuncio de Texto
-      </button>
+<div class="d-grid gap-2 mt-2">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVideoText" aria-expanded="false" aria-controls="collapseExample">
+        Comprar Anuncio de Texto y Video
+    </button>
 </div>
 
-    <div class="collapse" id="collapseText">
+  <div class="collapse" id="collapseVideoText">
     <div class="card card-body">
 
         <div class="card shadow" style="margin: 2%;">
             <div class="card-header">
-                <h5 class="card-title">Anuncio de Texto</h5>
+                <h5 class="card-title">Anuncio de Texto y Video</h5>
                 <h6 class="card-title">Q{{amount.amount}}</h6>
             </div>
             <div class="card-body">
+                
                 <form class="mb-3" [formGroup]="form" (ngSubmit)="submit()">
-                    <div class="form-control">
+                    
+                    <div class="mt-2">
                         <label>Tiempo</label>
                         <select formControlName="time" class="form-control">
                             <option value="one_day" >Un dia</option>
@@ -24,21 +26,25 @@
                         </select>
                     </div>
         
-                    <div class="form-control">
+                    <div class="mt-2">
                         <label>Fecha</label>
                         <input type="date" formControlName="date" class="form-control">
                     </div>
         
-                    <div class="form-control">
-                        <label>Texto del Anuncio</label>
+                    <div class="mt-2">
+                        <label>Texto del anuncio</label>
                         <textarea formControlName="text" class="form-control"></textarea>
                     </div>
-                    
+        
+                    <div class="mt-2">
+                        <label>Link del video</label>
+                        <input type="text" formControlName="link" class="form-control">
+                    </div>
+        
                         <button style="margin: 1%;" [disabled]="form.invalid" class="btn btn-primary">Comprar</button>
                 </form>
             </div>
         </div>
-        
 
     </div>
   </div>
