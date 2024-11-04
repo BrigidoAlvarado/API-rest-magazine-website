@@ -6,11 +6,15 @@ package backend.model;
 
 import backend.DBconnection.GlobalDBConnection;
 import backend.DBconnection.WalletDBConnection;
+import backend.enums.Global;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Ad;
 import backend.model.dto.Credential;
+import backend.model.dto.EarningsReport;
 import backend.model.dto.LockAd;
+import backend.model.dto.Magazine;
+import java.util.List;
 
 /**
  *
@@ -39,4 +43,5 @@ public class Store {
         }
         return money;
     }
+    
 }

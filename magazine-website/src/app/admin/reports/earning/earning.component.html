@@ -1,0 +1,97 @@
+<app-admin-header></app-admin-header>
+<main class="container">
+    <div class="alert alert-secondary">
+        <h3 class="text-center text-primary">Reporte de Ganancias</h3>
+    </div>
+    
+    <section class="form-control" style="margin: 1%;">
+        <div class="container my-4">
+            <h2 class="text-center">Ingresos por Anuncios</h2>
+            <table class="table table-striped table-hover table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Anunciante</th>
+                        <th scope="col">Costo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (ad of earningReport.adList; track $index) {
+                        <tr>
+                            <th scope="row">{{ad.id}}</th>
+                            <td>{{ad.kindAd}}</td>
+                            <td>{{ad.advertiser}}</td>
+                            <td>{{ad.cost}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="form-control" style="margin: 1%;">
+        <div class="container my-4">
+            <h2 class="text-center">Ingresos por Bloqueo de Anuncios</h2>
+            <table class="table table-striped table-hover table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Editor</th>
+                        <th scope="col">Costo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (lock of earningReport.lockAdList; track $index) {
+                        <tr>
+                            <th scope="row">{{lock.id}}</th>
+                            <td>{{lock.editor}}</td>
+                            <td>{{lock.cost}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+    <section class="form-control" style="margin: 1%;">
+        <div class="container my-4">
+            <h2 class="text-center">Egresos por Costo Diario de Revistas</h2>
+            <table class="table table-striped table-hover table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Editor</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Costo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (magazine of earningReport.magazineList; track $index) {
+                        <tr>
+                            <th scope="row">{{magazine.id}}</th>
+                            <td>{{magazine.editor}}</td>
+                            <td>{{magazine.tittle}}</td>
+                            <td>{{magazine.dailyCost}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section style="margin: 1%;" class="form-control">
+        <div>
+            <h6 class="text"> Ingresos Totales: Q.{{earningReport.totalIncome}}</h6>
+        </div>
+        <div>
+            <h6 class="text"> Egresos Totales: Q.{{earningReport.totalExpenses}}</h6>
+        </div>
+        <div>
+            <h6 class="text"> Ganancias Totales: Q.{{earningReport.totalProfits}}</h6>
+        </div>
+    </section>
+
+
+</main>

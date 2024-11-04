@@ -7,6 +7,7 @@ package backend.model.dto;
 import backend.enums.AdTime;
 import backend.enums.Global;
 import backend.exception.InvalidDataException;
+import java.time.LocalDate;
 
 /**
  *
@@ -17,8 +18,37 @@ public class Ad {
     
     protected int idAd;
     protected boolean status;
+    protected double cost;
     protected Global kindAd;
     protected AdTime adTime;
+    protected String advertiser;
+    protected LocalDate date;
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    
+    
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+    
+    public String getAdvertiser() {
+        return advertiser;
+    }
+
+    public void setAdvertiser(String advertiser) {
+        this.advertiser = advertiser;
+    }
 
     public boolean isStatus() {
         return status;
@@ -32,10 +62,7 @@ public class Ad {
         return status;
     };
     
-    public void setId(int id)throws InvalidDataException{
-        if (id < 0) {
-            throw  new InvalidDataException("El id es invalido");
-        }
+    public void setId(int id){
         this.idAd = id;
     }
     

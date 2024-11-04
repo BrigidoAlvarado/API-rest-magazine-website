@@ -23,6 +23,8 @@ import { ExplorerComponent } from './subscriber/explorer/explorer.component';
 import { MagazineViewComponent } from './subscriber/magazine-view/magazine-view.component';
 import { AutorProfileComponent } from './subscriber/autor-profile/autor-profile.component';
 import { AdminMagazineViewComponent } from './admin/admin-magazine-view/admin-magazine-view.component';
+import { AdminReportComponent } from './admin/reports/admin-report/admin-report.component';
+import { EarningComponent } from './admin/reports/earning/earning.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -60,6 +62,16 @@ export const routes: Routes = [
         path: 'admin-magazine',
         title: 'Revistas',
         component: AdminMagazineViewComponent
+    },
+    {
+        path: 'admin-report',
+        title: 'Reportes',
+        component: AdminReportComponent
+    },
+    {
+        path: 'admin-earning',
+        title: 'Reportes',
+        component: EarningComponent
     },
     //RUTAS DEL ANUNCIANTE
     {

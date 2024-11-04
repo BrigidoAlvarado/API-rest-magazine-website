@@ -1,0 +1,52 @@
+<div class="d-grid gap-2 mt-2 shadow">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseImage" aria-expanded="false" aria-controls="collapseExample">
+        Comprar anuncio de Texto e Imagen
+      </button>
+</div>
+
+    <div class="collapse" id="collapseImage">
+    <div class="card card-body">
+
+        <div class="card shadow" style="margin: 2%;">
+            <div class="card-header">
+                <h5 class="card-title">Anuncio de Texto e Imagen</h5>
+                <h6 class="card-title">Q{{amount.amount}}</h6>
+            </div>
+
+            <div class="card-body">
+                <form class="mb-3" [formGroup]="form" (ngSubmit)="submit()">
+                    
+                    <div class="">
+                        <label>Tiempo</label>
+                        <select formControlName="time" class="form-control">
+                            <option value="one_day" >Un dia</option>
+                            <option value="three_days" >Tres dias</option>
+                            <option value="one_week" >Una semana</option>
+                            <option value="two_week" >Dos semanas</option>
+                        </select>
+                    </div>
+        
+                    <div class="">
+                        <label>Fecha</label>
+                        <input type="date" formControlName="date" class="form-control">
+                    </div>
+        
+                    <div class="">
+                        <label>Texto del Anuncio</label>
+                        <textarea formControlName="text" class="form-control"></textarea>
+                    </div>
+
+                    <div class="">
+                        <label>Imagen</label>
+                        <input type="file" formControlName="image" class="form-control" (change)="onFileChange($event)" accept="image/png,image/jpeg">
+                    </div>
+                    
+                    <button style="margin: 1%;" [disabled]="form.invalid" class="btn btn-primary">Comprar</button>
+                </form>
+
+            </div>
+        </div>
+        
+
+    </div>
+  </div>

@@ -6,6 +6,7 @@ package backend.DBconnection;
 
 import backend.enums.Global;
 import backend.model.dto.Credential;
+import backend.model.dto.ImageAd;
 import backend.model.dto.VideoAd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,21 +16,21 @@ import java.sql.SQLException;
  *
  * @author brigidoalvarado
  */
-
-public class VideoAdDBConnection extends DBConnection {
-        
-    public void saveVideoAd(VideoAd ad, Credential credential, Connection connection) throws SQLException{
-        String sql = "INSERT INTO ad (kind, state, anunciante_name, date, link, text, cost, time ) VALUES ( ?, true, ?, ?, ?, ?, ?, ?)";
+public class ImageAdDBConnection extends DBConnection{
+    
+    public void saveImageAd(ImageAd ad, Credential credential, Connection connection) throws SQLException{
+        String sql = "INSERT INTO ad (kind, state, anunciante_name, date, text, cost, time, image, content_type) VALUES ( ?, true, ?, ?, ?, ?, ?, ?, ? )";
         
             SetConnection(connection);
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, Global.videoAd.name());
+            ps.setString(1, Global.textImageAd.name());
             ps.setString(2, credential.getUserName());
             ps.setString(3, ad.getDate().toString());
-            ps.setString(4, ad.getLink());
-            ps.setString(5, ad.getText());
-            ps.setDouble(6, ad.getCost());
-            ps.setInt(7, ad.getAdTime().getDay());
+            ps.setString(4, ad.getText());
+            ps.setDouble(5, ad.getCost());
+            ps.setInt(6, ad.getAdTime().getDay());
+            ps.setBlob(7, ad.getFile().getInputStream());
+            ps.setString(8, ad.getFile().getContentType());
             ps.executeUpdate();
        
     }

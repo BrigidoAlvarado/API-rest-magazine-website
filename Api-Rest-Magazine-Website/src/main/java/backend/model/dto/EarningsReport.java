@@ -36,11 +36,11 @@ public class EarningsReport {
         this.adList = adList;
     }
 
-    public List<LockAd> getLockAlList() {
+    public List<LockAd> getLockAdList() {
         return lockAdList;
     }
 
-    public void setLockAlList(List<LockAd> lockAlList) {
+    public void setLockAdList(List<LockAd> lockAlList) {
         this.lockAdList = lockAlList;
     }
 
@@ -66,5 +66,17 @@ public class EarningsReport {
 
     public void setTotalProfits(double totalProfits) {
         this.totalProfits = totalProfits;
+    }
+    
+    public void calculateTotalExpenses() {
+        double total = 0;
+        for (Magazine magazine : magazineList) {
+            total += magazine.getDailyCost();
+        }
+        totalExpenses = total;
+    }
+    
+    public void calculateTotalProfit(){
+        totalProfits = totalIncome - totalExpenses;
     }
 }

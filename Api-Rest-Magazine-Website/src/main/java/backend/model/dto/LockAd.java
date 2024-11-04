@@ -15,9 +15,39 @@ import java.time.LocalDate;
 public class LockAd {
 
     private Global kind;
+    private String editor;
     private int days;
+    private int id;
+    private double cost;
     private LocalDate date;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
+
+    
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    
     public Global getKind() {
         return kind;
     }

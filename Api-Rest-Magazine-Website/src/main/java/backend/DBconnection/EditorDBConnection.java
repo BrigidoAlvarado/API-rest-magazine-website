@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +46,13 @@ public class EditorDBConnection extends DBConnection {
     }
     
     public void saveLockAd (LockAd lockAd, String userName, Connection connection) throws SQLException {
-        String sql = "INSERT INTO lock_ad  (editor, days, date ) VALUES ( ? , ?, ? )";
+        String sql = "INSERT INTO lock_ad  (editor, days, date, cost ) VALUES ( ? , ?, ?, ? )";
         SetConnection(connection);
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, userName);
         ps.setInt(2, lockAd.getDays());
         ps.setString(3, lockAd.getDate().toString());
+        ps.setDouble(4, lockAd.getCost());
         ps.executeUpdate();
     }
     

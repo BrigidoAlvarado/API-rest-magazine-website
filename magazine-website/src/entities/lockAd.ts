@@ -1,6 +1,8 @@
 export interface LockAd {
     kind: string,
+    editor: string,
     days: number,
-    date: Date,
-    editor: string
+    id: number,
+    cost: number,
+    date: Date
 }

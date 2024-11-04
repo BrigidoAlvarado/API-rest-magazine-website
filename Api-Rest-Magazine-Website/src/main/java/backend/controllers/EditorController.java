@@ -33,6 +33,7 @@ public class EditorController {
         Store store = new Store();
         lockAd.validate();
         double cost = store.calculateCost(lockAd);
+        lockAd.setCost(cost);
         double change = store.calculateChange(credential, cost);
         transaction.buyLockAdTransaction(credential, lockAd, change, cost);
         amount.setAmount(change);
