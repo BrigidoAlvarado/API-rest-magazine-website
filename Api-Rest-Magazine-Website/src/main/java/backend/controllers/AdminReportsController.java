@@ -4,11 +4,15 @@
  */
 package backend.controllers;
 
+import backend.DBconnection.AdReportsDBConnection;
+import backend.DBconnection.AdvertiserDBConnection;
 import backend.DBconnection.BusinessDBConnection;
 import backend.DBconnection.GlobalDBConnection;
 import backend.enums.Global;
 import backend.exception.ServerException;
+import backend.model.dto.Advertiser;
 import backend.model.dto.EarningsReport;
+import java.util.List;
 
 /**
  *
@@ -28,5 +32,15 @@ public class AdminReportsController {
         report.calculateTotalExpenses();
         report.calculateTotalProfit();
         return report;
+    }
+    
+    public List<Advertiser> getAdvertiserReport(String userName) throws ServerException {
+        AdReportsDBConnection dBConnection = new AdReportsDBConnection();
+        AdvertiserDBConnection advertiserDBConnection = new AdvertiserDBConnection();
+        List<Advertiser> advertiserList = advertiserDBConnection.getAdvertiserList(userName);
+        for (Advertiser advertiser : advertiserList) {
+            advertiser.setAdList(dBConnection.getAdList(advertiser.getUserName()));
+        }
+        return advertiserList;
     }
 }

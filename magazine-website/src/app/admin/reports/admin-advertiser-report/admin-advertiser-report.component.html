@@ -1,0 +1,57 @@
+<app-admin-header></app-admin-header>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary mt-3">
+    <div class="container-fluid">
+      <a class="navbar-brand" >Reporte de Ganancias Anunciante</a>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
+        <form class="d-flex" role="search" [formGroup]="form" (ngSubmit)="submit()">
+        
+          <input 
+            class="form-control me-2" 
+            type="text" 
+            placeholder="Anunciante" 
+            aria-label="Anunciante"
+            formControlName="userName">
+
+          <button class="btn btn-outline-success" >Buscar</button>
+        </form>
+      
+    </div>
+    </div>
+  </nav>
+
+  <main> 
+    @for (advertiser of advertiserList; track $index) {
+        <section class="form-control" style="margin: 1%;">
+            <div class="container my-4">
+                <h2 class="text-center">Anuncios comprados por: {{advertiser.userName}}</h2>
+                <table class="table table-striped table-hover table-bordered text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Costo</th>
+                            <th scope="col">Dias</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (ad of advertiser.adList; track $index) {
+                            <tr>
+                                <th scope="row">{{ad.id}}</th>
+                                <td>{{ad.kindAd}}</td>
+                                <td>{{ad.date}}</td>
+                                <td>{{ad.cost}}</td>
+                                <td>{{ad.days}}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>   
+    }
+  </main>
+
+

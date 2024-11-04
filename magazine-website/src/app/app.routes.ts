@@ -26,6 +26,7 @@ import { AdminMagazineViewComponent } from './admin/admin-magazine-view/admin-ma
 import { AdminReportComponent } from './admin/reports/admin-report/admin-report.component';
 import { EarningComponent } from './admin/reports/earning/earning.component';
 import { AdminAdReportsComponent } from './admin/reports/admin-ad-reports/admin-ad-reports.component';
+import { AdminAdvertiserReportComponent } from './admin/reports/admin-advertiser-report/admin-advertiser-report.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -71,13 +72,18 @@ export const routes: Routes = [
     },
     {
         path: 'admin-earning',
-        title: 'Reportes',
+        title: 'Reportes de Ganancias',
         component: EarningComponent
     },
     {
         path: 'admin-ad-report',
-        title: 'Reportes',
+        title: 'Reporte de Anuncios',
         component: AdminAdReportsComponent
+    },
+    {
+        path: 'admin-advertiser-report',
+        title: 'Reportes de Ganancias Anunciante',
+        component: AdminAdvertiserReportComponent
     },
     //RUTAS DEL ANUNCIANTE
     {

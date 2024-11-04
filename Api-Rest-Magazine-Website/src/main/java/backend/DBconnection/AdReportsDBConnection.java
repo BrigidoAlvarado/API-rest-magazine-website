@@ -19,12 +19,10 @@ import java.util.List;
  *
  * @author brigidoalvarado
  */
-public class AdminReportsDBConnection extends DBConnection {
+public class AdReportsDBConnection extends DBConnection {
     
     public List<Ad> getAdList(Filter filter) throws ServerException{
-        
-        System.out.println("start: "+filter.getStartDate());
-        System.out.println("end: "+filter.getEndDate());
+        System.out.println("en get by filter");
         List<Ad> adList = new ArrayList<>();
         String sql = "select * from ad where ( ? is null or ? <= date) and ( ? is  null or date <= ? ) and ( ? is null or kind = ? )";
         try {
@@ -49,8 +47,36 @@ public class AdminReportsDBConnection extends DBConnection {
             }
             return adList;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new ServerException("Error al cargar los anuncios filtrados por fecha y tipo");
         }
     }
-    
+ 
+     public List<Ad> getAdList(String advertiser) throws ServerException{
+         System.out.println("en get ad by userName");
+        List<Ad> adList = new ArrayList<>();
+        String sql = "select * from ad where ( ?  is null or  ? = '' or anunciante_name = ? ) ";
+        try {
+            getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, advertiser);
+            ps.setString(2, advertiser);
+            ps.setString(3, advertiser);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Ad ad = new Ad();
+                ad.setKindAd(Global.valueOf(rs.getString("kind")));
+                ad.setId(rs.getInt("id"));
+                ad.setDate(LocalDate.parse(rs.getString("date")));
+                ad.setCost(rs.getDouble("cost"));
+                ad.setDays(rs.getInt("time"));
+                adList.add(ad);
+                System.out.println("cargando: "+ad.getId());
+            }
+            return adList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServerException("Error al cargar los anuncios filtrados por fecha y tipo");
+        }
+    }
 }
