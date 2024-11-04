@@ -5,16 +5,24 @@
 package com.ipc2ss.api.rest.magazine.website.resources;
 
 import backend.AuthTokenHandler;
+import backend.DBconnection.AdminReportsDBConnection;
 import backend.controllers.AdminReportsController;
+import backend.enums.Global;
 import backend.exception.AccessException;
 import backend.exception.ServerException;
+import backend.model.dto.Ad;
 import backend.model.dto.EarningsReport;
+import backend.model.dto.Filter;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -39,9 +47,30 @@ public class AdminReportsResource {
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (AccessException e){
+        } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
-        } 
+        }
+    }
+
+    @POST
+    @Path("ad")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAdReport(
+            @HeaderParam(AUTHORIZATION) String authorization,
+            Filter filter) {
+        AdminReportsDBConnection dBConnection = new AdminReportsDBConnection();
+        try {
+            ath.authToken(authorization);
+            List<Ad> adList = dBConnection.getAdList(filter);
+            return Response.ok(adList).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
     }
 }

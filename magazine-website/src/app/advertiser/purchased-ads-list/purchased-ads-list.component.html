@@ -1,4 +1,6 @@
-<h5 class="card=title">Anuncios Vigentes</h5>
-@for (ad of ads; track $index) {
-    <app-purchased-ad-view [ad]="ad"></app-purchased-ad-view>
-}
+<h5 class="card=title text-center">Anuncios Vigentes</h5>
+<div class="container">
+    @for (ad of ads; track $index) {
+        <app-purchased-ad-view [ad]="ad"></app-purchased-ad-view>
+    }
+</div>

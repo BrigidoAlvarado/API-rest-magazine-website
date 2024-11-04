@@ -1,10 +1,10 @@
 <app-adv-header></app-adv-header>
 <main>
-    <section class="container" style="margin: 1%;">
+    <section>
         @if (ads != null) {
             <app-purchased-ads-list [ads]="ads"></app-purchased-ads-list>
         } @else {
-            <div class="form-group">
+            <div class="alert alert-warning">
                 <p>No hay auncios para mostrar</p>
             </div>
         }

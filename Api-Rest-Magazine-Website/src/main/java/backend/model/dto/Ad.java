@@ -23,7 +23,18 @@ public class Ad {
     protected AdTime adTime;
     protected String advertiser;
     protected LocalDate date;
+    protected int days;
 
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    
+    
     public double getCost() {
         return cost;
     }

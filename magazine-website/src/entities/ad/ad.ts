@@ -5,5 +5,6 @@ export interface Ad {
     kindAd: string,
     timeAd: string,
     advertiser: string,
-    date: Date
+    date: Date,
+    days: number
 }

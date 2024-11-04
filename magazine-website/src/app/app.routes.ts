@@ -25,6 +25,7 @@ import { AutorProfileComponent } from './subscriber/autor-profile/autor-profile.
 import { AdminMagazineViewComponent } from './admin/admin-magazine-view/admin-magazine-view.component';
 import { AdminReportComponent } from './admin/reports/admin-report/admin-report.component';
 import { EarningComponent } from './admin/reports/earning/earning.component';
+import { AdminAdReportsComponent } from './admin/reports/admin-ad-reports/admin-ad-reports.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -72,6 +73,11 @@ export const routes: Routes = [
         path: 'admin-earning',
         title: 'Reportes',
         component: EarningComponent
+    },
+    {
+        path: 'admin-ad-report',
+        title: 'Reportes',
+        component: AdminAdReportsComponent
     },
     //RUTAS DEL ANUNCIANTE
     {

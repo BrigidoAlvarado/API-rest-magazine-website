@@ -1,7 +1,7 @@
 
 @if (!accepted) {
-  <div>
-    <h2 style="color: red;">El nombre de usuario o la Contraseña es invalido</h2>
+  <div class="alert alert-danger">
+    El nombre de usuario o la Contraseña es invalido
   </div>
 }
 <form [formGroup]="loginForm" (ngSubmit)="submit()">

@@ -1,0 +1,67 @@
+<app-admin-header></app-admin-header>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary mt-3">
+    <div class="container-fluid">
+      <a class="navbar-brand" >Reporte de Anuncios</a>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
+        <form class="d-flex" role="search" [formGroup]="form" (ngSubmit)="submit()">
+        
+            <select class="form-select me-2" formControlName="kind" placeholder="tipo">
+                <option value="textAd">Texto</option>
+                <option value="textImageAd">Texto e Imagen</option>
+                <option value="videoAd">Texto y Video</option>
+                <option value=''>Todo</option>
+            </select>
+          <input 
+            class="form-control me-2" 
+            type="date" 
+            placeholder="inicio" 
+            aria-label="inicio"
+            formControlName="startDate"
+            >
+          <input 
+            class="form-control me-2" 
+            type="date" 
+            placeholder="final" 
+            aria-label="final"
+            formControlName="endDate">
+          <button class="btn btn-outline-success" >Buscar</button>
+        </form>
+      
+    </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="form-control" style="margin: 1%;">
+        <div class="container my-4">
+            <h2 class="text-center">Anuncios</h2>
+            <table class="table table-striped table-hover table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Anunciante</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Costo</th>
+                        <th scope="col">Dias</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (ad of adList; track $index) {
+                        <tr>
+                            <th scope="row">{{ad.id}}</th>
+                            <td>{{ad.kindAd}}</td>
+                            <td>{{ad.advertiser}}</td>
+                            <td>{{ad.date}}</td>
+                            <td>{{ad.cost}}</td>
+                            <td>{{ad.days}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+  </main>

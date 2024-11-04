@@ -6,7 +6,6 @@ package backend.controllers;
 
 import backend.DBconnection.UserDBConnection;
 import backend.exception.AccessException;
-import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Account;
 import backend.model.dto.ApiFile;

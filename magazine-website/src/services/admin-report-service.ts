@@ -4,6 +4,8 @@ import { HttpClient } from "@angular/common/http";
 import { AuthService } from "./auth";
 import { Observable } from "rxjs";
 import { EarningReport } from "../entities/admin-report/earning-report";
+import { Filter } from "../entities/filter";
+import { Ad } from "../entities/ad/ad";
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +23,11 @@ export class AdminReportService {
     getEarningReport(): Observable<EarningReport> {
         const headers = this.auth.getHeader();
         return this.http.get<EarningReport>(`${this.URL}/earning`, { headers });
+    }
+
+    getAdReports(filter: Filter): Observable<Ad []> {
+        const headers = this.auth.getHeader();
+        return this.http.post<Ad[]>(`${this.URL}/ad`, filter, { headers });
     }
 
 }
