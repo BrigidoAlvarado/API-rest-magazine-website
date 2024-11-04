@@ -5,7 +5,7 @@
 package backend.model.dto;
 
 import backend.enums.AdTime;
-import backend.enums.GlobalCost;
+import backend.enums.Global;
 import backend.exception.InvalidDataException;
 
 /**
@@ -17,7 +17,7 @@ public class Ad {
     
     protected int idAd;
     protected boolean status;
-    protected GlobalCost kindAd;
+    protected Global kindAd;
     protected AdTime adTime;
 
     public boolean isStatus() {
@@ -43,11 +43,11 @@ public class Ad {
         return idAd;
     }
     
-    public void setKindAd(GlobalCost kindAd){
+    public void setKindAd(Global kindAd){
         this.kindAd = kindAd;
     }
     
-    public GlobalCost getKindAd(){
+    public Global getKindAd(){
         return kindAd;
     }
     

@@ -22,6 +22,7 @@ import { PostViewComponent } from './editor/post-view/post-view.component';
 import { ExplorerComponent } from './subscriber/explorer/explorer.component';
 import { MagazineViewComponent } from './subscriber/magazine-view/magazine-view.component';
 import { AutorProfileComponent } from './subscriber/autor-profile/autor-profile.component';
+import { AdminMagazineViewComponent } from './admin/admin-magazine-view/admin-magazine-view.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -55,10 +56,15 @@ export const routes: Routes = [
         title: 'Editar Perfil',
         component: AdminEditProfileComponent
     },
+    {
+        path: 'admin-magazine',
+        title: 'Revistas',
+        component: AdminMagazineViewComponent
+    },
     //RUTAS DEL ANUNCIANTE
     {
         path: 'advertiser-business',
-        title: 'Compra y Venta',
+        title: 'Tienda',
         component: AdvertiserBusinessViewComponent
     },
     {
@@ -78,7 +84,7 @@ export const routes: Routes = [
     },
     {
         path: 'edit-ad/:id',
-        title: 'Editar Perfil',
+        title: 'Editar Anuncio',
         component: EditAdViewComponent
     },
     //RUTAS DEL EDITOR

@@ -5,61 +5,61 @@
 package com.ipc2ss.api.rest.magazine.website.resources;
 
 import backend.AuthTokenHandler;
-import backend.DBconnection.GlobalDBConnection;
-import backend.controllers.GlobalCostController;
-import backend.enums.Global;
+import backend.controllers.AdminController;
 import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
-import backend.model.dto.Amount;
+import backend.model.dto.Magazine;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
 
 /**
  *
  * @author brigidoalvarado
  */
-@Path("global-cost")
-public class GlobalCostResource {
+@Path("admin")
+public class AdminResource {
 
+    private final AdminController adminController = new AdminController();
+    private final AuthTokenHandler authTokenHandler = new AuthTokenHandler();
     private static final String AUTHORIZATION = "Authorization";
 
     @GET
-    @Path("{kind}")
+    @Path("magazine")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSolicitudPorCodigo(@PathParam("kind") String kind) {
-        GlobalDBConnection globalCostDBConnection = new GlobalDBConnection();
-        Amount amount = new Amount();
+    public Response getMagazineList(
+            @HeaderParam(AUTHORIZATION) String authorization) {
         try {
-            Global globalCost = Global.valueOf(kind);
-            amount.setAmount(globalCostDBConnection.getCost(globalCost));
-            return Response.ok(amount).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            authTokenHandler.authToken(authorization);
+            List<Magazine> magazineList = adminController.getMagazineList();
+            return Response.ok(magazineList).build();
         } catch (ServerException e) {
+            e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 
     @POST
-    @Path("{kind}")
-    public Response updateCost(
+    @Path("cost")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateMagazineDailyCost(
             @HeaderParam(AUTHORIZATION) String authorization,
-            @PathParam("kind") Global kind,
-            int amount) {
-        AuthTokenHandler auth = new AuthTokenHandler();
-        GlobalCostController controller = new GlobalCostController();
+            Magazine magazine) {
         try {
-            auth.authToken(authorization);
-            controller.updateCost(kind, amount);
+            authTokenHandler.authToken(authorization);
+            adminController.updateDailyCost(magazine);
             return Response.status(Response.Status.ACCEPTED).build();
-        } catch (ServerException e) {
+        }  catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (AccessException e) {
@@ -68,6 +68,6 @@ public class GlobalCostResource {
         } catch (InvalidDataException e) {
             e.printStackTrace();
             return Response.status(Response.Status.FORBIDDEN).build();
-        }   
+        }
     }
 }

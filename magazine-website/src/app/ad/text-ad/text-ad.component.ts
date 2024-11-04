@@ -26,7 +26,8 @@ export class TextAdComponent implements OnInit{
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       time: [null, [Validators.required]],
-      text: [null, [Validators.required]]
+      text: [null, [Validators.required]],
+      date: [null, [Validators.required]]
     });  
   }
 

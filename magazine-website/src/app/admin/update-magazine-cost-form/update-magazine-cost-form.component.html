@@ -1,0 +1,11 @@
+<div class="card shadow" style="margin: 2%;">
+    <div class="card-body">
+        <h5 class="card-title text-center">Id: {{magazine.id}} Revista: {{magazine.tittle}}</h5>
+        <form [formGroup]="form" (submit)="submit()">
+            <div class="form-control">
+                <input type="number" formControlName="dailyCost">
+            </div>
+                <button [disabled]="form.invalid" class="btn btn-primary bm-3">Guardar Cambios</button>
+        </form>
+    </div>
+</div>

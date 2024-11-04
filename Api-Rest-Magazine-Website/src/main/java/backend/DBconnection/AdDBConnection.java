@@ -4,7 +4,7 @@
  */
 package backend.DBconnection;
 
-import backend.enums.GlobalCost;
+import backend.enums.Global;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Ad;
@@ -67,7 +67,7 @@ public class AdDBConnection extends DBConnection {
                 Ad ad = new Ad();
                 ad.setId(rs.getInt("id"));
                 ad.setStatus(rs.getBoolean("state"));
-                ad.setKindAd(GlobalCost.valueOf(rs.getString("kind")));
+                ad.setKindAd(Global.valueOf(rs.getString("kind")));
                 ads.add(ad);
             }
             return ads;

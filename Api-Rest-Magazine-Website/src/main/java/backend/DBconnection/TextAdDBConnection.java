@@ -4,7 +4,7 @@
  */
 package backend.DBconnection;
 
-import backend.enums.GlobalCost;
+import backend.enums.Global;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Credential;
@@ -26,7 +26,7 @@ public class TextAdDBConnection extends DBConnection {
                 "INSERT INTO ad ( kind, time, state, anunciante_name, date, text) VALUES ( ?, ?, ?, ?, ?, ?)";
   
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, GlobalCost.textAd.name());
+            preparedStatement.setString(1, Global.textAd.name());
             preparedStatement.setInt(2, ad.getTime().getDay());
             preparedStatement.setBoolean(3, true);
             preparedStatement.setString(4, credential.getUserName());
@@ -46,7 +46,7 @@ public class TextAdDBConnection extends DBConnection {
                 TextAd ad = new TextAd();
                 ad.setId(id);
                 ad.setText(rs.getString("text"));
-                ad.setKind(GlobalCost.valueOf(rs.getString("kind")));
+                ad.setKind(Global.valueOf(rs.getString("kind")));
                 return ad;
             } else {
                  throw new InvalidDataException("El anuncio no con id = "+id+" no existe o ha expirado");

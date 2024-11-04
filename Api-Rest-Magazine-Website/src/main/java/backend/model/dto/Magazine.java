@@ -167,7 +167,7 @@ public class Magazine {
     }
     
     public void validateCost() throws InvalidDataException{
-        if(dailyCost < 0){
+        if(dailyCost < 0 && id < 0){
             throw new InvalidDataException("Costo diario asignado invalido");
         }
     }

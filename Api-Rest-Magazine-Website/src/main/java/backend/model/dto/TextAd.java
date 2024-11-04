@@ -5,8 +5,9 @@
 package backend.model.dto;
 
 import backend.enums.AdTime;
-import backend.enums.GlobalCost;
+import backend.enums.Global;
 import backend.exception.InvalidDataException;
+import java.time.LocalDate;
 
 /**
  *
@@ -14,9 +15,20 @@ import backend.exception.InvalidDataException;
  */
 public class TextAd extends Ad{
 
-    private GlobalCost kind;
+    private Global kind;
     private AdTime time;
     private String text;
+    private LocalDate date;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+    
+    
 
     public AdTime getTime() {
         return time;
@@ -37,7 +49,7 @@ public class TextAd extends Ad{
 
     @Override
     public void validate() throws InvalidDataException{
-        if ( time == null || text == null || this.kind == null ) {
+        if ( time == null || text == null || this.kind == null || date == null ) {
             throw new InvalidDataException("datos del anuncio de texto invalidos");
         }
     }
@@ -48,12 +60,12 @@ public class TextAd extends Ad{
         }
     }
     
-    public void setKind(GlobalCost kind){
+    public void setKind(Global kind){
         this.kind = kind;
         kindAd = kind;
     }
     
-    public GlobalCost getKind(){
+    public Global getKind(){
         return kind;
     }
 }

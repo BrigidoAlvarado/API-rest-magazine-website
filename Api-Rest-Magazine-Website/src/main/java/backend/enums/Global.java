@@ -8,11 +8,12 @@ package backend.enums;
  *
  * @author brigidoalvarado
  */
-public enum GlobalCost {
+public enum Global {
         magazine,
         textAd,
         textImageAd,
         videoAd,
         bank,
-        lockAd;
+        lockAd,
+        Authorization;
 }

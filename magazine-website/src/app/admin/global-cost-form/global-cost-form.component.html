@@ -1,0 +1,15 @@
+<div class="d-grid gap-2" style="margin: 1%;">
+    <button class="btn btn-success" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseExample'+globalCost" aria-expanded="false" aria-controls="collapseExample">
+        {{title}}
+    </button>
+</div>
+
+<div class="collapse" [id]="'collapseExample'+globalCost">
+    <div class="card card-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <label>Costo diario de: {{title}}</label>
+            <input type="number" class="form-control" formControlName="cost">
+            <button class="btn btn-primary tm-2" [disabled]="form.invalid">Guardar Cambios</button>
+        </form>
+    </div>
+</div>

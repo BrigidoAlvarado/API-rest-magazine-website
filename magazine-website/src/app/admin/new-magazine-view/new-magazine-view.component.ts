@@ -49,9 +49,10 @@ export class NewMagazineViewComponent implements OnInit {
     submit(): void {
       let id = this.magazine.id;
       if(this.form.valid){
-        console.log('haciendo submit');
+
         this.magazine = this.form?.value as Magazine;
         this.magazine.id = id;
+
         this.magazineService.setCost(this.magazine).subscribe({
           next: () => {
             console.log('exito')
@@ -61,7 +62,8 @@ export class NewMagazineViewComponent implements OnInit {
             console.log(error);
             this.auth.validate(error);
           }
-        })
+        });
+        
       }
     }
 }

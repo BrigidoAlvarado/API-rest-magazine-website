@@ -1,0 +1,21 @@
+<app-admin-header></app-admin-header>
+<main class="container">
+    <section>
+        <h3 class="form-control text-center text-primary">Revistas Publicadas</h3>
+        @if (magazineList) {
+            <ul class="list-group">
+                @for (magazine of magazineList; track $index) {
+                    <li class="list-group-item">
+                        <app-update-magazine-cost-form [magazine]="magazine"></app-update-magazine-cost-form>
+                    </li>
+                }
+            </ul>
+        }
+        @else {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>No hay revistas publicadas en la aplicacion</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            }
+    </section>
+</main>

@@ -4,27 +4,24 @@ import { Magazine } from '../../../entities/magazine';
 import { MagazineService } from '../../../services/editor-service/magazine-service';
 import { AuthService } from '../../../services/auth';
 import { NewMagazinesListComponent } from '../new-magazines-list/new-magazines-list.component';
+import { GlobalCostListComponent } from "../global-cost-list/global-cost-list.component";
 
 @Component({
   selector: 'app-admin-home',
   standalone: true,
-  imports: [AdminHeaderComponent, NewMagazinesListComponent],
+  imports: [AdminHeaderComponent, NewMagazinesListComponent, GlobalCostListComponent],
   templateUrl: './admin-home.component.html',
   styleUrl: './admin-home.component.css'
 })
 export class AdminHomeComponent implements OnInit{
-  magazineList!: Magazine[];
+  magazineList: Magazine[] | null = null;
 
   constructor(private service: MagazineService, private auth: AuthService){}
 
   ngOnInit(): void {
       this.service.getNewMagazineList().subscribe({
         next: (magazineList: Magazine[]) => {
-          this.magazineList = magazineList;
-          console.log('se cargo'+magazineList)
-          console.log(magazineList[0].tittle);
-          console.log(magazineList[0].id);
-          console.log(magazineList[1].tittle)
+          this.magazineList = magazineList;        
         },
         error: (error: any) => {
           console.log(error);

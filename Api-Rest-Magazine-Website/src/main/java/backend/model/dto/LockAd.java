@@ -4,7 +4,7 @@
  */
 package backend.model.dto;
 
-import backend.enums.GlobalCost;
+import backend.enums.Global;
 import backend.exception.InvalidDataException;
 import java.time.LocalDate;
 
@@ -14,15 +14,15 @@ import java.time.LocalDate;
  */
 public class LockAd {
 
-    private GlobalCost kind;
+    private Global kind;
     private int days;
     private LocalDate date;
 
-    public GlobalCost getKind() {
+    public Global getKind() {
         return kind;
     }
 
-    public void setKind(GlobalCost kind) {
+    public void setKind(Global kind) {
         this.kind = kind;
     }
 
