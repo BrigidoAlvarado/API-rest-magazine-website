@@ -10,11 +10,22 @@
                 <a>APPCO</a>
                 <app-comment [id]="magazine.id" [commentStatus]="magazine.commentStatus"></app-comment>
                 <app-like [commentStatus]="magazine.commentStatus" [id]="magazine.id" [isLiked]="magazine.isLiked"></app-like>
-                <a class="btn-success" data-bs-toggle="collapse" rout="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Ver Numeros</a>
-                <a class="btn btn-success">Descargar</a>
+                <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Ver numeros
+                </button>
+                            <a class="btn btn-success">Descargar</a>
             </p>
         </div>
-        
-        
+            
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <form >
+                    <label>Costo diario de</label>
+                    <input type="number" class="form-control" formControlName="cost">
+                    <button class="btn btn-primary tm-2" >Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+        n
     </section>
 </main>

@@ -14,6 +14,7 @@ import backend.model.dto.Ad;
 import backend.model.dto.Advertiser;
 import backend.model.dto.EarningsReport;
 import backend.model.dto.Filter;
+import backend.model.dto.Magazine;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
@@ -65,6 +66,26 @@ public class AdminReportsResource {
             List<Advertiser> advertiserList = controller.getAdvertiserReport(userName);
             return Response.ok(advertiserList).build();
         } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @POST
+    @Path("popular")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPopularMagazines(
+            @HeaderParam(AUTHORIZATION) String authorization,
+            Filter filter) {
+        try {
+            ath.authToken(authorization);
+            List<Magazine> magazineList = controller.getPopularMagazinesReport(filter);
+            return Response.ok(magazineList).build();
+        }catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (AccessException e) {

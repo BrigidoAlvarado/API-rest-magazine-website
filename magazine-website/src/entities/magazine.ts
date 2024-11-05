@@ -1,3 +1,5 @@
+import { Profile } from "./profile";
+
 export interface Magazine {
     tittle: string,
     commentStatus: boolean,
@@ -10,7 +12,8 @@ export interface Magazine {
     description: string,
     editor: string,
     tags:string,
-    tagsList: string []
+    tagsList: string [],
     date: string,
-    file: File
+    file: File,
+    subscriberList: Profile[]
 }

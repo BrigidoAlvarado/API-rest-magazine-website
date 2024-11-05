@@ -5,13 +5,13 @@
 package backend.DBconnection;
 
 import backend.exception.ServerException;
+import backend.model.dto.Filter;
 import backend.model.dto.Magazine;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +37,13 @@ public class MagazineDBConnection extends DBConnection {
                 magazine.setId(rs.getInt("id"));
                 magazine.setLikes(rs.getInt("likes"));
                 magazine.setTittle(rs.getString("tittle"));
-                magazine.setCommentStatus(rs.getBoolean("comment_status"));                
+                magazine.setCommentStatus(rs.getBoolean("comment_status"));
                 magazine.setTagsList(tagDBConnection.getTagsList(magazine.getId()));
             }
             return magazine;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new ServerException("Error al cargar la revista con id: "+id);
+            throw new ServerException("Error al cargar la revista con id: " + id);
         }
     }
 
@@ -108,18 +108,18 @@ public class MagazineDBConnection extends DBConnection {
             throw new ServerException("error al actualizar el costo diario de  la revista en la base de datos");
         }
     }
-    
+
     public void increaseLikes(int id) throws SQLException, ServerException {
         int likes = getLikes(id);
-        String sql = 
-                " UPDATE magazine SET likes = ? WHERE ( id = ? );";
+        String sql
+                = " UPDATE magazine SET likes = ? WHERE ( id = ? );";
         SetConnection(connection);
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, likes + 1);
         ps.setInt(2, id);
         ps.executeUpdate();
     }
-    
+
     public int getLikes(int id) throws ServerException {
         String sql = " select likes from magazine where ( id = ? )";
         try {
@@ -128,13 +128,12 @@ public class MagazineDBConnection extends DBConnection {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-               int likes = rs.getInt("likes");
-                System.out.println("retornando likes: "+likes);
+                int likes = rs.getInt("likes");
                 return likes;
             }
-            throw new ServerException("error al obtener el numero de likes de la revista con id: "+id);
+            throw new ServerException("error al obtener el numero de likes de la revista con id: " + id);
         } catch (SQLException e) {
-            throw new ServerException("error al obtener el numero de likes de la revista con id: "+id);
+            throw new ServerException("error al obtener el numero de likes de la revista con id: " + id);
         }
     }
 }

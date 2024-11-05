@@ -29,7 +29,18 @@ public class Magazine {
     private String[] tags;
     private List<String> tagsList;
     private ApiFile file;
+    private List<Profile> subscriberList;
 
+    public List<Profile> getSubscriberList() {
+        return subscriberList;
+    }
+
+    public void setSubscriberList(List<Profile> subscriberList) {
+        this.subscriberList = subscriberList;
+    }
+    
+    
+    
     public List<String> getTagsList() {
         return tagsList;
     }

@@ -1,4 +1,4 @@
-import { Injectable, IterableDiffers } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { RestConstants } from "./rest-constants";
 import { HttpClient } from "@angular/common/http";
 import { AuthService } from "./auth";
@@ -7,6 +7,7 @@ import { EarningReport } from "../entities/admin-report/earning-report";
 import { Filter } from "../entities/filter";
 import { Ad } from "../entities/ad/ad";
 import { Advertiser } from "../entities/advertiser";
+import { Magazine } from "../entities/magazine";
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +35,11 @@ export class AdminReportService {
     getAdvertiserReport(userName: string): Observable<Advertiser []> {
         const headers = this.auth.getHeader();
         return this.http.get<Advertiser []> (`${this.URL}/advertiser/${userName}`, { headers });
+    }
+
+    getPopularMagazineReport(filter: Filter): Observable<Magazine[]> {
+        const headers = this.auth.getHeader();
+        return this.http.post<Magazine[]> (`${this.URL}/popular`, filter, { headers });
     }
 
 }

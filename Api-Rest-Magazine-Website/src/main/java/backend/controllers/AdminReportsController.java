@@ -8,10 +8,14 @@ import backend.DBconnection.AdReportsDBConnection;
 import backend.DBconnection.AdvertiserDBConnection;
 import backend.DBconnection.BusinessDBConnection;
 import backend.DBconnection.GlobalDBConnection;
+import backend.DBconnection.MagazineDBConnection;
+import backend.DBconnection.SubscribedMagazineDBConnection;
 import backend.enums.Global;
 import backend.exception.ServerException;
 import backend.model.dto.Advertiser;
 import backend.model.dto.EarningsReport;
+import backend.model.dto.Filter;
+import backend.model.dto.Magazine;
 import java.util.List;
 
 /**
@@ -42,5 +46,11 @@ public class AdminReportsController {
             advertiser.setAdList(dBConnection.getAdList(advertiser.getUserName()));
         }
         return advertiserList;
+    }
+    
+    public List<Magazine> getPopularMagazinesReport(Filter filter) throws ServerException {
+        SubscribedMagazineDBConnection dBConnection = new SubscribedMagazineDBConnection();
+        List<Magazine> magazineList = dBConnection.getPopularMagazines(filter);
+        return magazineList;
     }
 }

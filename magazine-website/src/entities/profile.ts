@@ -8,4 +8,5 @@ export interface Profile{
     contentType: string,
     description: string,
     photo: File
+    subscriberList: Profile[]
 }
