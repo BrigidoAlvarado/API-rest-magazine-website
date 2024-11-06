@@ -4,16 +4,17 @@ import { Advertiser } from '../../../../entities/advertiser';
 import { AdminReportService } from '../../../../services/admin-report-service';
 import { AuthService } from '../../../../services/auth';
 import { AdminHeaderComponent } from "../../admin-header/admin-header.component";
+import { ShowAdComponent } from "../../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-admin-advertiser-report',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AdminHeaderComponent],
+  imports: [FormsModule, ReactiveFormsModule, AdminHeaderComponent, ShowAdComponent],
   templateUrl: './admin-advertiser-report.component.html',
   styleUrl: './admin-advertiser-report.component.css'
 })
 export class AdminAdvertiserReportComponent implements OnInit{
-  
+  url: string = 'admin-advertiser-report';
   form!: FormGroup;
   advertiserList!: Advertiser[]
 

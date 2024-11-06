@@ -112,6 +112,7 @@ public class SubscriberDBConnection extends DBConnection {
     }
 
     public Magazine getSuscribedMagazineById(int id) throws ServerException {
+        FileDBConnection dBConnection = new FileDBConnection();
         Magazine magazine = new Magazine();
         String sql = "select  magazine.* , is_liked  from magazine join subscribed_magazine on id = magazine_id where id = ?";
         try {
@@ -127,6 +128,7 @@ public class SubscriberDBConnection extends DBConnection {
                 magazine.setTittle(rs.getString("tittle"));
                 magazine.setIsLiked(rs.getBoolean("is_liked"));
             }
+            magazine.setIdFilesList(dBConnection.getIdFiles(id));
             return magazine;
         } catch (SQLException e) {
             throw new ServerException("error al cargar la informacion de la revista suscrita con id: " + id);

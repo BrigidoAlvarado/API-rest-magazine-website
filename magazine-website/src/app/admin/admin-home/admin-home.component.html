@@ -1,6 +1,7 @@
     @if (magazineList === null || magazineList.length === 0) {
-        <app-admin-header></app-admin-header>
-    <main>
+    <app-admin-header></app-admin-header>
+    <main class="container">
+        <app-show-ad [url]="url"></app-show-ad>
         <section class="container">
             <app-global-cost-list></app-global-cost-list>
         </section>
@@ -8,12 +9,15 @@
             <strong>No hay revistas nuevas!</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
+        <app-show-ad [url]="url"></app-show-ad>
     </main>
     }
     @else {
         <main class="container" style="margin: 5%;">
             <section class="section">
+                <app-show-ad [url]="url"></app-show-ad>
                 <app-new-magazines-list [magazineList]="magazineList"></app-new-magazines-list>
             </section>
+            <app-show-ad [url]="url"></app-show-ad>
         </main>
     }

@@ -15,5 +15,6 @@ export interface Magazine {
     tagsList: string [],
     date: string,
     file: File,
-    subscriberList: Profile[]
+    subscriberList: Profile[],
+    idFilesList: number[]
 }

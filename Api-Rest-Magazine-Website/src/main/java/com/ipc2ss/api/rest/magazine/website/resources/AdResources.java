@@ -32,8 +32,8 @@ public class AdResources {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAdById(
-     @HeaderParam("Authorization") String authorization,
-    @PathParam("id") int id){
+            @HeaderParam("Authorization") String authorization,
+            @PathParam("id") int id) {
         System.out.println("en obtener informacion de un anuncio por id");
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         AdController adController = new AdController();
@@ -44,19 +44,19 @@ public class AdResources {
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (AccessException e){
+        } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
-        } catch (InvalidDataException e){
+        } catch (InvalidDataException e) {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAds(
-     @HeaderParam("Authorization") String authorization) {
+            @HeaderParam("Authorization") String authorization) {
         AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         AdController adController = new AdController();
         try {
@@ -66,33 +66,86 @@ public class AdResources {
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (AccessException e){
+        } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
-        }catch (InvalidDataException e){
+        } catch (InvalidDataException e) {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateStatus(
-    @HeaderParam("Authorization") String authorization,
-            Ad ad){
-        AuthTokenHandler authTokenHandler  = new AuthTokenHandler();
+            @HeaderParam("Authorization") String authorization,
+            Ad ad) {
+        AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         AdController adController = new AdController();
         try {
-           authTokenHandler.authToken(authorization);
-           adController.updateStatus(authTokenHandler.getCredential(), ad);
-           return Response.status(Response.Status.ACCEPTED).build();
+            authTokenHandler.authToken(authorization);
+            adController.updateStatus(authTokenHandler.getCredential(), ad);
+            return Response.status(Response.Status.ACCEPTED).build();
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (AccessException e){
+        } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
-        } catch (InvalidDataException e){
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("random/{type}/{url}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRandomAd(
+            @HeaderParam("Authorization") String authorization,
+            @PathParam("type") String type,
+            @PathParam("url") String url) {
+        AuthTokenHandler ath = new AuthTokenHandler();
+        AdController controller = new AdController();
+        try {
+            ath.authToken(authorization);
+            Ad ad = controller.getRandomAd(type, url);
+            return Response.ok(ad).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("random/{type}/{url}/{editor}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRandomAd(
+            @HeaderParam("Authorization") String authorization,
+            @PathParam("type") String type,
+            @PathParam("url") String url,
+            @PathParam("editor") String editor) {
+        AuthTokenHandler ath = new AuthTokenHandler();
+        AdController controller = new AdController();
+        try {
+        
+            ath.authToken(authorization);
+            Ad ad = controller.getRandomAd(type, url, editor);
+            return Response.ok(ad).build();
+        
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

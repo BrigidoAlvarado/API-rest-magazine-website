@@ -28,8 +28,17 @@ public class Magazine {
     private String editor;
     private String[] tags;
     private List<String> tagsList;
+    private List<Integer> idFilesList;
     private ApiFile file;
     private List<Profile> subscriberList;
+
+    public List<Integer> getIdFilesList() {
+        return idFilesList;
+    }
+
+    public void setIdFilesList(List<Integer> idFilesList) {
+        this.idFilesList = idFilesList;
+    }
 
     public List<Profile> getSubscriberList() {
         return subscriberList;

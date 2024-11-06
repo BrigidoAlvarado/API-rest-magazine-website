@@ -5,16 +5,17 @@ import { AuthService } from '../../../../services/auth';
 import { AdminReportService } from '../../../../services/admin-report-service';
 import { Magazine } from '../../../../entities/magazine';
 import { AdminHeaderComponent } from "../../admin-header/admin-header.component";
+import { ShowAdComponent } from "../../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-admin-popular-report',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AdminHeaderComponent],
+  imports: [FormsModule, ReactiveFormsModule, AdminHeaderComponent, ShowAdComponent],
   templateUrl: './admin-popular-report.component.html',
   styleUrl: './admin-popular-report.component.css'
 })
 export class AdminPopularReportComponent implements OnInit{
-
+  url: string = 'admin-popular-report';
   form!: FormGroup;
   filter!: Filter;
   magazineList!: Magazine [];

@@ -7,7 +7,6 @@ package com.ipc2ss.api.rest.magazine.website.resources;
 import backend.AuthTokenHandler;
 import backend.DBconnection.FileDBConnection;
 import backend.exception.AccessException;
-import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.ApiFile;
 import jakarta.ws.rs.GET;
@@ -25,6 +24,7 @@ import jakarta.ws.rs.core.Response;
 public class FileResource {
 
     private final AuthTokenHandler auth = new AuthTokenHandler();
+    private final FileDBConnection dBConnection = new FileDBConnection();
 
     @GET
     @Path("photo/{userName}/{userType}")
@@ -34,7 +34,6 @@ public class FileResource {
             @PathParam("userName") String userName,
             @PathParam("userType") String userType) {
         System.out.println("en get photo");
-        FileDBConnection dBConnection = new FileDBConnection();
         try {
             auth.authToken(authorization);
             ApiFile file = dBConnection.getProfile(userName, userType);
@@ -47,4 +46,46 @@ public class FileResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
+    @GET
+    @Path("image/{id}")
+    @Produces({"image/jpeg", "image/png"})
+    public Response getImage(
+            @HeaderParam("Authorization") String authorization,
+            @PathParam("id") int id) {
+        try {
+            auth.authToken(authorization);
+            ApiFile file = dBConnection.getImage(id);
+            return Response.ok(file.getInputStream()).type(file.getContentType()).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @GET
+    @Path("pdf/{id}")
+    @Produces("application/pdf")
+    public Response getPdfResponse(
+            @HeaderParam("Authorization") String authorization,
+            @PathParam("id") int id) {
+        try {
+            auth.authToken(authorization);
+            ApiFile file = dBConnection.getPdf(id);
+            return Response.ok(file.getInputStream()).
+                    type("application/pdf").
+                    header("Content-Disposition", "inline; filename=\"" + file.getFileName() + "\"").
+                    build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
 }

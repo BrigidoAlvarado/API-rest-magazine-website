@@ -4,16 +4,18 @@ import { Ad } from '../../../entities/ad/ad';
 import { AdService } from '../../../services/ad-service';
 import { PurchasedAdsListComponent } from "../purchased-ads-list/purchased-ads-list.component";
 import { EditAdViewComponent } from "../../ad/edit-ad-view/edit-ad-view.component";
+import { ShowAdComponent } from "../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-advertiser-home',
   standalone: true,
-  imports: [AdvHeaderComponent, PurchasedAdsListComponent, EditAdViewComponent],
+  imports: [AdvHeaderComponent, PurchasedAdsListComponent, EditAdViewComponent, ShowAdComponent],
   templateUrl: './advertiser-home.component.html',
   styleUrl: './advertiser-home.component.css'
 })
 export class AdvertiserHomeComponent implements OnInit{
   ads!: Ad[];
+  url: string = 'advertiser-home';
 
   constructor(private adService: AdService){ }
 

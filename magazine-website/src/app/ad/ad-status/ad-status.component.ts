@@ -30,7 +30,7 @@ export class AdStatusComponent implements OnInit{
     
     if(confirm){
       this.ad.status = this.form.get('activo')?.value;
-      console.log(this.ad.status)
+      console.log('el estado se cambio a:',this.ad.status)
       this.adService.updateStatus(this.ad).subscribe({
         next: () => {
           window.alert('Cambio de estado exitoso');

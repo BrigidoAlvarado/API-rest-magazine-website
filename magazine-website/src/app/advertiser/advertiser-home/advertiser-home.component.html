@@ -1,6 +1,7 @@
 <app-adv-header></app-adv-header>
 <main>
     <section>
+        <app-show-ad [url]="url"></app-show-ad>
         @if (ads != null) {
             <app-purchased-ads-list [ads]="ads"></app-purchased-ads-list>
         } @else {

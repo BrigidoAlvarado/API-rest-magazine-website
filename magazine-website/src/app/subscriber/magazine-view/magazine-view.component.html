@@ -1,31 +1,38 @@
 <app-subscriber-header></app-subscriber-header>
 <main>
     <div class="container form-control">
-        <h3 class="display-7 text-primary text-center">{{magazine.tittle}}</h3>
+        <h3 class="display-7 text-primary text-center">{{magazine.tittle}} by {{magazine.editor}}</h3>
     </div>
     <section class="container mt-4">
         
         <div class="form-control">
             <p class="d-inline-flex gap-1">
-                <a>APPCO</a>
                 <app-comment [id]="magazine.id" [commentStatus]="magazine.commentStatus"></app-comment>
                 <app-like [commentStatus]="magazine.commentStatus" [id]="magazine.id" [isLiked]="magazine.isLiked"></app-like>
                 <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Ver numeros
                 </button>
-                            <a class="btn btn-success">Descargar</a>
+                <a class="btn btn-success">Descargar</a>
             </p>
         </div>
             
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
-                <form >
-                    <label>Costo diario de</label>
-                    <input type="number" class="form-control" formControlName="cost">
-                    <button class="btn btn-primary tm-2" >Guardar Cambios</button>
-                </form>
+                @for (id of magazine.idFilesList; track $index) {
+                    <button 
+                        class="btn btn-primary mt-3"
+                        (click)="chooseFile(id)">
+                        Leer Numero {{$index + 1}}
+                    </button>
+                }
             </div>
         </div>
-        n
     </section>
+
+    <section>
+        @if (pdfUrl) {
+            <iframe [src]="pdfUrl" width="100%" height="600px"></iframe>
+        }
+    </section>
+    <app-show-ad [url]="url" [editor]="magazine.editor"></app-show-ad>
 </main>

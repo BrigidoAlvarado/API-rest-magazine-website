@@ -17,9 +17,26 @@ export class FileService {
 
     getPhoto(userName: string, userType: string): Observable<Blob> {
         const headers = this.auth.getHeader();
-        return this.http.get(`${this.constants.API_URL}file/photo/${userName}/${userType}`, { 
+        return this.http.get(`${this.constants.API_URL}file/photo/${userName}/${userType}`, 
+         { 
             headers,
-            responseType: 'blob' });
+            responseType: 'blob' 
+        });
     }
-    
+
+    getPdf(id: number): Observable<Blob> {
+        const headers = this.auth.getHeader();
+        return this.http.get(`${this.constants.API_URL}file/pdf/${id}`,
+            { headers,
+                responseType: 'blob'
+            });
+    }
+
+    getImage(id: number): Observable<Blob> {
+        const headers = this.auth.getHeader();
+        return this.http.get(`${this.constants.API_URL}file/image/${id}`,
+            { headers,
+                responseType: 'blob'
+            });
+    }
 }

@@ -4,12 +4,14 @@
  */
 package backend.transactions;
 
+import backend.DBconnection.AdDBConnection;
 import backend.DBconnection.DBConnection;
 import backend.DBconnection.GlobalDBConnection;
 import backend.DBconnection.ImageAdDBConnection;
 import backend.DBconnection.TextAdDBConnection;
 import backend.DBconnection.VideoAdDBConnection;
 import backend.DBconnection.WalletDBConnection;
+import backend.DBconnection.adViewDBConnection;
 import backend.exception.ServerException;
 import backend.model.dto.Credential;
 import backend.model.dto.ImageAd;
@@ -21,7 +23,7 @@ import java.sql.SQLException;
  *
  * @author brigidoalvarado
  */
-public class TransactionBuyAd extends DBConnection {
+public class TransactionAd extends DBConnection {
 
     private final WalletDBConnection walletDBConnection = new WalletDBConnection();
     private final GlobalDBConnection globalCostDBConnection = new GlobalDBConnection();
@@ -69,7 +71,7 @@ public class TransactionBuyAd extends DBConnection {
             }
         }
     }
-    
+
     public void buyAd(ImageAd ad, Credential credential, double change, double cost) throws ServerException {
         ImageAdDBConnection adDBConnection = new ImageAdDBConnection();
         getConnection();
@@ -92,4 +94,27 @@ public class TransactionBuyAd extends DBConnection {
         }
     }
 
+    public void increaseView(int id, String url) throws ServerException {
+        AdDBConnection adDBConnection = new AdDBConnection();
+        adViewDBConnection viewDBConnection = new adViewDBConnection();
+        try {
+            if (id > 0) {
+                getConnection();
+                connection.setAutoCommit(false);
+                adDBConnection.increaseScreenTime(id, connection);
+                viewDBConnection.saveView(id, url, connection);
+                connection.commit();
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+                throw new ServerException("Error en la transaccion para aumentar vista del anuncio: " + id);
+            } catch (SQLException ex) {
+                e.printStackTrace();
+                throw new ServerException("Error en rollback de la transaccion para aumentar vista del anuncio:" + id);
+            }
+        }
+    }
 }

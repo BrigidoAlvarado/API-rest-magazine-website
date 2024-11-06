@@ -1,0 +1,30 @@
+.ad {
+    width: 200px; /* Ajusta el ancho del anuncio */
+    height: auto; /* Permite que el anuncio tenga altura flexible */
+    background-color: #f8f9fa; /* Color de fondo */
+    border: 1px solid #ced4da; /* Borde */
+    padding: 10px; /* Relleno interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  .top-ad {
+    position: absolute;
+    top: 20px; /* Espaciado desde la parte superior */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .side-ad {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+  }
+  
+  .bottom-ad {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  

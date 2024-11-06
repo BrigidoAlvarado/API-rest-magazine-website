@@ -6,5 +6,10 @@ export interface Ad {
     timeAd: string,
     advertiser: string,
     date: Date,
-    days: number
+    days: number,
+    text: string,
+    link: string
+    isText: boolean,
+    isImage: boolean,
+    isVideo: boolean
 }

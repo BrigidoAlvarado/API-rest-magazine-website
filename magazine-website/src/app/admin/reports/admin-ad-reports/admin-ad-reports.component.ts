@@ -5,11 +5,12 @@ import { Ad } from '../../../../entities/ad/ad';
 import { AdminReportService } from '../../../../services/admin-report-service';
 import { AuthService } from '../../../../services/auth';
 import { AdminHeaderComponent } from "../../admin-header/admin-header.component";
+import { ShowAdComponent } from "../../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-admin-ad-reports',
   standalone: true,
-  imports: [AdminHeaderComponent, FormsModule, ReactiveFormsModule],
+  imports: [AdminHeaderComponent, FormsModule, ReactiveFormsModule, ShowAdComponent],
   templateUrl: './admin-ad-reports.component.html',
   styleUrl: './admin-ad-reports.component.css'
 })
@@ -17,6 +18,7 @@ export class AdminAdReportsComponent implements OnInit {
   form!: FormGroup;
   filter!: Filter;
   adList!: Ad[];
+  url: string = 'admin-ad-report';
 
   constructor(
     private service: AdminReportService,

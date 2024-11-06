@@ -65,7 +65,7 @@ export class UsersHome {
             this.router.navigate(['/admin-edit-profile']);
             break;
           case 'anunciante':
-            this.router.navigate(['/advertiser-profile']);
+            this.router.navigate(['/advertiser-edit-profile']);
             break;
           case 'editor':
             this.router.navigate(['/editor-edit-profile']);

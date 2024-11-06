@@ -8,8 +8,10 @@ import backend.DBconnection.AdDBConnection;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.ExpirationAd;
+import backend.model.ExpirationLockAd;
 import backend.model.dto.Ad;
 import backend.model.dto.Credential;
+import backend.transactions.TransactionAd;
 import java.util.List;
 
 /**
@@ -33,5 +35,27 @@ public class AdController {
     public void updateStatus(Credential credential, Ad ad)throws InvalidDataException, ServerException{
         ad.validate();
         adDBConnection.updateStatus(credential, ad);
+    }
+    
+    public Ad getRandomAd(String type, String url) throws ServerException, InvalidDataException{
+        TransactionAd transactionAd = new TransactionAd();
+        
+        expirationAd.validate();
+        Ad ad = adDBConnection.getRandomAd(type);
+        transactionAd.increaseView(ad.getId(), url);            
+        return ad;
+    }
+    
+    public Ad getRandomAd(String type, String url, String editor) throws ServerException, InvalidDataException{
+        TransactionAd transactionAd = new TransactionAd();
+        ExpirationLockAd expirationLockAd = new ExpirationLockAd();
+        Ad ad = new Ad();
+        
+        if (expirationLockAd.existLokAd(editor)) {
+         expirationAd.validate();
+        ad = adDBConnection.getRandomAd(type);
+        transactionAd.increaseView(ad.getId(), url);   
+        }
+        return ad;
     }
 }

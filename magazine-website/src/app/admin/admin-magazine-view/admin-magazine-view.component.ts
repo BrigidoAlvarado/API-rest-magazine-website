@@ -4,16 +4,18 @@ import { Magazine } from '../../../entities/magazine';
 import { AdminService } from '../../../services/admin-servie';
 import { AuthService } from '../../../services/auth';
 import { UpdateMagazineCostFormComponent } from "../update-magazine-cost-form/update-magazine-cost-form.component";
+import { ShowAdComponent } from "../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-admin-magazine-view',
   standalone: true,
-  imports: [AdminHeaderComponent, UpdateMagazineCostFormComponent],
+  imports: [AdminHeaderComponent, UpdateMagazineCostFormComponent, ShowAdComponent],
   templateUrl: './admin-magazine-view.component.html',
   styleUrl: './admin-magazine-view.component.css'
 })
 export class AdminMagazineViewComponent implements OnInit {
 
+  url: string = 'admin-magazine';
   magazineList: Magazine[] | null = null;
 
   constructor(private service: AdminService, private auth: AuthService ){}

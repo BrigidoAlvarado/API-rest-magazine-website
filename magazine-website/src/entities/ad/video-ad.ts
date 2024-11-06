@@ -1,4 +1,5 @@
 export interface VideoAd {
+    id: number,
     kind: string,
     time: string,
     link: string,

@@ -23,18 +23,21 @@ import { ExplorerComponent } from './subscriber/explorer/explorer.component';
 import { MagazineViewComponent } from './subscriber/magazine-view/magazine-view.component';
 import { AutorProfileComponent } from './subscriber/autor-profile/autor-profile.component';
 import { AdminMagazineViewComponent } from './admin/admin-magazine-view/admin-magazine-view.component';
-import { AdminReportComponent } from './admin/reports/admin-report/admin-report.component';
 import { EarningComponent } from './admin/reports/earning/earning.component';
 import { AdminAdReportsComponent } from './admin/reports/admin-ad-reports/admin-ad-reports.component';
 import { AdminAdvertiserReportComponent } from './admin/reports/admin-advertiser-report/admin-advertiser-report.component';
 import { AdminPopularReportComponent } from './admin/reports/admin-popular-report/admin-popular-report.component';
+import { IsAdmin } from '../services/validate-role/is-admin';
+import { IsEditor } from '../services/validate-role/is-editor';
+import { IsAdvertiser } from '../services/validate-role/is-advertiser';
+import { IsSubscriber } from '../services/validate-role/is-subscriber';
 
 export const routes: Routes = [
     //RUTAS GENERALES
     {
         path: 'login',
         title: 'Iniciar Sesion',
-        component: LoginComponent
+        component: LoginComponent,
     },
     {
         path: 'newAccount',
@@ -44,130 +47,149 @@ export const routes: Routes = [
     {
         path: 'edit-profile',
         title: 'Editar Perfil',
-        component: RedirectToEditProfileComponent
+        component: RedirectToEditProfileComponent,
     },
     //RUTAS DEL ADMINISTRADOR
     {
         path: 'admin-home',
         title: 'Home',
-        component: AdminHomeComponent
+        component: AdminHomeComponent,
+        canActivate: [IsAdmin]
     },
     {
         path: 'admin-profile',
         title: 'Perfil',
-        component: AdminProfileComponent
+        component: AdminProfileComponent,
+        canActivate: [IsAdmin]
     },{
         path: 'admin-edit-profile',
         title: 'Editar Perfil',
-        component: AdminEditProfileComponent
+        component: AdminEditProfileComponent,
+        canActivate: [IsAdmin]
     },
     {
         path: 'admin-magazine',
         title: 'Revistas',
-        component: AdminMagazineViewComponent
-    },
-    {
-        path: 'admin-report',
-        title: 'Reportes',
-        component: AdminReportComponent
+        component: AdminMagazineViewComponent,
+        canActivate: [IsAdmin]
     },
     {
         path: 'admin-earning',
         title: 'Reportes de Ganancias',
-        component: EarningComponent
+        component: EarningComponent,
+        canActivate: [IsAdmin]
     },
     {
         path: 'admin-ad-report',
         title: 'Reporte de Anuncios',
-        component: AdminAdReportsComponent
+        component: AdminAdReportsComponent,
+        canActivate: [IsAdmin]
     },
     {
         path: 'admin-advertiser-report',
         title: 'Reporte de Ganancias Anunciante',
-        component: AdminAdvertiserReportComponent
+        component: AdminAdvertiserReportComponent,
+        canActivate: [IsAdmin]
     },
     {
         path: 'admin-popular-report',
         title: 'Reporte Revistas Populares',
-        component: AdminPopularReportComponent
+        component: AdminPopularReportComponent,
+        canActivate: [IsAdmin]
     },
     //RUTAS DEL ANUNCIANTE
     {
         path: 'advertiser-business',
         title: 'Tienda',
-        component: AdvertiserBusinessViewComponent
+        component: AdvertiserBusinessViewComponent,
+        canActivate: [IsAdvertiser]
     },
     {
         path: 'advertiser-home',
         title: 'Home',
-        component: AdvertiserHomeComponent
+        component: AdvertiserHomeComponent,
+        canActivate: [IsAdvertiser]
     },
     {
         path: 'advertiser-profile',
         title: 'Perfil',
-        component: AdvProfileComponent
+        component: AdvProfileComponent,
+        canActivate: [IsAdvertiser]
     },
     {
         path: 'advertiser-edit-profile',
         title: 'Editar Perfil',
-        component: AdvertiserEditProfileComponent
+        component: AdvertiserEditProfileComponent,
+        canActivate: [IsAdvertiser]
     },
     {
         path: 'edit-ad/:id',
         title: 'Editar Anuncio',
-        component: EditAdViewComponent
+        component: EditAdViewComponent,
+        canActivate: [IsAdvertiser]
     },
     //RUTAS DEL EDITOR
     {
         path: 'editor-home',
         title: 'Home',
-        component: EditorHomeComponent
+        component: EditorHomeComponent,
+        canActivate: [IsEditor]
     },
     {
         path: 'editor-profile',
         title: 'home',
-        component: EditorProfileComponent
+        component: EditorProfileComponent,
+        canActivate: [IsEditor]
     },
     {
         path: 'editor-edit-profile',
         title: 'Editar Perfil',
-        component: EditorEditProfileComponent
+        component: EditorEditProfileComponent,
+        canActivate: [IsEditor]
     },{
         path: 'editor-post',
         title: 'Publicar Revista',
-        component: PostViewComponent
+        component: PostViewComponent,
+        canActivate: [IsEditor]
     },
     {
         path: 'editor-business',
         title: 'Tienda',
-        component: EditorBusinessViewComponent
+        component: EditorBusinessViewComponent,
+        canActivate: [IsEditor]
     },
     //RUTAS DEL SUSCRIPTOR
     {
         path: 'subscriber-home',
         title: 'home',
-        component: SubscriberHomeComponent
+        component: SubscriberHomeComponent,
+        canActivate: [IsSubscriber]
     },
     {
         path: 'subscriber-profile',
         title: 'home',
-        component: SubsProfileComponent
+        component: SubsProfileComponent,
+        canActivate: [IsSubscriber]
     },{
         path: 'subscriber-edit-profile',
         title: 'Editar Perfil',
-        component: SubscriberEditProfileComponent
+        component: SubscriberEditProfileComponent,
+        canActivate: [IsSubscriber]
     },{
         path: 'subscriber-explorer',
         title: 'Buscar Revistas',
-        component: ExplorerComponent
+        component: ExplorerComponent,
+        canActivate: [IsSubscriber]
     },{
         path: 'magazine/:id',
         title: 'Revista',
-        component: MagazineViewComponent
+        component: MagazineViewComponent,
+        canActivate: [IsSubscriber]
     },{
         path: 'autor-profile/:userName',
         title: 'Perfil de Autor',
-        component: AutorProfileComponent
+        component: AutorProfileComponent,
+        canActivate: [IsSubscriber]
     },
     //EXTRAS
     {

@@ -22,7 +22,6 @@ import java.util.List;
 public class AdReportsDBConnection extends DBConnection {
     
     public List<Ad> getAdList(Filter filter) throws ServerException{
-        System.out.println("en get by filter");
         List<Ad> adList = new ArrayList<>();
         String sql = "select * from ad where ( ? is null or ? <= date) and ( ? is  null or date <= ? ) and ( ? is null or kind = ? )";
         try {

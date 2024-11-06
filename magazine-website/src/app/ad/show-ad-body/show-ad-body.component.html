@@ -1,0 +1,49 @@
+
+<label> text is: {{ad.text != null}}</label>
+
+    @if (ad.isImage) {
+      <div class="card border-primary mb-3" style="width: 30rem;">
+        <div class="row g-0">
+            
+            <!-- Columna de la imagen -->
+            <div class="col-md-4">
+              <img [src]="imageUrl" class="card-img-top" alt="imagen">
+            </div>
+  
+            <!-- Columna del contenido -->
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ad.text}}</h5>
+              </div>
+            </div>
+    
+        </div>
+      </div>
+    }
+
+
+    @if (ad.isText) {
+      <div class="card my-3 shadow-sm" style="max-width: 600px; margin: auto;">
+        <div class="card-body">
+          <h5 class="card-title text-center">{{ad.text}}</h5>
+        </div>
+      </div>
+    }
+
+    @if (ad.isVideo) {
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe 
+            [src]="videoUrl" 
+            allowfullscreen
+            allow="autoplay; encrypted-media"
+            >
+          </iframe>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ad.text}}</h5>
+          </div>
+        </div>
+      </div>
+    }

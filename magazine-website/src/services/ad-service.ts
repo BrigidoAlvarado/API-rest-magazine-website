@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Amount } from "../entities/amount";
 import { RestConstants } from "./rest-constants";
-import { TextAd } from "../entities/ad/text-ad";
 import { AuthService } from "./auth";
 import { Ad } from "../entities/ad/ad";
 
@@ -35,6 +34,16 @@ export class AdService {
     updateStatus(ad:Ad): Observable<void> {
         const headers = this.auth.getHeader();
         return this.http.post<void>(this.restConstants.API_URL+'ad',ad, { headers });
+    }
+
+    getRandomAd(type: string, url: string): Observable<Ad> {
+        const headers = this.auth.getHeader();
+        return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url}`, { headers });
+    }
+
+    getRandomAdWhitEditor(type: string, url: string, editor: string): Observable<Ad> {
+        const headers = this.auth.getHeader();
+        return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url}/${editor}`, { headers });
     }
 
 }

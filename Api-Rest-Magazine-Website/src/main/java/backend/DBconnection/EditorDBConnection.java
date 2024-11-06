@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,17 +21,17 @@ import java.util.List;
  */
 public class EditorDBConnection extends DBConnection {
 
-    public List<Magazine> getPublisedMagazineList(String userName) throws ServerException{
+    public List<Magazine> getPublisedMagazineList(String userName) throws ServerException {
         List<Magazine> list = new ArrayList<>();
-        String sql = 
-                "SELECT id, tittle, comment_status, subscription_status FROM magazine WHERE ( editor_user_name = ? )";
+        String sql
+                = "SELECT id, tittle, comment_status, subscription_status FROM magazine WHERE ( editor_user_name = ? )";
         try {
             getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, userName);
             ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Magazine magazine = new Magazine();
                 magazine.setId(rs.getInt("id"));
                 magazine.setTittle(rs.getString("tittle"));
@@ -41,11 +42,11 @@ public class EditorDBConnection extends DBConnection {
             }
             return list;
         } catch (SQLException e) {
-            throw new ServerException("Error al cargar las revista publicadas de: "+userName);
+            throw new ServerException("Error al cargar las revista publicadas de: " + userName);
         }
     }
-    
-    public void saveLockAd (LockAd lockAd, String userName, Connection connection) throws SQLException {
+
+    public void saveLockAd(LockAd lockAd, String userName, Connection connection) throws SQLException {
         String sql = "INSERT INTO lock_ad  (editor, days, date, cost ) VALUES ( ? , ?, ?, ? )";
         SetConnection(connection);
         PreparedStatement ps = connection.prepareStatement(sql);
@@ -55,8 +56,8 @@ public class EditorDBConnection extends DBConnection {
         ps.setDouble(4, lockAd.getCost());
         ps.executeUpdate();
     }
-    
-    public void updateCommentAndLikesStatus(Magazine magazine) throws ServerException{
+
+    public void updateCommentAndLikesStatus(Magazine magazine) throws ServerException {
         String sql = " UPDATE magazine SET comment_status = ?  WHERE ( id = ? )";
         try {
             getConnection();
@@ -66,11 +67,11 @@ public class EditorDBConnection extends DBConnection {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new ServerException("Error al cambiar el estado de comentarios y me gusta de la revista con id: "+magazine.getId());
+            throw new ServerException("Error al cambiar el estado de comentarios y me gusta de la revista con id: " + magazine.getId());
         }
     }
-    
-    public void updateSubscriptionStatus(Magazine magazine) throws ServerException{
+
+    public void updateSubscriptionStatus(Magazine magazine) throws ServerException {
         String sql = " UPDATE magazine SET subscription_status = ?  WHERE ( id = ? )";
         try {
             getConnection();
@@ -80,7 +81,50 @@ public class EditorDBConnection extends DBConnection {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new ServerException("Error al cambiar el estado las suscripciones de la revista con id: "+magazine.getId());
+            throw new ServerException("Error al cambiar el estado las suscripciones de la revista con id: " + magazine.getId());
+        }
+    }
+
+    public List<Integer> getIdExpireLockAds() throws ServerException{
+        List<Integer> idList = new ArrayList<>();
+        String sql
+                = " select id from lock_ad where ( datediff( curdate(), date ) > days );";
+        try {
+            getConnection();
+            Statement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                idList.add(rs.getInt("id"));
+            }
+            return idList;
+        } catch (SQLException e) {
+            throw new ServerException("Error al cargar el id de todos los lock_ad expirados");
+        }
+    }
+    
+    public void setExpireLockAd(int id) throws ServerException {
+        String sql 
+                = "update lock_ad set expire_status = false where id = ?";
+        try {
+            getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new ServerException("Error al actualizar el estado de los lock_ad expirados");
+        }
+    }
+    
+    public boolean hasLockAd(String userName) throws ServerException {
+        String sql = "select expire_status from lock_ad where ( editor = ? ) and ( expire_status = true )";
+        try {
+            getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, userName);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            throw new ServerException("Error al validar si existen bloqueos de anuncio para el editor: "+userName);
         }
     }
 }
