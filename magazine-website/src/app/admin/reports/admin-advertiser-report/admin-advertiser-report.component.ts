@@ -42,4 +42,14 @@ export class AdminAdvertiserReportComponent implements OnInit{
       }
     });
   }
+
+  calculteIncome(): number {
+    let total = 0;
+    this.advertiserList.forEach( advertiser => {
+      advertiser.adList.forEach( ad => {
+        total += ad.cost;
+      });
+    });
+    return total;
+  }
 }

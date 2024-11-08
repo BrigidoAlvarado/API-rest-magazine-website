@@ -5,6 +5,7 @@
 package backend.DBconnection;
 
 import backend.exception.ServerException;
+import backend.model.dto.Filter;
 import backend.model.dto.LockAd;
 import backend.model.dto.Magazine;
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +127,33 @@ public class EditorDBConnection extends DBConnection {
             return rs.next();
         } catch (SQLException e) {
             throw new ServerException("Error al validar si existen bloqueos de anuncio para el editor: " + userName);
+        }
+    }
+
+    public List<LockAd> getLockAdsBougth(Filter filter, String userName) throws ServerException {
+        List<LockAd> lockAdList = new ArrayList<>();
+        String sql
+                = " select * from lock_ad "
+                + " where (editor = ? ) "
+                + " and ( ? is null or date >= ? ) "
+                + " and ( ? is null or date <= ? ) ";
+        try (Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setString(1, userName);
+            ps.setString(2, filter.getStartDate());
+            ps.setString(3, filter.getStartDate());
+            ps.setString(4, filter.getEndDate());
+            ps.setString(5, filter.getEndDate());
+            ResultSet rs = ps.executeQuery();
+            while( rs.next() ){
+                LockAd lockAd = new LockAd();
+                lockAd.setDate(LocalDate.parse(rs.getString("date")));
+                lockAd.setDays(rs.getInt("days"));
+                lockAd.setCost(rs.getDouble("cost"));
+                lockAdList.add(lockAd);
+            }
+            return lockAdList;
+        } catch (SQLException e) {
+            throw new ServerException("Error al obtener los bloqueos de anuncios comprados por el editor: "+userName);
         }
     }
 }

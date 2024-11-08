@@ -9,11 +9,13 @@ package backend.enums;
  * @author brigidoalvarado
  */
 public enum Global {
-        magazine,
-        textAd,
-        textImageAd,
-        videoAd,
-        bank,
-        lockAd,
-        Authorization;
+    magazine,
+    textAd,
+    textImageAd,
+    videoAd,
+    bank,
+    lockAd;
+
+    public static final String AUTHORIZATION = "Authorization";
+
 }

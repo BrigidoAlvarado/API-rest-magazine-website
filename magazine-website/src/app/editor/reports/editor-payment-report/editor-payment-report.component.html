@@ -1,0 +1,56 @@
+<app-editor-header></app-editor-header>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary mt-3">
+    <div class="container-fluid">
+      <a class="navbar-brand" >Reporte de Pagos</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex" role="search" [formGroup]="form" (ngSubmit)="submit()">
+        
+          <input 
+            class="form-control me-2" 
+            type="date" 
+            placeholder="inicio" 
+            aria-label="inicio"
+            formControlName="startDate"
+            >
+          <input 
+            class="form-control me-2" 
+            type="date" 
+            placeholder="final" 
+            aria-label="final"
+            formControlName="endDate">
+          <button class="btn btn-outline-success" >Buscar</button>
+        </form>
+      
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    <h2 class="text-center text-primary">Reporte Pagos</h2>
+    <section>
+        <table class="table table-striped table-hover table-bordered text-center ">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Dias activo</th>
+                    <th scope="col">cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (lock of lockAdList; track $index) {
+                    <tr>
+                        <th scope="row">{{$index + 1}}</th>
+                        <th scope="row">{{lock.date}}</th>
+                        <th scope="row">{{lock.days}}</th>
+                        <th scope="row">{{lock.cost}}</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="card-title">
+            Total: {{calculateTotal()}}
+        </div>
+    </section>
+</main>

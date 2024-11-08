@@ -105,4 +105,6 @@ public class BusinessDBConnection extends DBConnection {
             throw new ServerException("Error al obtener los ingresos de los bloqueos de anuncio");
         }
     }
+    
+    
 }

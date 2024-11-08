@@ -33,6 +33,7 @@ import { IsAdvertiser } from '../services/validate-role/is-advertiser';
 import { IsSubscriber } from '../services/validate-role/is-subscriber';
 import { EffectivityAdComponent as AdminEffectivityAdComponent } from './admin/reports/effectivity-ad/effectivity-ad.component';
 import { CommentMagazineReportComponent } from './admin/reports/comment-magazine-report/comment-magazine-report.component';
+import { EditorPaymentReportComponent } from './editor/reports/editor-payment-report/editor-payment-report.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -170,6 +171,12 @@ export const routes: Routes = [
         path: 'editor-business',
         title: 'Tienda',
         component: EditorBusinessViewComponent,
+        canActivate: [IsEditor]
+    },
+    {
+        path: 'editor-payment-report',
+        title: 'Reporte de Pagos',
+        component: EditorPaymentReportComponent,
         canActivate: [IsEditor]
     },
     //RUTAS DEL SUSCRIPTOR
