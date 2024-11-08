@@ -5,6 +5,7 @@
 package backend.controllers;
 
 import backend.DBconnection.TagDBConnection;
+import backend.exception.ServerException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -27,7 +28,7 @@ public class TagController {
         }
     }
     
-    public void saveTagInMagazine(String [] tags, int magazineId, Connection connection) throws SQLException{
+    public void saveTagInMagazine(String [] tags, int magazineId, Connection connection) throws SQLException, ServerException{
         for (String tag : tags) {
             try {
                 dBConnection.saveTagInMagazine(tag, magazineId, connection);

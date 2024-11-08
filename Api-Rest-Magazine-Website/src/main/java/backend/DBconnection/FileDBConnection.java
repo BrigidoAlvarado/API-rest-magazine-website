@@ -6,6 +6,7 @@ package backend.DBconnection;
 
 import backend.exception.ServerException;
 import backend.model.dto.ApiFile;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,9 +23,11 @@ public class FileDBConnection extends DBConnection {
         ApiFile file = new ApiFile();
         String sql
                 = "SELECT photo, photo_content_type FROM " + userType + " WHERE ( user_name = ?)";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try(
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                )  {
+            
             ps.setString(1, userName);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -42,9 +45,11 @@ public class FileDBConnection extends DBConnection {
         ApiFile file = new ApiFile();
         String sql
                 = " select * from ad where id = ? ";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ) {
+            
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -61,9 +66,11 @@ public class FileDBConnection extends DBConnection {
     public ApiFile getPdf(int id) throws ServerException{
         ApiFile file = new ApiFile();
         String sql = " select * from magazine_number where ( id = ? )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try(
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                )  {
+            
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -85,9 +92,11 @@ public class FileDBConnection extends DBConnection {
                 + " on magazine.id = magazine_number.magazine "
                 + " where ( magazine.id = ? ) ";
 
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ) {
+            
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

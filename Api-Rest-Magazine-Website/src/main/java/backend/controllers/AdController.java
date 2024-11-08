@@ -18,44 +18,46 @@ import java.util.List;
  *
  * @author brigidoalvarado
  */
-
 public class AdController {
+
     private final AdDBConnection adDBConnection = new AdDBConnection();
     private final ExpirationAd expirationAd = new ExpirationAd();
-    
-    public List<Ad> getPurchasedAds(Credential credential) throws ServerException, InvalidDataException{
+
+    public List<Ad> getPurchasedAds(Credential credential) throws ServerException, InvalidDataException {
         expirationAd.validate();
         return adDBConnection.getPurchasedAds(credential);
     }
-    
+
     public Ad getAdById(int id) throws InvalidDataException, ServerException {
         return adDBConnection.getAdById(id);
     }
-    
-    public void updateStatus(Credential credential, Ad ad)throws InvalidDataException, ServerException{
+
+    public void updateStatus(Credential credential, Ad ad) throws InvalidDataException, ServerException {
         ad.validate();
         adDBConnection.updateStatus(credential, ad);
     }
-    
-    public Ad getRandomAd(String type, String url) throws ServerException, InvalidDataException{
+
+    public Ad getRandomAd(String type, String url) throws ServerException, InvalidDataException {
         TransactionAd transactionAd = new TransactionAd();
-        
+
         expirationAd.validate();
         Ad ad = adDBConnection.getRandomAd(type);
-        transactionAd.increaseView(ad.getId(), url);            
+        transactionAd.increaseView(ad.getId(), url);
         return ad;
     }
-    
-    public Ad getRandomAd(String type, String url, String editor) throws ServerException, InvalidDataException{
+
+    public Ad getRandomAd(String type, String url, String editor) throws ServerException, InvalidDataException {
         TransactionAd transactionAd = new TransactionAd();
         ExpirationLockAd expirationLockAd = new ExpirationLockAd();
         Ad ad = new Ad();
-        
-        if (expirationLockAd.existLokAd(editor)) {
-         expirationAd.validate();
-        ad = adDBConnection.getRandomAd(type);
-        transactionAd.increaseView(ad.getId(), url);   
+        System.out.println("editor: " + editor);
+        if (!expirationLockAd.existLokAd(editor)) {
+            System.out.println("el editor no tiene bloqueador");
+            expirationAd.validate();
+            ad = adDBConnection.getRandomAd(type);
+            transactionAd.increaseView(ad.getId(), url);
         }
+        System.out.println("el editor tiene bloqueador");
         return ad;
     }
 }

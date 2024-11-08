@@ -31,6 +31,8 @@ import { IsAdmin } from '../services/validate-role/is-admin';
 import { IsEditor } from '../services/validate-role/is-editor';
 import { IsAdvertiser } from '../services/validate-role/is-advertiser';
 import { IsSubscriber } from '../services/validate-role/is-subscriber';
+import { EffectivityAdComponent as AdminEffectivityAdComponent } from './admin/reports/effectivity-ad/effectivity-ad.component';
+import { CommentMagazineReportComponent } from './admin/reports/comment-magazine-report/comment-magazine-report.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -95,6 +97,18 @@ export const routes: Routes = [
         path: 'admin-popular-report',
         title: 'Reporte Revistas Populares',
         component: AdminPopularReportComponent,
+        canActivate: [IsAdmin]
+    },
+    {
+        path: 'app-effectivity-ad',
+        title: 'Reporte Efectividad Anucios',
+        component: AdminEffectivityAdComponent,
+        canActivate: [IsAdmin]
+    },
+    {
+        path: 'comment-magazine-report',
+        title: 'Reporte Revistas Comentadas',
+        component: CommentMagazineReportComponent,
         canActivate: [IsAdmin]
     },
     //RUTAS DEL ANUNCIANTE

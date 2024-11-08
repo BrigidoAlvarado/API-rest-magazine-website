@@ -6,11 +6,13 @@ package backend.DBconnection;
 
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
+import backend.model.dto.Filter;
 import backend.model.dto.Magazine;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +35,9 @@ public class SubscriberDBConnection extends DBConnection {
                 + " ( select magazine_id from subscribed_magazine where subscriber_user_name = ? ))";
         System.out.println(sqlSelect);
         System.out.println(userName);
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sqlSelect);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sqlSelect);) {
+
             ps.setString(1, tagFilter);
             ps.setString(2, tagFilter);
             ps.setString(3, categoryFilter);
@@ -60,9 +62,9 @@ public class SubscriberDBConnection extends DBConnection {
 
     public void subscribe(Magazine magazine, String userName) throws ServerException {
         String sqlInsert = "insert into subscribed_magazine (subscriber_user_name, magazine_id, date) values (?, ?, ?)";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sqlInsert);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sqlInsert);) {
+
             ps.setString(1, userName);
             ps.setInt(2, magazine.getId());
             ps.setString(3, magazine.getDate().toString());
@@ -75,9 +77,9 @@ public class SubscriberDBConnection extends DBConnection {
 
     public boolean isSuscriptionActive(int id) throws ServerException, InvalidDataException {
         String sql = " select subscription_status from magazine where id = ? ";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -93,11 +95,11 @@ public class SubscriberDBConnection extends DBConnection {
         List<Magazine> magazineList = new ArrayList<>();
         String sqlSelect
                 = "select id, tittle  from magazine join subscribed_magazine on id = magazine_id where subscriber_user_name = ?";
-        try {
-            getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect);
-            preparedStatement.setString(1, userName);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sqlSelect);) {
+
+            ps.setString(1, userName);
+            ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 Magazine magazine = new Magazine();
                 magazine.setId(resultSet.getInt("id"));
@@ -115,9 +117,9 @@ public class SubscriberDBConnection extends DBConnection {
         FileDBConnection dBConnection = new FileDBConnection();
         Magazine magazine = new Magazine();
         String sql = "select  magazine.* , is_liked  from magazine join subscribed_magazine on id = magazine_id where id = ?";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -137,9 +139,9 @@ public class SubscriberDBConnection extends DBConnection {
 
     public boolean isCommentActive(int id) throws ServerException, InvalidDataException {
         String sql = " select comment_status from magazine where id = ? ";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -150,24 +152,24 @@ public class SubscriberDBConnection extends DBConnection {
             throw new ServerException("Error al obtener el estado de suscripcion de la revista con id:" + id);
         }
     }
-    
-    public void comment(int id, String comment, String userName) throws ServerException{
-        String sql = 
-                "INSERT INTO comment ( magazine_id, subscriber_user_name, content ) VALUES ( ? , ? , ?)";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+
+    public void comment(int id, String comment, String userName, LocalDate date) throws ServerException {
+        String sql
+                = "INSERT INTO comment ( magazine_id, subscriber_user_name, content, date ) VALUES ( ? , ? , ?, ? )";
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, id);
             ps.setString(2, userName);
             ps.setString(3, comment);
+            ps.setString(4, date.toString());
             ps.executeUpdate();
         } catch (Exception e) {
         }
     }
 
-    public void saveLike( int id, String userName, Connection connection) throws SQLException{
-        String sql = 
-                " UPDATE subscribed_magazine SET is_liked = true WHERE ( subscriber_user_name = ? ) and ( magazine_id = ? );";
+    public void saveLike(int id, String userName, Connection connection) throws SQLException {
+        String sql
+                = " UPDATE subscribed_magazine SET is_liked = true WHERE ( subscriber_user_name = ? ) and ( magazine_id = ? );";
         SetConnection(connection);
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, userName);
@@ -175,4 +177,27 @@ public class SubscriberDBConnection extends DBConnection {
         ps.executeUpdate();
         System.out.println("se is_liked = true");
     }
-} 
+
+    public List<String> getMagazineComments(Filter filter, int magazineId) throws ServerException {
+        List<String> commentList = new ArrayList<>();
+        String sql
+                = " select content from comment "
+                + " where ( magazine_id = ? ) "
+                + " and ( ? is null or date >= ? ) "
+                + " and ( ? is null or date <= ? ) ";
+        try (Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, magazineId);
+            ps.setString(2, filter.getStartDate());
+            ps.setString(3, filter.getStartDate());
+            ps.setString(4, filter.getEndDate());
+            ps.setString(5, filter.getEndDate());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                commentList.add(rs.getString("content"));
+            }
+            return commentList;
+        } catch (SQLException e) {
+            throw new ServerException("Error al cargar los comentarios de la revista con id: "+magazineId);
+        }
+    }
+}

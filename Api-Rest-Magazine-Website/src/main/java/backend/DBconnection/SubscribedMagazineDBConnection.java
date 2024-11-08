@@ -7,6 +7,7 @@ package backend.DBconnection;
 import backend.exception.ServerException;
 import backend.model.dto.Filter;
 import backend.model.dto.Magazine;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,9 +32,11 @@ public class SubscribedMagazineDBConnection extends DBConnection {
                 + " order by total desc "
                 + " limit 5 ";
         System.out.println("st date:" +filter.getStartDate());
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ) {
+            
             ps.setString(1, filter.getStartDate());
             ps.setString(2, filter.getStartDate());
             ps.setString(3, filter.getEndDate());
@@ -54,6 +57,5 @@ public class SubscribedMagazineDBConnection extends DBConnection {
             throw new ServerException("Error al obtener las 5 revistas mas populares");
         }
     }
-    
     
 }

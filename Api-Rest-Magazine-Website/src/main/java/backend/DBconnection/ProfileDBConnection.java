@@ -9,6 +9,7 @@ import backend.model.UserType;
 import backend.model.dto.ApiFile;
 import backend.model.dto.Credential;
 import backend.model.dto.Profile;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,11 +23,13 @@ public class ProfileDBConnection extends DBConnection{
     public Profile getProfile( String userName, UserType userType) throws ServerException{
         Profile profile = null;
         String sqlSelect = "select * from " + userType.name() + " where user_name = ? ";
-        try {
-            getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect);
-            preparedStatement.setString(1, userName);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sqlSelect);
+                ) {
+            
+            ps.setString(1, userName);
+            ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 profile = new Profile();
                 profile.setUserName(resultSet.getString("user_name"));
@@ -57,9 +60,11 @@ public class ProfileDBConnection extends DBConnection{
                 + " hobbies = ? , "                   //5
                 + " photo_content_type = ? "  //6
                 + " where user_name = ?";     //7
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sqlUpdate);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sqlUpdate);
+                ) {
+            
             ps.setString(1, profile.getTastes());
             ps.setBlob(  2, photo.getInputStream());
             ps.setString(3, profile.getTopicOfInterest());
@@ -78,9 +83,11 @@ public class ProfileDBConnection extends DBConnection{
         String sqlUpdate =
                 " update " + credential.getUserType().name() + " set tastes = ?, topic_of_interest = ? ,  description = ? , hobbies = ?  where user_name = ?";   
 
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sqlUpdate);
+        try(
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sqlUpdate);
+                )  {
+            
             ps.setString(1, profile.getTastes());
             ps.setString(2, profile.getTopicOfInterest());
             ps.setString(3, profile.getDescription());

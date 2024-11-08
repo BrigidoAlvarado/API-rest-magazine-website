@@ -6,6 +6,7 @@ package backend.transactions;
 
 import backend.DBconnection.AdDBConnection;
 import backend.DBconnection.DBConnection;
+import backend.DBconnection.DBConnectionSingleton;
 import backend.DBconnection.GlobalDBConnection;
 import backend.DBconnection.ImageAdDBConnection;
 import backend.DBconnection.TextAdDBConnection;
@@ -17,6 +18,7 @@ import backend.model.dto.Credential;
 import backend.model.dto.ImageAd;
 import backend.model.dto.TextAd;
 import backend.model.dto.VideoAd;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -97,14 +99,16 @@ public class TransactionAd extends DBConnection {
     public void increaseView(int id, String url) throws ServerException {
         AdDBConnection adDBConnection = new AdDBConnection();
         adViewDBConnection viewDBConnection = new adViewDBConnection();
-        try {
+        Connection cnl;
+        try(
+                 Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                ) {
             if (id > 0) {
-                getConnection();
-                connection.setAutoCommit(false);
-                adDBConnection.increaseScreenTime(id, connection);
-                viewDBConnection.saveView(id, url, connection);
-                connection.commit();
-                connection.setAutoCommit(true);
+                cn.setAutoCommit(false);
+                adDBConnection.increaseScreenTime(id, cn);
+                viewDBConnection.saveView(id, url, cn);
+                cn.commit();
+                cn.setAutoCommit(true);
             }
         } catch (SQLException e) {
             e.printStackTrace();

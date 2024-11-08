@@ -105,17 +105,16 @@ public class AdDBConnection extends DBConnection {
     }
     
     public void updateStatus(Credential credential, Ad ad) throws InvalidDataException, ServerException{
-        String sql = "update ad set state = ? where ( id = ? and kind = ? and state = true)";
+        String sql = " UPDATE ad SET state = ? WHERE (id = ?);";
         System.out.println("se actualizara al estado: "+ad.getStatus());
         try(
                 Connection cn = DBConnectionSingleton.getInstance().getConnection();
-                PreparedStatement st = cn.prepareStatement(sql);
+                PreparedStatement ps = cn.prepareStatement(sql);
                 ) {
             
-            st.setBoolean(1, ad.getStatus());
-            st.setInt(2, ad.getId());
-            st.setString(3, ad.getKindAd().name());
-            st.executeUpdate();
+            ps.setBoolean(1, ad.getStatus());
+            ps.setInt(2, ad.getId());
+            int i = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new ServerException("Error al actualizar el estado del anuncio: "+ad.getId());
@@ -124,7 +123,7 @@ public class AdDBConnection extends DBConnection {
     
     public Ad getRandomAd(String type) throws ServerException{
         Ad ad = new Ad();
-        String sql = " select * from ad where ( kind = ? ) order by rand() limit 1";
+        String sql = " select * from ad where ( kind = ? and state = true ) order by rand() limit 1";
         try (
                 Connection cn = DBConnectionSingleton.getInstance().getConnection();
                 PreparedStatement ps = cn.prepareStatement(sql);

@@ -17,7 +17,6 @@ export class LoginService{
   }
     
     public doLogin(credential: UserCredential): Observable<{ token: string }> {
-        console.log('antes de enviar el request');
         return this.httpClient.post<{ token: string }>(this.restConstants.API_URL+'login',credential);
     }
 }

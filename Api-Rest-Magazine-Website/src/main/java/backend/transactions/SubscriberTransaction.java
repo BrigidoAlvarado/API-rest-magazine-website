@@ -9,7 +9,6 @@ import backend.DBconnection.MagazineDBConnection;
 import backend.DBconnection.SubscriberDBConnection;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -26,7 +25,7 @@ public class SubscriberTransaction extends DBConnection{
             getConnection();
             connection.setAutoCommit(false);
             subscriberDBConnection.saveLike(id, userName, connection);
-            magazineDBConnection.increaseLikes(id);
+            magazineDBConnection.increaseLikes(id, connection);
             connection.commit();
             connection.setAutoCommit(true);
         }  catch (SQLException e) {

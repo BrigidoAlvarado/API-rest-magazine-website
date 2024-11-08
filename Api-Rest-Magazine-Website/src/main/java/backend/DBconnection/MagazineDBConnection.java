@@ -25,9 +25,9 @@ public class MagazineDBConnection extends DBConnection {
         TagDBConnection tagDBConnection = new TagDBConnection();
         Magazine magazine = new Magazine();
         String sql = " select * from magazine where ( id = ?)";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -77,9 +77,9 @@ public class MagazineDBConnection extends DBConnection {
     public List<Magazine> getNewPosts() throws ServerException {
         List<Magazine> magazines = new ArrayList<>();
         String sqlSelect = "select id, tittle from magazine where daily_cost is null ";
-        try {
-            getConnection();
-            Statement statement = connection.createStatement();
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); Statement statement = cn.prepareStatement(sqlSelect);) {
+
             ResultSet resultSet = statement.executeQuery(sqlSelect);
             while (resultSet.next()) {
                 Magazine magazine = new Magazine();
@@ -97,9 +97,9 @@ public class MagazineDBConnection extends DBConnection {
     public void setCost(int id, double cost) throws ServerException {
         System.out.println("se asignara: " + cost + " a " + id);
         String sqlUpdate = "update  magazine set daily_cost = ? where id = ?";
-        try {
-            getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlUpdate);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement preparedStatement = cn.prepareStatement(sqlUpdate);) {
+
             preparedStatement.setDouble(1, cost);
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
@@ -109,7 +109,7 @@ public class MagazineDBConnection extends DBConnection {
         }
     }
 
-    public void increaseLikes(int id) throws SQLException, ServerException {
+    public void increaseLikes(int id, Connection connection) throws SQLException, ServerException {
         int likes = getLikes(id);
         String sql
                 = " UPDATE magazine SET likes = ? WHERE ( id = ? );";
@@ -122,9 +122,9 @@ public class MagazineDBConnection extends DBConnection {
 
     public int getLikes(int id) throws ServerException {
         String sql = " select likes from magazine where ( id = ? )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -134,6 +134,36 @@ public class MagazineDBConnection extends DBConnection {
             throw new ServerException("error al obtener el numero de likes de la revista con id: " + id);
         } catch (SQLException e) {
             throw new ServerException("error al obtener el numero de likes de la revista con id: " + id);
+        }
+    }
+
+    public List<Magazine> getMoreCommentMagazineList(Filter filter) throws ServerException {
+        SubscriberDBConnection subscriberDBConnection = new SubscriberDBConnection();
+        MagazineDBConnection magazineDBConnection = new MagazineDBConnection();
+        List<Magazine> magazineList = new ArrayList<>();
+        String sql
+                = " select  magazine_id, count( * ) as total from comment "
+                + " where ( ? is null or date >= ? ) "
+                + " and    ( ? is null or date <= ? ) "
+                + " group by magazine_id "
+                + " order by total desc limit 5 ";
+        try (Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, filter.getStartDate());
+            ps.setString(2, filter.getStartDate());
+            ps.setString(3, filter.getEndDate());
+            ps.setString(4, filter.getEndDate());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Magazine magazine = new Magazine();
+                magazine.setId(rs.getInt("magazine_id"));
+                magazine = magazineDBConnection.getById(magazine.getId());
+                magazine.setComments(subscriberDBConnection.getMagazineComments(filter, magazine.getId()));
+                magazineList.add(magazine);
+            }
+            return magazineList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServerException("Error al cargar las 5 revistas mas comentadas");
         }
     }
 }

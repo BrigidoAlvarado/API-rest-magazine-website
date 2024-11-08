@@ -39,7 +39,6 @@ public class VideoAdResource {
             VideoAd videoAd) {
         AuthTokenHandler auth = new AuthTokenHandler();
    BuyAdController controller = new BuyAdController();
-    String AUTHORIZATION = "Authorization";
         try {
             System.out.println("en comprar video ad");
             auth.authToken(authorization);

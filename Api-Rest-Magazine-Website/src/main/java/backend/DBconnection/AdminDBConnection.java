@@ -6,6 +6,7 @@ package backend.DBconnection;
 
 import backend.exception.ServerException;
 import backend.model.dto.Magazine;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,15 +18,15 @@ import java.util.List;
  *
  * @author brigidoalvarado
  */
-public class AdminDBConnection extends DBConnection{
-    
-    public List<Magazine> getMagazineList() throws ServerException{
-        List<Magazine> magazineList = new  ArrayList<>();
-        String sql 
+public class AdminDBConnection extends DBConnection {
+
+    public List<Magazine> getMagazineList() throws ServerException {
+        List<Magazine> magazineList = new ArrayList<>();
+        String sql
                 = " select id, tittle, daily_cost from magazine";
-        try {
-            getConnection();
-            Statement st = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); 
+                Statement st = cn.prepareStatement(sql);) {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 Magazine magazine = new Magazine();
@@ -39,17 +40,19 @@ public class AdminDBConnection extends DBConnection{
             throw new ServerException("Error al cargar el costo diarioi de las revistas publicadas");
         }
     }
-    
+
     public void updateDailyCost(Magazine magazine) throws ServerException {
         String sql = " update magazine set daily_cost = ? where ( id = ? )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ) {
+            
             ps.setDouble(1, magazine.getDailyCost());
             ps.setInt(2, magazine.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new ServerException("erro al acrualizar el costo diario de la revista con id: "+magazine.getId());
+            throw new ServerException("erro al acrualizar el costo diario de la revista con id: " + magazine.getId());
         }
     }
 }

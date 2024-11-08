@@ -36,11 +36,13 @@ public class GlobalDBConnection extends DBConnection {
     
     public double getCost(Global globalCost )throws ServerException{
         String sql = "select cost from  global_cost where name = ?";
-        try {
-            getConnection();
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, globalCost.name());
-            ResultSet rs = st.executeQuery();
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ) {
+           
+            ps.setString(1, globalCost.name());
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getDouble("cost");
             } else {
@@ -53,9 +55,11 @@ public class GlobalDBConnection extends DBConnection {
     
     public void updateGlobalCost(Global kind, double cost) throws ServerException {
         String sql = " UPDATE global_cost SET cost = ? WHERE ( name = ? )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                )  {
+            
             ps.setDouble(1, cost);
             ps.setString(2, kind.name());
             ps.executeUpdate();

@@ -21,18 +21,21 @@ export class CommentComponent implements OnInit{
   constructor(private service: SubscriberService, private auth: AuthService, private builder:FormBuilder){}
 
   ngOnInit(): void {
-      this.form = this.builder.group({
-        comment: [null, [Validators.required]]
+
+    this.form = this.builder.group({
+        comment: [ null, [ Validators.required ] ],
+        date:    [ new Date().toISOString().split('T')[0], [ Validators.required ] ]
       });
   }
 
   submit(): void {
     if(this.form.valid){
       let comment = this.form.get('comment')?.value;
-      this.service.comment(this.id,comment).
+      let date = this.form.get('date')?.value;
+      this.service.comment(this.id,comment, date).
       subscribe({
         next: () => {
-          this.form.reset();
+          this.form.reset({date: [new Date().toISOString().split('T')[0]]});
           window.alert('Ha comentado exitosamente');
         }, 
         error: (error: any) => {

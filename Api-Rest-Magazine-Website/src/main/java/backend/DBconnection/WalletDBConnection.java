@@ -22,10 +22,11 @@ public class WalletDBConnection extends DBConnection  {
         String sqlSelect = 
                 "SELECT money FROM "+credential.getUserType().name()+"  WHERE ( user_name  =  ? )";
         
-        try {
-            getConnection();
-            //Obtener cantidad de dinero Actual;
-            PreparedStatement ps = connection.prepareStatement(sqlSelect);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sqlSelect);
+                ) {
+            
             ps.setString(1, credential.getUserName());
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
@@ -42,12 +43,14 @@ public class WalletDBConnection extends DBConnection  {
     public void updateMoney(Credential credential, Amount amount) throws ServerException{
         String sqlUpdate = 
                 "UPDATE "+credential.getUserType()+"  SET money =  ?  WHERE ( user_name  =  ? )";
-        try {
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sqlUpdate);
+                ) {
             //Actualizar la cantidad de dinero
-            PreparedStatement psUpdate = connection.prepareStatement(sqlUpdate);
-            psUpdate.setDouble(1, amount.getAmount());
-            psUpdate.setString(2, credential.getUserName());
-            psUpdate.executeUpdate();
+            ps.setDouble(1, amount.getAmount());
+            ps.setString(2, credential.getUserName());
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw  new ServerException("Erro al actualizar el dinero del usuario: "+ credential.getUserName());
         }

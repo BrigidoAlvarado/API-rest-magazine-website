@@ -1,0 +1,82 @@
+<app-admin-header></app-admin-header>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary mt-3">
+    <div class="container-fluid">
+      <a class="navbar-brand" >Reporte de Efectividad de Anuncios</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="d-flex" role="search" [formGroup]="form" (ngSubmit)="submit()">
+                <input 
+                    class="form-control me-2" 
+                    type="date" 
+                    placeholder="inicio" 
+                    aria-label="inicio"
+                    formControlName="startDate"
+                >
+                <input 
+                    class="form-control me-2" 
+                    type="date" 
+                    placeholder="final" 
+                    aria-label="final"
+                    formControlName="endDate"
+                >
+                <button class="btn btn-outline-success" >Buscar</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<main>
+
+    <section>
+        <h1 class="text-center text-dark mt-3">Efectividad de los anuncios</h1>
+        <div class="container" style="margin: 3%;">
+            @for (advertiser of advertiserList; track $index) {
+                <div class="card text-bg-primary mt-3 container">
+                    <h2 class="card-title text-center mt-1">{{$index + 1}}. Anuncios de: {{advertiser.userName}}</h2>
+                    <div class="card-body">
+                        @for (adView of advertiser.adViewList; track $index) {
+                            <table class="table table-striped table-hover table-bordered text-center">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">No.</th>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Vistas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{adView.id}}</td>
+                                            <td>{{adView.type}}</td>
+                                            <td>{{adView.views}}</td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                                
+                            <table class="table table-striped table-hover table-bordered text-center">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">No.</th>
+                                        <th scope="col">Rutas donde se mostro</th>
+                                    </tr>
+                                </thead>
+                                    @for (ruta of adView.urls; track $index) {
+                                            <tbody>
+                                                    <tr>
+                                                        <td>{{$index +1}}</td>
+                                                        <td>{{ruta}}</td>
+                                                    </tr>
+                                            </tbody>
+                                    }
+                                </table>
+
+                        }
+
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+</main>

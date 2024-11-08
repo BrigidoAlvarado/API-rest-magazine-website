@@ -7,7 +7,6 @@ package backend.DBconnection;
 import backend.enums.Global;
 import backend.model.dto.Credential;
 import backend.model.dto.ImageAd;
-import backend.model.dto.VideoAd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

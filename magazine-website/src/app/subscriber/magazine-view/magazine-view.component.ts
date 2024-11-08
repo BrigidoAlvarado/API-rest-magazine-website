@@ -18,7 +18,7 @@ import { ShowAdComponent } from "../../ad/show-ad/show-ad.component";
   styleUrl: './magazine-view.component.css'
 })
 export class MagazineViewComponent implements OnInit {
-  url: string = 'magazine/:id';
+  url: string = 'magazine';
   id!: number;
   magazine!: Magazine;
   fileSelected!: number;

@@ -23,7 +23,7 @@ export class SubscribeComponent implements OnInit {
 
   ngOnInit(): void {
       this.form = this.formBuilder.group({
-        date: [null, [Validators.required]]
+        date: [new Date().toISOString().split('T')[0], [Validators.required]]
       });
   }
 
@@ -33,7 +33,7 @@ export class SubscribeComponent implements OnInit {
       magazine.id = this.magazine.id;
       this.service.subscribe(magazine).subscribe({
         next: () => {
-          window.alert("subscripci[on exitosa");
+          window.alert("suscripcion exitosa");
           window.location.reload();
         },
         error: (error: any) => {

@@ -28,7 +28,7 @@
             <ul class="list-group">
                 @for (magazine of magazineList; track $index) {
                     <li class="list-group-item">
-                        <app-magazine-explorer-view [magazine]="magazine"></app-magazine-explorer-view>
+                        <small>{{$index + 1}}.</small><app-magazine-explorer-view [magazine]="magazine"></app-magazine-explorer-view>
                     </li>
                 }
             </ul>

@@ -4,6 +4,7 @@
  */
 package backend.model.dto;
 
+import backend.exception.InvalidDataException;
 import java.time.LocalDate;
 
 /**
@@ -39,6 +40,22 @@ public class Filter {
     public void setKind(String kind) {
         this.kind = kind;
     }
-    
-    
+
+    public void datesValidate() throws InvalidDataException {
+        try {
+            if (startDate == null || startDate.equals("")) {
+                startDate = null;
+            } else {
+                LocalDate.parse(startDate);
+            }
+            if (endDate == null || endDate.equals("")) {
+                endDate = null;
+            } else {
+                LocalDate.parse(endDate);
+            }
+        } catch (IllegalArgumentException e) {
+            throw new InvalidDataException("Las fechas son invalidas: " + startDate + " " + endDate);
+        }
+    }
+
 }

@@ -31,7 +31,16 @@ public class Magazine {
     private List<Integer> idFilesList;
     private ApiFile file;
     private List<Profile> subscriberList;
+    private List<String> comments;
 
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
+    
     public List<Integer> getIdFilesList() {
         return idFilesList;
     }

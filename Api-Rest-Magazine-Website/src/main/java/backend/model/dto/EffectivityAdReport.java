@@ -10,11 +10,18 @@ import java.util.List;
  *
  * @author brigidoalvarado
  */
-public class Advertiser {
+public class EffectivityAdReport {
 
-    private List<Ad> adList;
-    private String userName;
+    private String advertiser;
     private List<AdView> adViewList;
+
+    public String getAdvertiser() {
+        return advertiser;
+    }
+
+    public void setAdvertiser(String advertiser) {
+        this.advertiser = advertiser;
+    }
 
     public List<AdView> getAdViewList() {
         return adViewList;
@@ -24,21 +31,5 @@ public class Advertiser {
         this.adViewList = adViewList;
     }
     
-
-    public List<Ad> getAdList() {
-        return adList;
-    }
-
-    public void setAdList(List<Ad> adList) {
-        this.adList = adList;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
+    
 }

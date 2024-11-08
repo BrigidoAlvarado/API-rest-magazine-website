@@ -11,6 +11,7 @@ import backend.DBconnection.GlobalDBConnection;
 import backend.DBconnection.MagazineDBConnection;
 import backend.DBconnection.SubscribedMagazineDBConnection;
 import backend.enums.Global;
+import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Advertiser;
 import backend.model.dto.EarningsReport;
@@ -37,7 +38,7 @@ public class AdminReportsController {
         report.calculateTotalProfit();
         return report;
     }
-    
+
     public List<Advertiser> getAdvertiserReport(String userName) throws ServerException {
         AdReportsDBConnection dBConnection = new AdReportsDBConnection();
         AdvertiserDBConnection advertiserDBConnection = new AdvertiserDBConnection();
@@ -47,10 +48,22 @@ public class AdminReportsController {
         }
         return advertiserList;
     }
-    
+
     public List<Magazine> getPopularMagazinesReport(Filter filter) throws ServerException {
         SubscribedMagazineDBConnection dBConnection = new SubscribedMagazineDBConnection();
         List<Magazine> magazineList = dBConnection.getPopularMagazines(filter);
         return magazineList;
+    }
+
+    public List<Advertiser> getEffectivityAdReportList(Filter filter) throws ServerException, InvalidDataException {
+        AdvertiserDBConnection dBConnection  = new AdvertiserDBConnection();
+        filter.datesValidate();
+        return dBConnection.getEffectivityAdList(filter);
+    }
+    
+    public List<Magazine> getCommentMagazineReport( Filter filter) throws ServerException, InvalidDataException {
+        MagazineDBConnection dBConnection = new MagazineDBConnection();
+        filter.datesValidate();
+        return dBConnection.getMoreCommentMagazineList(filter);
     }
 }

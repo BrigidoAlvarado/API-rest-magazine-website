@@ -21,20 +21,21 @@ public class MagazineNumberDBConnection extends DBConnection{
     
     public void saveFirstNumber(int id, ApiFile file, Connection connection) throws SQLException{
         SetConnection(connection);
-        save(id, file);
+        save(id, file, connection);
     }
     
     public void saveNumber(int id, ApiFile file) throws ServerException {
-        try {
-            getConnection();
-            save(id, file);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                ) {
+            save(id, file, cn);
         } catch (SQLException e) {
             throw new ServerException("Error al guardar un nuevo numeor de la revista con id: "+id);
         }
     }
     
-    private void save(int id, ApiFile file) throws SQLException{
-        PreparedStatement ps = connection.prepareStatement(sqlInsert);
+    private void save(int id, ApiFile file, Connection conn) throws SQLException{
+        PreparedStatement ps = conn.prepareStatement(sqlInsert);
         ps.setInt(1, id);
         ps.setBlob(2, file.getInputStream());
         ps.setString(3, file.getContentType());

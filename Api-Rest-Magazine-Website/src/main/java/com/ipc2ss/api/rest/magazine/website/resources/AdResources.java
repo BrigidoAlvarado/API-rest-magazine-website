@@ -134,7 +134,7 @@ public class AdResources {
         AuthTokenHandler ath = new AuthTokenHandler();
         AdController controller = new AdController();
         try {
-        
+            System.out.println("en get ad random with editor");
             ath.authToken(authorization);
             Ad ad = controller.getRandomAd(type, url, editor);
             return Response.ok(ad).build();

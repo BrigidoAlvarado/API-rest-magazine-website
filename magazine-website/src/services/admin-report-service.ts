@@ -8,6 +8,7 @@ import { Filter } from "../entities/filter";
 import { Ad } from "../entities/ad/ad";
 import { Advertiser } from "../entities/advertiser";
 import { Magazine } from "../entities/magazine";
+import { AdView } from "../entities/ad/adView";
 
 @Injectable({
     providedIn: 'root'
@@ -42,4 +43,13 @@ export class AdminReportService {
         return this.http.post<Magazine[]> (`${this.URL}/popular`, filter, { headers });
     }
 
+    getEffectivityAdReport( filter: Filter): Observable<Advertiser []> {
+        const headers = this.auth.getHeader();
+        return this.http.post<Advertiser  []> (`${this.URL}/effectivity-ad`, filter, { headers });
+    }
+
+    getCommentMagazineReport(filter: Filter): Observable< Magazine[] >{
+        const headers = this.auth.getHeader();
+        return this.http.post< Magazine[] > (`${this.URL}/comments`, filter, { headers });
+    }
 }

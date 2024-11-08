@@ -59,7 +59,7 @@ public class AdminResource {
             authTokenHandler.authToken(authorization);
             adminController.updateDailyCost(magazine);
             return Response.status(Response.Status.ACCEPTED).build();
-        }  catch (ServerException e) {
+        } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (AccessException e) {

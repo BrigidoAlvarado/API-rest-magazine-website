@@ -14,6 +14,7 @@
         <div class="modal-body">
 
             <form [formGroup]="form" (ngSubmit)="submit()">
+                <input type="date" formControlName="date" class="form-control">
                 <label class="text-center">Ingrese el contenido del comentario</label>
                 <textarea class="form-control" formControlName="comment" rows="6"></textarea>
                 <button class="btn btn-primary mt-3" [disabled]="form.invalid">Comentar</button>

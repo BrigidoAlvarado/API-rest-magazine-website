@@ -7,8 +7,8 @@ package com.ipc2ss.api.rest.magazine.website.resources;
 import backend.AuthTokenHandler;
 import backend.DBconnection.AdReportsDBConnection;
 import backend.controllers.AdminReportsController;
-import backend.enums.Global;
 import backend.exception.AccessException;
+import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Ad;
 import backend.model.dto.Advertiser;
@@ -85,7 +85,7 @@ public class AdminReportsResource {
             ath.authToken(authorization);
             List<Magazine> magazineList = controller.getPopularMagazinesReport(filter);
             return Response.ok(magazineList).build();
-        }catch (ServerException e) {
+        } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (AccessException e) {
@@ -112,6 +112,52 @@ public class AdminReportsResource {
         } catch (AccessException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @POST
+    @Path("effectivity-ad")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEffectivityResport(
+            @HeaderParam(AUTHORIZATION) String authorization,
+            Filter filter) {
+        try {
+            ath.authToken(authorization);
+            List<Advertiser> advetiserList = controller.getEffectivityAdReportList(filter);
+            return Response.ok(advetiserList).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+    }
+
+    @POST
+    @Path("comments")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCommentMagazineReport(
+            @HeaderParam(AUTHORIZATION) String authorization,
+            Filter filter) {
+        try {
+            ath.authToken(authorization);
+            List<Magazine> magazineList = controller.getCommentMagazineReport(filter);
+            return Response.ok(magazineList).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
     }
 }

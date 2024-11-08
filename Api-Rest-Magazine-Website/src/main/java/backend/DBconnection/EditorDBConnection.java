@@ -25,9 +25,9 @@ public class EditorDBConnection extends DBConnection {
         List<Magazine> list = new ArrayList<>();
         String sql
                 = "SELECT id, tittle, comment_status, subscription_status FROM magazine WHERE ( editor_user_name = ? )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setString(1, userName);
             ResultSet rs = ps.executeQuery();
 
@@ -59,9 +59,9 @@ public class EditorDBConnection extends DBConnection {
 
     public void updateCommentAndLikesStatus(Magazine magazine) throws ServerException {
         String sql = " UPDATE magazine SET comment_status = ?  WHERE ( id = ? )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setBoolean(1, magazine.isCommentStatus());
             ps.setInt(2, magazine.getId());
             ps.executeUpdate();
@@ -73,9 +73,9 @@ public class EditorDBConnection extends DBConnection {
 
     public void updateSubscriptionStatus(Magazine magazine) throws ServerException {
         String sql = " UPDATE magazine SET subscription_status = ?  WHERE ( id = ? )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setBoolean(1, magazine.isSubscriptionStatus());
             ps.setInt(2, magazine.getId());
             ps.executeUpdate();
@@ -85,13 +85,13 @@ public class EditorDBConnection extends DBConnection {
         }
     }
 
-    public List<Integer> getIdExpireLockAds() throws ServerException{
+    public List<Integer> getIdExpireLockAds() throws ServerException {
         List<Integer> idList = new ArrayList<>();
         String sql
                 = " select id from lock_ad where ( datediff( curdate(), date ) > days );";
-        try {
-            getConnection();
-            Statement st = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); Statement st = cn.prepareStatement(sql);) {
+
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 idList.add(rs.getInt("id"));
@@ -101,30 +101,30 @@ public class EditorDBConnection extends DBConnection {
             throw new ServerException("Error al cargar el id de todos los lock_ad expirados");
         }
     }
-    
+
     public void setExpireLockAd(int id) throws ServerException {
-        String sql 
+        String sql
                 = "update lock_ad set expire_status = false where id = ?";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new ServerException("Error al actualizar el estado de los lock_ad expirados");
         }
     }
-    
+
     public boolean hasLockAd(String userName) throws ServerException {
-        String sql = "select expire_status from lock_ad where ( editor = ? ) and ( expire_status = true )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        String sql = "select expire_status from lock_ad where ( editor = ? ) and ( expire_status = false )";
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setString(1, userName);
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            throw new ServerException("Error al validar si existen bloqueos de anuncio para el editor: "+userName);
+            throw new ServerException("Error al validar si existen bloqueos de anuncio para el editor: " + userName);
         }
     }
 }

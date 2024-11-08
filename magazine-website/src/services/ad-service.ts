@@ -43,7 +43,7 @@ export class AdService {
 
     getRandomAdWhitEditor(type: string, url: string, editor: string): Observable<Ad> {
         const headers = this.auth.getHeader();
-        return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url}/${editor}`, { headers });
+        return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url} /${editor}`, { headers });
     }
 
 }

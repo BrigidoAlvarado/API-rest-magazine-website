@@ -37,11 +37,13 @@ public class TextAdDBConnection extends DBConnection {
     
     public TextAd getById( int id) throws ServerException, InvalidDataException{
         String sql = "select * from ad where ( id = ? and expire_status = false )";
-        try {
-            getConnection();
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ) {
+          
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 TextAd ad = new TextAd();
                 ad.setId(id);
@@ -59,13 +61,14 @@ public class TextAdDBConnection extends DBConnection {
     
     public void update(TextAd ad) throws ServerException, InvalidDataException{
         String sql = " update  ad set text  = ? where ( id = ?) ";
-        String mm = "UPDATE ad SET  text = 'ANUNCIO DE TEXTO edit' WHERE (`id` = '1');";
-        try {
-            getConnection();
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, ad.getText());
-            st.setInt(2, ad.getId());
-            st.executeUpdate();
+        try(
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                )  {
+            
+            ps.setString(1, ad.getText());
+            ps.setInt(2, ad.getId());
+            ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
             throw new ServerException("Error al actualizar el anucio de texto con id = "+ad.getId());

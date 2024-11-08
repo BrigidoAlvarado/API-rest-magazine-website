@@ -8,6 +8,7 @@ import backend.exception.ServerException;
 import backend.model.dto.Account;
 import backend.model.dto.Credential;
 import backend.model.dto.Profile;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,9 +26,11 @@ public class UserDBConnection extends DBConnection {
         String sql = "insert into " + account.getCredential().getUserType().name()
                 + " (user_name, password, tastes, photo, topic_of_interest, description, hobbies, photo_content_type)"
                 + " values ( ? , ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ) {
+           
             ps.setString(1, account.getCredential().getUserName());
             ps.setString(2, account.getCredential().getPassword());
             ps.setString(3, account.getProfile().getTastes());
@@ -49,13 +52,15 @@ public class UserDBConnection extends DBConnection {
     public Credential validateLogin(Credential credential) throws ServerException {
 
         String query = "select count(1) from " + credential.getUserType().name() + " where user_name = ? and password = ?";
-        try {
-            connection = DBConnectionSingleton.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, credential.getUserName());
-            preparedStatement.setString(2, credential.getPassword());
+        try(
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(query);
+                )  {
+            
+            ps.setString(1, credential.getUserName());
+            ps.setString(2, credential.getPassword());
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = ps.executeQuery();
 
             if (resultSet.next() && resultSet.getInt(1) > 0) {
                 return credential;
@@ -76,9 +81,11 @@ public class UserDBConnection extends DBConnection {
                 + " join subscribed_magazine on user_name = subscriber_user_name "
                 + " join magazine on magazine_id = magazine.id "
                 + " where (magazine.id = ? )";
-        try {
-            getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ) {
+            
             ps.setInt(1, magazineId);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){

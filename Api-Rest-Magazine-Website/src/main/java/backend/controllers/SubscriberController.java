@@ -9,6 +9,7 @@ import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Magazine;
 import backend.transactions.SubscriberTransaction;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -48,9 +49,9 @@ public class SubscriberController {
         return dBConnection.getSuscribedMagazineById(id);
     }
     
-    public void commentMagazine(int id, String comment, String userName) throws ServerException, InvalidDataException{
+    public void commentMagazine(int id, String comment, String userName, LocalDate date) throws ServerException, InvalidDataException{
         if (dBConnection.isCommentActive(id) && comment != null && id > 0) {
-            dBConnection.comment(id, comment, userName);
+            dBConnection.comment(id, comment, userName, date);
         } else {
             throw new InvalidDataException("Datos para realizar el comentario invalidos");
         }

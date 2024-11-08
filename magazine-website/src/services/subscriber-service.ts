@@ -22,9 +22,9 @@ export class SubscriberService {
         return this.http.post<void>(`${this.URL}/like`, id, { headers });
     }
 
-    comment(id: number, comment: String): Observable<void> {
+    comment(id: number, comment: String, date: Date): Observable<void> {
         const headers = this.auth.getHeader();
-        return this.http.post<void>(`${this.URL}/comment/${id}`,comment,{ headers });
+        return this.http.post<void>(`${this.URL}/comment/${id}/${date}`,comment,{ headers });
     }
 
     getSubscribedMagazineById(id: number): Observable<Magazine> {

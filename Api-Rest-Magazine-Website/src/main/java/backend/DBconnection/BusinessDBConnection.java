@@ -11,6 +11,7 @@ import backend.model.dto.Amount;
 import backend.model.dto.Credential;
 import backend.model.dto.LockAd;
 import backend.model.dto.Magazine;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -37,9 +38,11 @@ public class BusinessDBConnection extends DBConnection {
     public List<Magazine> getExpensesMagazineList() throws ServerException{
         List<Magazine> magazineList = new ArrayList<>();
         String sql = "select daily_cost * (datediff( curdate(), date)) as total, magazine.* from magazine;";
-        try {
-            getConnection();
-            Statement ps = connection.prepareStatement(sql);
+        try(
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                Statement ps = cn.prepareStatement(sql);
+                )  {
+            
             ResultSet rs = ps.executeQuery(sql);
             while(rs.next()){
                 Magazine magazine = new Magazine();
@@ -58,9 +61,11 @@ public class BusinessDBConnection extends DBConnection {
     public List<Ad> getIncomeAdList() throws ServerException {
         List<Ad> adList = new ArrayList<>();
         String sql = "select kind, anunciante_name, id , date, cost from ad;";
-        try {
-            getConnection();
-            Statement st = connection.prepareStatement(sql);
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                Statement st = cn.prepareStatement(sql);
+                ) {
+           
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 Ad ad = new Ad();
@@ -80,9 +85,11 @@ public class BusinessDBConnection extends DBConnection {
     public List<LockAd> getIncomeLockAdList()throws ServerException{
         List<LockAd> lockAdList = new ArrayList<>();
         String sql = "select * from lock_ad;";
-        try {
-            getConnection();
-            Statement st = connection.prepareStatement(sql);
+        try(
+                Connection cn = DBConnectionSingleton.getInstance().getConnection();
+                Statement st = cn.prepareStatement(sql);
+                )  {
+           
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
                 LockAd lockAd = new LockAd();

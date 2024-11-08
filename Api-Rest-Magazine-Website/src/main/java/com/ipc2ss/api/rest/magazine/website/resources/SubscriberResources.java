@@ -21,6 +21,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -115,15 +116,16 @@ public class SubscriberResources {
     }
 
     @POST
-    @Path("comment/{id}")
+    @Path("comment/{id}/{date}")
     public Response commentMagazine(
             @HeaderParam("Authorization") String authorization,
             @PathParam("id") int id,
+            @PathParam("date") String date,
             String comment) {
         try {
-            System.out.println("en comment");
+            System.out.println("en comment intentando :(");
             auth.authToken(authorization);
-            controller.commentMagazine(id, comment, auth.getCredential().getUserName());
+            controller.commentMagazine(id, comment, auth.getCredential().getUserName(), LocalDate.parse(date));
             return Response.status(Response.Status.ACCEPTED).build();
         } catch (ServerException e) {
             e.printStackTrace();
