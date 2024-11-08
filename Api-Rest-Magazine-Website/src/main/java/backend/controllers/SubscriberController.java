@@ -59,7 +59,9 @@ public class SubscriberController {
     
     public void likeMagazine(int id, String userName) throws  ServerException, InvalidDataException{
         SubscriberTransaction transaction = new SubscriberTransaction();
-        if (dBConnection.isCommentActive(id) || id > 0) {
+        if (dBConnection.isCommentActive(id) && id > 0) {
+            System.out.println("is comment active? = "+dBConnection.isCommentActive(id));
+            System.out.println("id = "+id);
             transaction.likeMagazine(id, userName);
         }else {
             throw new InvalidDataException("El id de la revista a la que se la ha dado like es invalido");

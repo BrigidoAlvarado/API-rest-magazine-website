@@ -123,7 +123,6 @@ public class SubscriberResources {
             @PathParam("date") String date,
             String comment) {
         try {
-            System.out.println("en comment intentando :(");
             auth.authToken(authorization);
             controller.commentMagazine(id, comment, auth.getCredential().getUserName(), LocalDate.parse(date));
             return Response.status(Response.Status.ACCEPTED).build();
@@ -144,10 +143,9 @@ public class SubscriberResources {
     public Response doLike(
             @HeaderParam("Authorization") String authorization,
             int id) {
-        SubscriberTransaction subscriberTransaction = new SubscriberTransaction();
         try {
             auth.authToken(authorization);
-            subscriberTransaction.likeMagazine(id, auth.getCredential().getUserName());
+            controller.likeMagazine(id, auth.getCredential().getUserName());
             return Response.status(Response.Status.ACCEPTED).build();
         } catch (ServerException e) {
             e.printStackTrace();

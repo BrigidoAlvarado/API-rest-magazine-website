@@ -23,8 +23,7 @@ public class SubscriberTransaction extends DBConnection {
     private final MagazineDBConnection magazineDBConnection = new MagazineDBConnection();
 
     public void likeMagazine(int id, String userName) throws ServerException, InvalidDataException {
-        try (
-                Connection cn = DBConnectionSingleton.getInstance().getConnection();) {
+        try (Connection cn = DBConnectionSingleton.getInstance().getConnection();) {
             SetConnection(cn);
             connection.setAutoCommit(false);
             subscriberDBConnection.saveLike(id, userName, connection);
