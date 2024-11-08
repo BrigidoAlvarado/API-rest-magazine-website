@@ -27,10 +27,8 @@ public class UserDBConnection extends DBConnection {
                 + " (user_name, password, tastes, photo, topic_of_interest, description, hobbies, photo_content_type)"
                 + " values ( ? , ?, ?, ?, ?, ?, ?, ?)";
         try (
-                Connection cn = DBConnectionSingleton.getInstance().getConnection();
-                PreparedStatement ps = cn.prepareStatement(sql);
-                ) {
-           
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setString(1, account.getCredential().getUserName());
             ps.setString(2, account.getCredential().getPassword());
             ps.setString(3, account.getProfile().getTastes());
@@ -52,11 +50,9 @@ public class UserDBConnection extends DBConnection {
     public Credential validateLogin(Credential credential) throws ServerException {
 
         String query = "select count(1) from " + credential.getUserType().name() + " where user_name = ? and password = ?";
-        try(
-                Connection cn = DBConnectionSingleton.getInstance().getConnection();
-                PreparedStatement ps = cn.prepareStatement(query);
-                )  {
-            
+        try (
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(query);) {
+
             ps.setString(1, credential.getUserName());
             ps.setString(2, credential.getPassword());
 
@@ -74,7 +70,7 @@ public class UserDBConnection extends DBConnection {
     }
 
     public List<Profile> getSubscriber(int magazineId) throws ServerException {
-        
+
         List<Profile> profileList = new ArrayList<>();
         String sql
                 = " select subscriber.* from subscriber "
@@ -82,13 +78,11 @@ public class UserDBConnection extends DBConnection {
                 + " join magazine on magazine_id = magazine.id "
                 + " where (magazine.id = ? )";
         try (
-                Connection cn = DBConnectionSingleton.getInstance().getConnection();
-                PreparedStatement ps = cn.prepareStatement(sql);
-                ) {
-            
+                Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+
             ps.setInt(1, magazineId);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Profile profile = new Profile();
                 profile.setUserName(rs.getString("user_name"));
                 profile.setDescription(rs.getString("description"));
@@ -97,10 +91,32 @@ public class UserDBConnection extends DBConnection {
                 profile.setTopicOfInterest(rs.getString("topic_of_interest"));
                 profileList.add(profile);
             }
-            return  profileList;
+            return profileList;
         } catch (SQLException e) {
-            throw new ServerException("Error al cargar los usuario suscritos a la revista con id: "+magazineId);
+            throw new ServerException("Error al cargar los usuario suscritos a la revista con id: " + magazineId);
         }
     }
 
+    public List<Profile> getLikedSubscriber(int magazineId) throws ServerException {
+        List<Profile> profileList = new ArrayList<>();
+        String sql
+                = " select user_name from subscribed_magazine "
+                + " join subscriber on user_name = subscriber_user_name "
+                + " where ( is_liked = true) "
+                + " and ( magazine_id = ? )";
+        try (Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, magazineId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Profile profile = new Profile();
+                profile.setUserName(rs.getString("user_name"));
+                profileList.add(profile);
+            }
+            System.out.println("retornando un  lista de :"+profileList.size()+" con la revista de id: "+magazineId);
+            return profileList;
+        } catch (SQLException e) {
+            throw new ServerException("Error al cargar los suscriptores que le han dado me gusta a la revista con id: "+magazineId);
+        }
+
+    }
 }

@@ -113,14 +113,17 @@ public class SubscriberDBConnection extends DBConnection {
         }
     }
 
-    public Magazine getSuscribedMagazineById(int id) throws ServerException {
+    public Magazine getSuscribedMagazineById(int id, String userName) throws ServerException {
         FileDBConnection dBConnection = new FileDBConnection();
         Magazine magazine = new Magazine();
-        String sql = "select  magazine.* , is_liked  from magazine join subscribed_magazine on id = magazine_id where id = ?";
+        String sql
+                = " select  magazine.* , is_liked  from magazine join subscribed_magazine on id = magazine_id "
+                + " where ( id = ? and subscriber_user_name = ? )";
         try (
                 Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
 
             ps.setInt(1, id);
+            ps.setString(2, userName);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 magazine.setCommentStatus(rs.getBoolean("comment_status"));
@@ -169,13 +172,15 @@ public class SubscriberDBConnection extends DBConnection {
 
     public void saveLike(int id, String userName, Connection connection) throws SQLException {
         String sql
-                = " UPDATE subscribed_magazine SET is_liked = true WHERE ( subscriber_user_name = ? ) and ( magazine_id = ? );";
+                = " update subscribed_magazine set is_liked = true "
+                + " where ( subscriber_user_name = ? and magazine_id = ? ) ";
         SetConnection(connection);
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, userName);
         ps.setInt(2, id);
         ps.executeUpdate();
-        System.out.println("se is_liked = true");
+        System.out.println("se marco is liked como true en: " + userName
+                + " " + id);
     }
 
     public List<String> getMagazineComments(Filter filter, int magazineId) throws ServerException {
@@ -192,12 +197,12 @@ public class SubscriberDBConnection extends DBConnection {
             ps.setString(4, filter.getEndDate());
             ps.setString(5, filter.getEndDate());
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 commentList.add(rs.getString("content"));
             }
             return commentList;
         } catch (SQLException e) {
-            throw new ServerException("Error al cargar los comentarios de la revista con id: "+magazineId);
+            throw new ServerException("Error al cargar los comentarios de la revista con id: " + magazineId);
         }
     }
 }

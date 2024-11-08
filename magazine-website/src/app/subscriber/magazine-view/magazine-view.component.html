@@ -1,14 +1,17 @@
 <app-subscriber-header></app-subscriber-header>
 <main>
     <div class="container form-control">
-        <h3 class="display-7 text-primary text-center">{{magazine.tittle}} by {{magazine.editor}}</h3>
+        <h3 class="display-7 text-primary text-center">{{magazine.tittle}}</h3>
+        <h6 class="card-subtitle">Editor:  {{magazine.editor}}</h6>
     </div>
     <section class="container mt-4">
         
         <div class="form-control">
             <p class="d-inline-flex gap-1">
+                
                 <app-comment [id]="magazine.id" [commentStatus]="magazine.commentStatus"></app-comment>
                 <app-like [commentStatus]="magazine.commentStatus" [id]="magazine.id" [isLiked]="magazine.isLiked"></app-like>
+                
                 <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Ver numeros
                 </button>

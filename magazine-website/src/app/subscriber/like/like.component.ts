@@ -18,7 +18,7 @@ export class LikeComponent{
   @Input({required: true})
   id!: number;
 
-  constructor(private service: SubscriberService, private auth: AuthService){}
+  constructor(private service: SubscriberService, private auth: AuthService){ }
 
   submit(): void {
     console.log('se hizo submit');

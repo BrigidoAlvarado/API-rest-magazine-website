@@ -28,7 +28,7 @@ export class AdService {
 
     getAdById(id: number): Observable<Ad> {
         const headers = this.auth.getHeader();
-        return this.http.get<Ad>(this.restConstants.API_URL+'ad/'+id, { headers });
+        return this.http.get<Ad>(this.restConstants.API_URL+'ad/'+id);
     }
 
     updateStatus(ad:Ad): Observable<void> {
@@ -37,13 +37,11 @@ export class AdService {
     }
 
     getRandomAd(type: string, url: string): Observable<Ad> {
-        const headers = this.auth.getHeader();
-        return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url}`, { headers });
+        return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url}`);
     }
 
     getRandomAdWhitEditor(type: string, url: string, editor: string): Observable<Ad> {
-        const headers = this.auth.getHeader();
-        return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url} /${editor}`, { headers });
+        return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url} /${editor}`);
     }
 
 }

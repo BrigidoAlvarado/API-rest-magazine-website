@@ -82,7 +82,7 @@ public class SubscriberResources {
             @PathParam("id") int id) {
         try {
             auth.authToken(authorization);
-            Magazine magazine = controller.getSubscribedMagazine(id);
+            Magazine magazine = controller.getSubscribedMagazine(id, auth.getCredential().getUserName());
             return Response.ok(magazine).build();
         } catch (ServerException e) {
             e.printStackTrace();

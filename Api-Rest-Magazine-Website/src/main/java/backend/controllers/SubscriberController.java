@@ -45,8 +45,8 @@ public class SubscriberController {
         return dBConnection.getSubscriberMagazines(userName);
     }
     
-    public Magazine getSubscribedMagazine(int id) throws ServerException{
-        return dBConnection.getSuscribedMagazineById(id);
+    public Magazine getSubscribedMagazine(int id, String userName) throws ServerException{
+        return dBConnection.getSuscribedMagazineById(id, userName);
     }
     
     public void commentMagazine(int id, String comment, String userName, LocalDate date) throws ServerException, InvalidDataException{

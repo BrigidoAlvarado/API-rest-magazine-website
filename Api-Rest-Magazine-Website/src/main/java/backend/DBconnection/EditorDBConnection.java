@@ -144,7 +144,7 @@ public class EditorDBConnection extends DBConnection {
             ps.setString(4, filter.getEndDate());
             ps.setString(5, filter.getEndDate());
             ResultSet rs = ps.executeQuery();
-            while( rs.next() ){
+            while (rs.next()) {
                 LockAd lockAd = new LockAd();
                 lockAd.setDate(LocalDate.parse(rs.getString("date")));
                 lockAd.setDays(rs.getInt("days"));
@@ -153,7 +153,35 @@ public class EditorDBConnection extends DBConnection {
             }
             return lockAdList;
         } catch (SQLException e) {
-            throw new ServerException("Error al obtener los bloqueos de anuncios comprados por el editor: "+userName);
+            throw new ServerException("Error al obtener los bloqueos de anuncios comprados por el editor: " + userName);
+        }
+    }
+
+    public List<Magazine> getFavoriteMagazines(int id, String userName) throws ServerException {
+        UserDBConnection userDBConnection = new UserDBConnection();
+        List<Magazine> magazineList = new ArrayList<>();
+        String sql
+                = " select * from magazine "
+                + " where ( ? = 0  or id = ? ) "
+                + " and (  editor_user_name = ? )"
+                + " order by likes desc limit 5 ";
+        try (Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, id);
+            ps.setInt(2, id);
+            ps.setString(3, userName);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Magazine magazine = new Magazine();
+                magazine.setId(rs.getInt("id"));
+                magazine.setTittle(rs.getString("tittle"));
+                magazine.setDate(LocalDate.parse(rs.getString("date")));
+                magazine.setLikes(rs.getInt("likes"));
+                magazine.setSubscriberList(userDBConnection.getLikedSubscriber(magazine.getId()));
+                magazineList.add(magazine);
+            }
+            return magazineList;
+        } catch (SQLException e) {
+            throw  new ServerException("Error al cargar las 5 revista con mas comentarios");
         }
     }
 }
