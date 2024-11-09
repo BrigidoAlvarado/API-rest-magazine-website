@@ -36,6 +36,7 @@ import { CommentMagazineReportComponent } from './admin/reports/comment-magazine
 import { EditorPaymentReportComponent } from './editor/reports/editor-payment-report/editor-payment-report.component';
 import { EditorFavoriteMagazineReportComponent } from './editor/reports/editor-favorite-magazine-report/editor-favorite-magazine-report.component';
 import { EditorSubscriptionReportComponent } from './editor/reports/editor-subscription-report/editor-subscription-report.component';
+import { EditorCommentReportComponent } from './editor/reports/editor-comment-report/editor-comment-report.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -191,6 +192,12 @@ export const routes: Routes = [
         path: 'editor-subscription-report',
         title: 'Reporte de Suscripcines',
         component: EditorSubscriptionReportComponent,
+        canActivate: [IsEditor]
+    },
+    {
+        path: 'editor-comment-report',
+        title: 'Reporte de Comentarios',
+        component: EditorCommentReportComponent,
         canActivate: [IsEditor]
     },
     //RUTAS DEL SUSCRIPTOR

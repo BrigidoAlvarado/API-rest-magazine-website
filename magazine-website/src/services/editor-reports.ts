@@ -36,4 +36,9 @@ export class EditorReportsService {
         const headers = this.auth.getHeader();
         return this.http.post < Magazine [] > (`${this.URL}subscription`, filter , { headers });
     }
+
+    getCommentsReport( filter: Filter): Observable < Magazine [] > {
+        const headers = this.auth.getHeader();
+        return this.http.post< Magazine [] > (`${this.URL}comment`, filter, { headers });
+    }
 }

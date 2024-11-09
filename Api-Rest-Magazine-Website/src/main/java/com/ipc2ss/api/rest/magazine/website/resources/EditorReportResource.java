@@ -98,4 +98,27 @@ public class EditorReportResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
+
+    @POST
+    @Path("comment")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCommentsReport(
+            @HeaderParam(Global.AUTHORIZATION) String authorization,
+            Filter filter) {
+        try {
+            auth.authToken(authorization);
+            List<Magazine> magazineList =  controller.getCommentReports(filter, auth.getCredential().getUserName());
+            return Response.ok(magazineList).build();
+        }  catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
 }

@@ -29,4 +29,9 @@ public class EditorReportsController {
         filter.datesValidate();
         return editorDBConnection.getSubscriptionMagazines(filter, userName);
     }
+    
+    public List<Magazine> getCommentReports(Filter filter, String userName) throws ServerException, InvalidDataException {
+        filter.datesValidate();
+        return editorDBConnection.getCommentsReports(filter, userName);
+    }
 }

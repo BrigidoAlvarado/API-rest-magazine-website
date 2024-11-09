@@ -179,8 +179,6 @@ public class SubscriberDBConnection extends DBConnection {
         ps.setString(1, userName);
         ps.setInt(2, id);
         ps.executeUpdate();
-        System.out.println("se marco is liked como true en: " + userName
-                + " " + id);
     }
 
     public List<String> getMagazineComments(Filter filter, int magazineId) throws ServerException {

@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author brigidoalvarado
@@ -166,7 +167,7 @@ public class EditorDBConnection extends DBConnection {
                 + " and ( ? is null or ? >= subscribed_magazine.date ) "
                 + " and (  editor_user_name = ? )"
                 + " order by likes desc limit 5 ";
- 
+
         try (Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, filter.getId());
             ps.setInt(2, filter.getId());
@@ -212,17 +213,50 @@ public class EditorDBConnection extends DBConnection {
             ps.setInt(6, filter.getId());
             ps.setInt(7, filter.getId());
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Magazine magazine = new Magazine();
                 magazine.setId(rs.getInt("id"));
                 magazine.setTittle(rs.getString("tittle"));
-                magazine.setSubscriberList(userDBConnection.getSubscriberName( filter,magazine.getId()));
+                magazine.setSubscriberList(userDBConnection.getSubscriberName(filter, magazine.getId()));
                 magazineList.add(magazine);
             }
             return magazineList;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ServerException("Error al cargar las revistas suscritas del editor: "+ userName);
+            throw new ServerException("Error al cargar las revistas suscritas del editor: " + userName);
+        }
+    }
+
+    public List<Magazine> getCommentsReports(Filter filter, String userName) throws ServerException {
+        SubscriberDBConnection subscriberDBConnection = new SubscriberDBConnection();
+        List<Magazine> magazineList = new ArrayList<>();
+        String sql
+                = " select distinct magazine.id, tittle from magazine "
+                + " join comment "
+                + " on magazine.id = comment.magazine_id "
+                + " where (editor_user_name = ? ) "
+                + " and ( ? is null or comment.date >= ? ) "
+                + " and ( ? is null or comment.date <= ? ) "
+                + " and ( ? = 0 or magazine.id = ? ) ";
+        try (Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setString(1, userName);
+            ps.setString(2, filter.getStartDate());
+            ps.setString(3, filter.getStartDate());
+            ps.setString(4, filter.getEndDate());
+            ps.setString(5, filter.getEndDate());
+            ps.setInt(6, filter.getId());
+            ps.setInt(7, filter.getId());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Magazine magazine = new Magazine();
+                magazine.setId(rs.getInt("id"));
+                magazine.setTittle(rs.getString("tittle"));
+                magazine.setComments(subscriberDBConnection.getMagazineComments(filter, magazine.getId()));
+                magazineList.add(magazine);
+            }
+            return magazineList;
+        } catch (SQLException e) {
+            throw new ServerException("Error al cargar las revistas y los comentarios del editor: "+userName);
         }
     }
 }
