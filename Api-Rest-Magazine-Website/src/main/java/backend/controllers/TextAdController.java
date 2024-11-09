@@ -21,7 +21,7 @@ public class TextAdController {
     
     public TextAd getTextAdById(Credential credential, int id) throws ServerException, InvalidDataException{
         expirationAd.validate();
-        if (id > 0) {
+        if (id > 0 ) {
            return textAdDBConnection.getById(id);
         } else {
             throw  new InvalidDataException("El id proporcionado <"+id+"> es invalido");

@@ -19,7 +19,7 @@ export class ImageAdService{
         this.URL = `${this.constants.API_URL}image-ad`;
     }
 
-        buyImageAd(imageAd: ImageAd): Observable<Amount> {
+    buyImageAd(imageAd: ImageAd): Observable<Amount> {
         const headers = this.auth.getHeader();
 
         let formData = new FormData;
@@ -32,4 +32,19 @@ export class ImageAdService{
         return this.http.post<Amount>(`${this.URL}/buy`, formData, { headers });
     }
 
+    getImageAdById(id: number): Observable< ImageAd > {
+        const headers = this.auth.getHeader();
+        return this.http.get< ImageAd > (`${this.URL}/get/${id}`, { headers });
+    }
+
+    updateAd(imageAd: ImageAd): Observable< void > {
+        const headers = this.auth.getHeader();
+        let formData = new FormData;
+        formData.append('text', imageAd.text);
+        formData.append('id', imageAd.id.toString());
+        if(imageAd.image){
+            formData.set('image', imageAd.image, imageAd.image.name);
+        }
+        return this.http.post< void > (`${this.URL}/update`, formData, { headers });
+    }
 }

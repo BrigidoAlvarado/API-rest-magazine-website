@@ -6,6 +6,7 @@ package backend.model.dto;
 
 import backend.enums.AdTime;
 import backend.enums.Global;
+import backend.exception.InvalidDataException;
 import java.time.LocalDate;
 
 /**
@@ -14,12 +15,21 @@ import java.time.LocalDate;
  */
 public class VideoAd extends Ad{
 
+    private int id;
     private Global kind;
     private AdTime time;
     private String link;
     private LocalDate date;
     private String text;
     private double cost;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getText() {
         return text;
@@ -72,5 +82,9 @@ public class VideoAd extends Ad{
         this.cost = cost;
     }
     
-    
+    public void validateUpdate() throws  InvalidDataException{
+        if (text == null || link == null || id < 0) {
+            throw  new InvalidDataException("Los datos para la acutializacin son invalidos");
+        }
+    }
 }

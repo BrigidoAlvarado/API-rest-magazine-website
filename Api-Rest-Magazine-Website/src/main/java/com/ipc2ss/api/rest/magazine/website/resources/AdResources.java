@@ -5,7 +5,9 @@
 package com.ipc2ss.api.rest.magazine.website.resources;
 
 import backend.AuthTokenHandler;
+import backend.DBconnection.AdDBConnection;
 import backend.controllers.AdController;
+import backend.enums.Global;
 import backend.exception.AccessException;
 import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
@@ -34,7 +36,6 @@ public class AdResources {
     public Response getAdById(
             @PathParam("id") int id) {
         System.out.println("en obtener informacion de un anuncio por id");
-        AuthTokenHandler authTokenHandler = new AuthTokenHandler();
         AdController adController = new AdController();
         try {
             Ad ad = adController.getAdById(id);
@@ -124,7 +125,6 @@ public class AdResources {
         try {
             Ad ad = controller.getRandomAd(type, url, editor);
             return Response.ok(ad).build();
-        
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -132,5 +132,25 @@ public class AdResources {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+    }
+    
+    @GET
+    @Path("ad-list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAdList(
+    @HeaderParam(Global.AUTHORIZATION) String authorization){
+        AuthTokenHandler ath = new AuthTokenHandler();
+        AdDBConnection adDBConnection = new AdDBConnection();
+        try {
+           ath.authToken(authorization);
+           List<Ad> adList = adDBConnection.getAdList();
+           return Response.ok(adList).build();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (AccessException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } 
     }
 }

@@ -1,0 +1,14 @@
+<app-admin-header></app-admin-header>
+<h1 class="text-center mt-4 text-primary">Anuncios sin Expirar</h1>
+<main>
+    <section class="container">
+        <ul class="list-group">
+            @for (ad of adList; track $index) {
+                <li class="list-group-item">
+                    <label>{{$index + 1}}) Anuncio: {{ad.kindAd}} ID: {{ad.id}}</label>
+                    <app-ad-status [ad]="ad"></app-ad-status>
+                </li>
+            }
+        </ul>
+    </section>
+</main>

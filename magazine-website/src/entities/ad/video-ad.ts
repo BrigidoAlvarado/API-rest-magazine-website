@@ -4,5 +4,5 @@ export interface VideoAd {
     time: string,
     link: string,
     date: Date,
-    text: string
+    text: string,
 }

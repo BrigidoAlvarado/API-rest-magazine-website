@@ -37,6 +37,7 @@ import { EditorPaymentReportComponent } from './editor/reports/editor-payment-re
 import { EditorFavoriteMagazineReportComponent } from './editor/reports/editor-favorite-magazine-report/editor-favorite-magazine-report.component';
 import { EditorSubscriptionReportComponent } from './editor/reports/editor-subscription-report/editor-subscription-report.component';
 import { EditorCommentReportComponent } from './editor/reports/editor-comment-report/editor-comment-report.component';
+import { UpdateAdStatusComponent } from './admin/update-ad-status/update-ad-status.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -113,6 +114,12 @@ export const routes: Routes = [
         path: 'comment-magazine-report',
         title: 'Reporte Revistas Comentadas',
         component: CommentMagazineReportComponent,
+        canActivate: [IsAdmin]
+    },
+    {
+        path: 'admin-ad-status',
+        title: 'Anuncios',
+        component: UpdateAdStatusComponent,
         canActivate: [IsAdmin]
     },
     //RUTAS DEL ANUNCIANTE

@@ -6,6 +6,7 @@ package backend.model.dto;
 
 import backend.enums.AdTime;
 import backend.enums.Global;
+import backend.exception.InvalidDataException;
 import java.time.LocalDate;
 
 /**
@@ -14,13 +15,14 @@ import java.time.LocalDate;
  */
 public class ImageAd extends Ad {
     
+    private int id;
     private Global kind;
     private AdTime time;
     private String text;
     private LocalDate date;
     private ApiFile file;
     private double cost;
-
+        
     public Global getKind() {
         return kind;
     }
@@ -37,6 +39,14 @@ public class ImageAd extends Ad {
     public void setTime(AdTime time) {
         this.time = time;
         super.adTime = time;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getText() {
@@ -71,4 +81,9 @@ public class ImageAd extends Ad {
         this.cost = cost;
     }
     
+   public void validateUpdate()throws InvalidDataException{
+       if (id < 0 || text == null) {
+           throw new InvalidDataException("Los datos para la acuatualizacion son invalidos");
+       }
+   }
 }

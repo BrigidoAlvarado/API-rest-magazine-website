@@ -41,7 +41,6 @@ public class TextAdDBConnection extends DBConnection {
                 Connection cn = DBConnectionSingleton.getInstance().getConnection();
                 PreparedStatement ps = cn.prepareStatement(sql);
                 ) {
-          
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -65,7 +64,6 @@ public class TextAdDBConnection extends DBConnection {
                 Connection cn = DBConnectionSingleton.getInstance().getConnection();
                 PreparedStatement ps = cn.prepareStatement(sql);
                 )  {
-            
             ps.setString(1, ad.getText());
             ps.setInt(2, ad.getId());
             ps.executeUpdate();

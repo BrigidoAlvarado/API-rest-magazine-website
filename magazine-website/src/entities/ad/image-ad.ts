@@ -4,5 +4,6 @@ export interface ImageAd {
     text: string,
     date: Date,
     image: File,
-    cost: number
+    cost: number,
+    id: number
 }

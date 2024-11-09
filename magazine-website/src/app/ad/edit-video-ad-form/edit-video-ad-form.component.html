@@ -1,0 +1,7 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <label>Texto</label>
+    <textarea class="form-control" rows="6" formControlName="text"></textarea>
+    <label>Link</label>
+    <input type="tel" class="form-control" formControlName="link">
+    <button class="btn btn-primary mt-3">Guardar Cambios</button>
+</form>

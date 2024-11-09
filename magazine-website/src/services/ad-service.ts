@@ -17,6 +17,11 @@ export class AdService {
         this.restConstants = new RestConstants();
     }
 
+    getAdList(): Observable < Ad[] > {
+        const headers = this.auth.getHeader();
+        return this.http.get < Ad [] > (`${this.restConstants.API_URL}ad/ad-list`, { headers });
+    }
+
     getCost(kind: string): Observable<Amount>{
         return this.http.get<Amount>(this.restConstants.API_URL+'global-cost/'+kind);
     }
@@ -43,5 +48,4 @@ export class AdService {
     getRandomAdWhitEditor(type: string, url: string, editor: string): Observable<Ad> {
         return this.http.get<Ad>(`${this.restConstants.API_URL}ad/random/${type}/${url} /${editor}`);
     }
-
 }

@@ -1,12 +1,11 @@
 <app-adv-header></app-adv-header>
 <main>
     <section>
-        <app-show-ad [url]="url"></app-show-ad>
         @if (ads != null) {
             <app-purchased-ads-list [ads]="ads"></app-purchased-ads-list>
         } @else {
             <div class="alert alert-warning">
-                <p>No hay auncios para mostrar</p>
+                <p>No hay auncios disponibles</p>
             </div>
         }
     </section>

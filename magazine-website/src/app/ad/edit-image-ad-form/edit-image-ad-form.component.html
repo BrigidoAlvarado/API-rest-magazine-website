@@ -1,0 +1,9 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <label class="text-center">Texto</label>
+    <textarea formControlName="text" class="form-control" rows="6"></textarea>
+    <label class="text-center">Imagen</label>
+    <div>
+        <input type="file" formControlName="image" (change)="onFileChange($event)">
+    </div>
+    <button class="btn btn-primary mt-3">Guardar Cambios</button>
+</form>

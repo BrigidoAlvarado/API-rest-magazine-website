@@ -1,10 +1,35 @@
-@if (ad.kindAd === 'textAd') {
-    <!--Llamar a el editor de auncios de texto-->
-    <app-edit-text-ad-form [ad]="ad"></app-edit-text-ad-form>
-}
-@if (ad.kindAd === 'textImageAd') {
-    <!--Llamar al editor de anucios de texto e imagen-->
-}
-@if (ad.kindAd === 'videoAd') {
-    <!--Llamar al editor de anucios de video-->    
-}
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-info" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal'+ad.id.toString()">
+    Editar
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" [id]="'exampleModal'+ad.id.toString()" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Anuncio</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         
+            @if (ad.kindAd === 'textAd') {
+                <!--Llamar a el editor de auncios de texto-->
+                <app-edit-text-ad-form [ad]="ad"></app-edit-text-ad-form>
+            }
+            @if (ad.kindAd === 'textImageAd') {
+                <!--Llamar al editor de anucios de texto e imagen-->
+                <app-edit-image-ad-form [ad]="ad"></app-edit-image-ad-form>
+            }
+            @if (ad.kindAd === 'videoAd') {
+                <!--Llamar al editor de anucios de video-->  
+              <app-edit-video-ad-form [ad]="ad"></app-edit-video-ad-form>
+              }
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

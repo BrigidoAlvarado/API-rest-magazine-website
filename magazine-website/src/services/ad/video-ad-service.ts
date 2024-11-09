@@ -5,6 +5,7 @@ import { AuthService } from "../auth";
 import { VideoAd } from "../../entities/ad/video-ad";
 import { Observable } from "rxjs";
 import { Amount } from "../../entities/amount";
+import { UrlCodec } from "@angular/common/upgrade";
 
 @Injectable({
     providedIn: 'root'
@@ -22,5 +23,15 @@ export class VideoAdService {
     buyVideoAd(videoAd: VideoAd): Observable<Amount> {
         const headers = this.auth.getHeader();
         return this.http.post<Amount>(`${this.URL}/buy`, videoAd, { headers });
+    }
+
+    getVideoAdById(id: number): Observable< VideoAd > {
+        const headers = this.auth.getHeader();
+        return this.http.get< VideoAd > (`${this.URL}/get/${id}`, { headers });
+    }
+
+    updateVideoAd( videoAd: VideoAd): Observable < void > {
+        const headers = this.auth.getHeader();
+        return this.http.post < void > (`${this.URL}/update`, videoAd, { headers });
     }
 }
