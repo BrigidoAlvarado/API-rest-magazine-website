@@ -9,6 +9,7 @@ import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Filter;
 import backend.model.dto.LockAd;
+import backend.model.dto.Magazine;
 import java.util.List;
 
 /**
@@ -16,10 +17,16 @@ import java.util.List;
  * @author brigidoalvarado
  */
 public class EditorReportsController {
+    
+    private final EditorDBConnection editorDBConnection = new EditorDBConnection();
 
     public List<LockAd> getPaymentReport( Filter filter, String userName) throws ServerException, InvalidDataException{
-        EditorDBConnection editorDBConnection = new EditorDBConnection();
         filter.datesValidate();
         return editorDBConnection.getLockAdsBougth(filter, userName);
+    }
+    
+    public List<Magazine> getSubscriptionMagazines(Filter filter, String userName) throws ServerException, InvalidDataException{
+        filter.datesValidate();
+        return editorDBConnection.getSubscriptionMagazines(filter, userName);
     }
 }

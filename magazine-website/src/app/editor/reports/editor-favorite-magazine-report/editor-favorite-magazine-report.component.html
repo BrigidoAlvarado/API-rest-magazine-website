@@ -5,7 +5,8 @@
       <a class="navbar-brand" >Reporte de Pagos</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="d-flex" role="search" [formGroup]="form" (ngSubmit)="submit()">
-        
+            <input type="date" class="form-control" formControlName="startDate">
+            <input type="date" class="form-control" formControlName="endDate">
             <select class="form-select" formControlName="id" >
                 <option value="0">Todas</option>
               @for (magazine of options; track $index) {
@@ -55,9 +56,9 @@
             </thead>
             <tbody>
             @for (subs of magazine.subscriberList; track $index) {
-                <tr>    
-                    <th scope="row">{{$index + 1}}</th>
-                    <th scope="row">{{subs.userName}}</th>  
+                    <tr>    
+                        <th scope="row">{{$index + 1}}</th>
+                        <th scope="row">{{subs.userName}}</th>  
                     </tr>      
             }
             </tbody>
@@ -67,4 +68,3 @@
         }
     </section>
 </main>
-

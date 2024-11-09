@@ -22,13 +22,18 @@ export class EditorReportsService {
         this.URL = `${this.contants.API_URL}editor-reports/`;
     }
 
-    getPaymentReport( filter: Filter): Observable< LockAd[] > {
+    getPaymentReport( filter: Filter): Observable < LockAd[] > {
         const headers = this.auth.getHeader();
         return this.http.post< LockAd [] > (`${this.URL}payment`, filter, { headers });
     }
 
-    getFavoriteMagazineReport(id: number): Observable < Magazine [] > {
+    getFavoriteMagazineReport(filter: Filter): Observable < Magazine [] > {
         const headers = this.auth.getHeader();
-        return this.http.get< Magazine[] > (`${this.URL}favorite/${id}`, { headers });
+        return this.http.post < Magazine[] > (`${this.URL}favorite`, filter, { headers });
+    }
+
+    getSubscriptionReport(filter: Filter): Observable < Magazine [] > {
+        const headers = this.auth.getHeader();
+        return this.http.post < Magazine [] > (`${this.URL}subscription`, filter , { headers });
     }
 }

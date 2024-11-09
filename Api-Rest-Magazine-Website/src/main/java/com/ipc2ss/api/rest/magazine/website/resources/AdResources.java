@@ -120,10 +120,8 @@ public class AdResources {
             @PathParam("type") String type,
             @PathParam("url") String url,
             @PathParam("editor") String editor) {
-        AuthTokenHandler ath = new AuthTokenHandler();
         AdController controller = new AdController();
         try {
-            System.out.println("en get ad random with editor");
             Ad ad = controller.getRandomAd(type, url, editor);
             return Response.ok(ad).build();
         

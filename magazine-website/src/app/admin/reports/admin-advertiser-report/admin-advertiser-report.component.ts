@@ -9,7 +9,7 @@ import { ShowAdComponent } from "../../../ad/show-ad/show-ad.component";
 @Component({
   selector: 'app-admin-advertiser-report',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AdminHeaderComponent, ShowAdComponent],
+  imports: [FormsModule, ReactiveFormsModule, AdminHeaderComponent],
   templateUrl: './admin-advertiser-report.component.html',
   styleUrl: './admin-advertiser-report.component.css'
 })

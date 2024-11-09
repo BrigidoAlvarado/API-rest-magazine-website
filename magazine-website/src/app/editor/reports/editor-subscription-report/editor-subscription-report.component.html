@@ -1,0 +1,52 @@
+<app-editor-header></app-editor-header>
+<nav class="navbar navbar-expand-lg bg-body-tertiary mt-3">
+    <div class="container-fluid">
+      <a class="navbar-brand" >Reporte de Suscripciones</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex" role="search" [formGroup]="form" (ngSubmit)="submit()">
+            
+            <input type="date" class="form-control" formControlName="startDate">
+            <input type="date" class="form-control" formControlName="endDate">
+            
+            <select class="form-select" formControlName="id" >
+                <option value="0">Todas</option>
+              @for (magazine of options; track $index) {
+                <option value="{{magazine.id}}">{{$index + 1}}) {{magazine.tittle}}</option>
+              }
+            </select>
+          <button class="btn btn-outline-success" >Buscar</button>
+        </form>
+      
+        </div>
+    </div>
+</nav>
+
+<main>
+    <h2 class="text-center text-primary mt-4">Reporte de Suscripciones</h2>
+    <section class="container">
+        @for (magazine of magazineList; track $index) {
+            <div class="card text-bg-succes shadow mt-5">
+                
+                <h2 class="card-title text-center text-bg-success">No. {{$index + 1}} Revista: {{magazine.tittle}}</h2>
+                <h5 class="text-center text-secondary">Lista de Suscriptores</h5>
+    
+                    <table class="table table-striped table-hover table-bordered text-center ">
+                        <thead class="table-dark">
+                             <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (subs of magazine.subscriberList; track $index) {
+                                <tr>    
+                                <th scope="row">{{$index + 1}}</th>
+                                <th scope="row">{{subs.userName}}</th>  
+                                </tr>      
+                            }
+                        </tbody>
+                    </table>
+            </div>
+        }
+    </section>
+</main>

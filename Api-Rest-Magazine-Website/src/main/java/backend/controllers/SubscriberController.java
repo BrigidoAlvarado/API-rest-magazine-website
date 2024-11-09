@@ -64,7 +64,7 @@ public class SubscriberController {
             System.out.println("id = "+id);
             transaction.likeMagazine(id, userName);
         }else {
-            throw new InvalidDataException("El id de la revista a la que se la ha dado like es invalido");
+            throw new InvalidDataException("Datos para dar me gusta invalidos");
         }
     }
 }

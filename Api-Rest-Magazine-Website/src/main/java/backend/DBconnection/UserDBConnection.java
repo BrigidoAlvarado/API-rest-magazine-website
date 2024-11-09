@@ -7,6 +7,7 @@ package backend.DBconnection;
 import backend.exception.ServerException;
 import backend.model.dto.Account;
 import backend.model.dto.Credential;
+import backend.model.dto.Filter;
 import backend.model.dto.Profile;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,18 +70,24 @@ public class UserDBConnection extends DBConnection {
         }
     }
 
-    public List<Profile> getSubscriber(int magazineId) throws ServerException {
+    public List<Profile> getSubscriberInfo(int magazineId, Filter filter) throws ServerException {
 
         List<Profile> profileList = new ArrayList<>();
         String sql
                 = " select subscriber.* from subscriber "
                 + " join subscribed_magazine on user_name = subscriber_user_name "
                 + " join magazine on magazine_id = magazine.id "
-                + " where (magazine.id = ? )";
+                + " where ( magazine.id = ? )"
+                + " and ( ? is null or ? <= subscribed_magazine.date ) "
+                + " and ( ? is null or ? >= subscribed_magazine.date ) ";
         try (
                 Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
 
             ps.setInt(1, magazineId);
+            ps.setString(2, filter.getStartDate());
+            ps.setString(3, filter.getStartDate());
+            ps.setString(4, filter.getEndDate());
+            ps.setString(5, filter.getEndDate());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Profile profile = new Profile();
@@ -117,6 +124,31 @@ public class UserDBConnection extends DBConnection {
         } catch (SQLException e) {
             throw new ServerException("Error al cargar los suscriptores que le han dado me gusta a la revista con id: "+magazineId);
         }
-
+    }
+    
+    public List<Profile> getSubscriberName(Filter filter, int magazineId) throws  ServerException {
+        List<Profile> profileList = new ArrayList<>();
+        String sql
+                = " select user_name from subscribed_magazine "
+                + " join subscriber on user_name = subscriber_user_name "
+                + " where  ( magazine_id = ? )"
+                + " and ( ? is null or ? <= subscribed_magazine.date ) "
+                + " and ( ? is null or ? >= subscribed_magazine.date ) ";
+        try (Connection cn = DBConnectionSingleton.getInstance().getConnection(); PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, magazineId);
+            ps.setString(2, filter.getStartDate());
+            ps.setString(3, filter.getStartDate());
+            ps.setString(4, filter.getEndDate());
+            ps.setString(5, filter.getEndDate());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Profile profile = new Profile();
+                profile.setUserName(rs.getString("user_name"));
+                profileList.add(profile);
+            }
+            return profileList;
+        } catch (SQLException e) {
+            throw new ServerException("Error al cargar los suscriptores que le han dado me gusta a la revista con id: "+magazineId);
+        }
     }
 }

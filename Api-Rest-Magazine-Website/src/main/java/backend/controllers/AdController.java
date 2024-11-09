@@ -50,14 +50,13 @@ public class AdController {
         TransactionAd transactionAd = new TransactionAd();
         ExpirationLockAd expirationLockAd = new ExpirationLockAd();
         Ad ad = new Ad();
-        System.out.println("editor: " + editor);
+
         if (!expirationLockAd.existLokAd(editor)) {
             System.out.println("el editor no tiene bloqueador");
             expirationAd.validate();
             ad = adDBConnection.getRandomAd(type);
             transactionAd.increaseView(ad.getId(), url);
         }
-        System.out.println("el editor tiene bloqueador");
         return ad;
     }
 }

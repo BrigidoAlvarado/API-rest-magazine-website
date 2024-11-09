@@ -16,7 +16,16 @@ public class Filter {
     private String startDate;
     private String endDate;
     private String kind;
+    private int id;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getStartDate() {
         return startDate;
     }

@@ -35,6 +35,7 @@ import { EffectivityAdComponent as AdminEffectivityAdComponent } from './admin/r
 import { CommentMagazineReportComponent } from './admin/reports/comment-magazine-report/comment-magazine-report.component';
 import { EditorPaymentReportComponent } from './editor/reports/editor-payment-report/editor-payment-report.component';
 import { EditorFavoriteMagazineReportComponent } from './editor/reports/editor-favorite-magazine-report/editor-favorite-magazine-report.component';
+import { EditorSubscriptionReportComponent } from './editor/reports/editor-subscription-report/editor-subscription-report.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -182,8 +183,14 @@ export const routes: Routes = [
     },
     {
         path: 'editor-favorite-magazine-report',
-        title: 'Reporte de Pagos',
+        title: 'Reporte de Revistas Favoritas',
         component: EditorFavoriteMagazineReportComponent,
+        canActivate: [IsEditor]
+    },
+    {
+        path: 'editor-subscription-report',
+        title: 'Reporte de Suscripcines',
+        component: EditorSubscriptionReportComponent,
         canActivate: [IsEditor]
     },
     //RUTAS DEL SUSCRIPTOR
