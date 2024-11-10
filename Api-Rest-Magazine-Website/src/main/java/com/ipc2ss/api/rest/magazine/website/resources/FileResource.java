@@ -55,15 +55,11 @@ public class FileResource {
             @HeaderParam("Authorization") String authorization,
             @PathParam("id") int id) {
         try {
-            auth.authToken(authorization);
             ApiFile file = dBConnection.getImage(id);
             return Response.ok(file.getInputStream()).type(file.getContentType()).build();
         } catch (ServerException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (AccessException e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 

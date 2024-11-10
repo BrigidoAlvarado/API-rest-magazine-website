@@ -9,7 +9,6 @@ import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  *
