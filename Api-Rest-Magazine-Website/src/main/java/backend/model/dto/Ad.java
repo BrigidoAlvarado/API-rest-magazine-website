@@ -25,7 +25,7 @@ public class Ad {
     protected int days;
     private String text;
     private String link;
-
+    
     private boolean isText = false;
     private boolean isImage = false;
     private boolean isVideo = false;
@@ -113,8 +113,6 @@ public class Ad {
     public boolean getStatus() {
         return status;
     }
-
-    ;
     
     public void setId(int id) {
         this.idAd = id;
@@ -160,4 +158,5 @@ public class Ad {
             default:
         }
     }
+   
 }

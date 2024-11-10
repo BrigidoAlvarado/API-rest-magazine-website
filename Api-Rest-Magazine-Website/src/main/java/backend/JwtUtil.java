@@ -5,12 +5,13 @@
 package backend;
 
 import backend.exception.AccessException;
-import backend.exception.InvalidDataException;
 import backend.model.UserType;
 import backend.model.dto.Credential;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Base64;
+import java.util.Date;
 
 /**
  *
@@ -20,14 +21,20 @@ public class JwtUtil {
 
     private static final String SECRET_KEY = "ipc-2";
     private static final String USER_TYPE = "userType";
+    private static final long EXPIRATION_TIME_MS = 900000; // 15 minutos en milisegundos
     private String token = null;
 
     public String generatedToken(String userName, String userType) {
 
+        Date now = new Date();
+        Date expirationDate = new Date(now.getTime() + EXPIRATION_TIME_MS);
+        
         token = Jwts.builder()
                 .setSubject(userName)
                 .claim(USER_TYPE, userType)
-                .signWith(io.jsonwebtoken.SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(SECRET_KEY.getBytes()))
+                .setIssuedAt(now)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(SECRET_KEY.getBytes()))
                 .compact();
         return token;
     }
@@ -37,13 +44,16 @@ public class JwtUtil {
             // Analizar y validar el token
             token = tokenToValidate;
             getClaims(token);
+        }  catch (io.jsonwebtoken.ExpiredJwtException e) {
+            // Capturar excepción de token expirado
+            throw new AccessException("El token ha expirado");
         } catch (Exception e) {
-            // Si hay una excepción, el token no es válido
-            throw new AccessException("Token invalido");
+            // Si hay una excepción diferente, el token no es válido
+            throw new AccessException("Token inválido");
         }
     }
 
-    public Credential getCredential() throws AccessException{
+    public Credential getCredential() throws AccessException {
         Credential credential = new Credential();
         credential.setUserName(getUserName(token));
         credential.setUserType(UserType.valueOf(getUserType(token)));

@@ -24,7 +24,7 @@ export class PostMagazineFormComponent implements OnInit{
   ngOnInit(): void {
 
     this.form = this.builder.group({
-      title: [null, [Validators.required, Validators.max(200)]],
+      tittle: [null, [Validators.required, Validators.max(200)]],
       category: [null, [Validators.required, Validators.max(45)]],
       description: [null, [Validators.required, Validators.max(200)]],
       tags: [null, [Validators.required]],

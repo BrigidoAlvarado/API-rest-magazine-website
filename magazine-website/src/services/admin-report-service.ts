@@ -34,7 +34,7 @@ export class AdminReportService {
     }
 
     getAdvertiserReport(userName: string): Observable<Advertiser []> {
-        if(userName || userName === null){userName = 'null'}
+        if(userName === null){userName = 'null'}
         const headers = this.auth.getHeader();
         return this.http.get<Advertiser []> (`${this.URL}/advertiser/${userName}`, { headers });
     }

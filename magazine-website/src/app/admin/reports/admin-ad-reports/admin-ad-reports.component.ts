@@ -5,13 +5,12 @@ import { Ad } from '../../../../entities/ad/ad';
 import { AdminReportService } from '../../../../services/admin-report-service';
 import { AuthService } from '../../../../services/auth';
 import { AdminHeaderComponent } from "../../admin-header/admin-header.component";
-import { ShowAdComponent } from "../../../ad/show-ad/show-ad.component";
-import { AdmintAdExportComponent } from "../exports/admint-ad-export/admint-ad-export.component";
+import { ExportService } from '../../../../services/export-service';
 
 @Component({
   selector: 'app-admin-ad-reports',
   standalone: true,
-  imports: [AdminHeaderComponent, FormsModule, ReactiveFormsModule, ShowAdComponent, AdmintAdExportComponent],
+  imports: [AdminHeaderComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './admin-ad-reports.component.html',
   styleUrl: './admin-ad-reports.component.css'
 })
@@ -24,7 +23,9 @@ export class AdminAdReportsComponent implements OnInit {
   constructor(
     private service: AdminReportService,
     private auth: AuthService,
-    private formBuilder: FormBuilder){}
+    private formBuilder: FormBuilder,
+    private exportService: ExportService
+  ){}
 
     ngOnInit(): void {  
       this.form = this.formBuilder.group({
@@ -61,5 +62,21 @@ export class AdminAdReportsComponent implements OnInit {
       if( !this.filter.endDate ){
         this.filter.endDate = null;
       }
+    }
+
+    click(): void {
+      console.log(`en click tamanio: ${this.adList.length}`)
+      this.exportService.exportAdminAd(this.adList).subscribe({
+        next: (data: Blob) => {
+          const blob = new Blob([data], { type: 'application/pdf' });
+          const url = window.URL.createObjectURL(blob);
+          window.open(url);
+        },
+        error: (error: any) => {
+          console.log('error al exportar el reported de anuncios ',error);
+          this.auth.validate(error);
+        }
+      });
+  
     }
 }

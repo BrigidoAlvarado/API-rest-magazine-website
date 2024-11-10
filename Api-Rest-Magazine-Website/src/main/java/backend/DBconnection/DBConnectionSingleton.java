@@ -43,7 +43,7 @@ public class DBConnectionSingleton {
             p.setValidationInterval(30000);
             p.setTimeBetweenEvictionRunsMillis(30000);
             p.setMaxActive(50);
-            p.setInitialSize(5);
+            p.setInitialSize(15);
             p.setMaxWait(10000);
             p.setRemoveAbandonedTimeout(60);
             p.setMinEvictableIdleTimeMillis(30000);

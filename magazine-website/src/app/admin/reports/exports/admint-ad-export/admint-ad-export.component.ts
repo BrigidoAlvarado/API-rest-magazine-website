@@ -16,24 +16,12 @@ export class AdmintAdExportComponent {
   adList!: Ad[]
 
   constructor(
-    private service: ExportService,
+    private exportService: ExportService,
     private auth: AuthService
-  ){}
-
-  submit(): void {
-
-    this.service.exportAdminAd(this.adList).subscribe({
-      next: (data: Blob) => {
-        const blob = new Blob([data], { type: 'application/pdf' });
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
-      },
-      error: (error: any) => {
-        console.log('error al exportar el reported de anuncios ',error);
-        this.auth.validate(error);
-      }
-    });
-
+  ){
+    console.log(`el tamanio del arreglo es ${this.adList}`);
   }
+
   
+
 }

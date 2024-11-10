@@ -24,6 +24,7 @@ export class MagazineService {
         formData.append('tags',magazine.tags);
         formData.append('date',magazine.date);
         formData.set('magazine',magazine.file, magazine.file.name);
+        console.log('enviando revista')
         
         return this.http.post<void>(this.constants.API_URL+'magazine', formData, { headers });
     }

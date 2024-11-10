@@ -9,7 +9,6 @@ import backend.exception.InvalidDataException;
 import backend.exception.ServerException;
 import backend.model.dto.Magazine;
 import backend.transactions.MagazineTransaction;
-import java.util.List;
 
 /**
  *

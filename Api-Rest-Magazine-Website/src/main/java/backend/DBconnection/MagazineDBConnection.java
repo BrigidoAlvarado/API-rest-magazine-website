@@ -65,6 +65,7 @@ public class MagazineDBConnection extends DBConnection {
         if (generatedKey.next()) {
             magazine.setId(generatedKey.getInt(1));
         }
+        System.out.println("revista guardada");
         // Cerrar recursos
         if (generatedKey != null) {
             generatedKey.close();

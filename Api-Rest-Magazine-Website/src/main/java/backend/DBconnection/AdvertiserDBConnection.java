@@ -6,7 +6,6 @@ package backend.DBconnection;
 
 import backend.exception.ServerException;
 import backend.model.dto.Advertiser;
-import backend.model.dto.EffectivityAdReport;
 import backend.model.dto.Filter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +21,7 @@ import java.util.List;
 public class AdvertiserDBConnection extends DBConnection {
 
     public List<Advertiser> getAdvertiserList(String userName) throws ServerException {
+        System.out.println("nombre recibido "+userName);
         List<Advertiser> advertiserList = new ArrayList<>();
         String sql = " select user_name from anunciante where ( ? = 'null' or user_name = ? )";
         try (

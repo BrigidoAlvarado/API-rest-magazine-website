@@ -22,6 +22,7 @@ public class MagazineNumberDBConnection extends DBConnection{
     public void saveFirstNumber(int id, ApiFile file, Connection connection) throws SQLException{
         SetConnection(connection);
         save(id, file, connection);
+        System.out.println("numero guardado");
     }
     
     public void saveNumber(int id, ApiFile file) throws ServerException {

@@ -38,6 +38,7 @@ import { EditorFavoriteMagazineReportComponent } from './editor/reports/editor-f
 import { EditorSubscriptionReportComponent } from './editor/reports/editor-subscription-report/editor-subscription-report.component';
 import { EditorCommentReportComponent } from './editor/reports/editor-comment-report/editor-comment-report.component';
 import { UpdateAdStatusComponent } from './admin/update-ad-status/update-ad-status.component';
+import { LogoutComponent } from './user/logout/logout.component';
 
 export const routes: Routes = [
     //RUTAS GENERALES
@@ -50,6 +51,11 @@ export const routes: Routes = [
         path: 'newAccount',
         title: 'Crear Cuenta',
         component: NewAccountComponent
+    },
+    {
+        path: 'logout',
+        title: 'Cerrar sesion',
+        component: LogoutComponent
     },
     {
         path: 'edit-profile',
