@@ -6,11 +6,12 @@ import { Magazine } from '../../../../entities/magazine';
 import { AuthService } from '../../../../services/auth';
 import { EditorReportsService } from '../../../../services/editor-reports';
 import { EditorService } from '../../../../services/editor-service';
+import { ShowAdComponent } from "../../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-editor-subscription-report',
   standalone: true,
-  imports: [EditorHeaderComponent, FormsModule, ReactiveFormsModule],
+  imports: [EditorHeaderComponent, FormsModule, ReactiveFormsModule, ShowAdComponent],
   templateUrl: './editor-subscription-report.component.html',
   styleUrl: './editor-subscription-report.component.css'
 })

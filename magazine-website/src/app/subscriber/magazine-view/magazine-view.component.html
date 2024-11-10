@@ -8,25 +8,29 @@
         
         <div class="form-control">
             <p class="d-inline-flex gap-1">
-                
                 <app-comment [id]="magazine.id" [commentStatus]="magazine.commentStatus"></app-comment>
                 <app-like [commentStatus]="magazine.commentStatus" [id]="magazine.id" [isLiked]="magazine.isLiked"></app-like>
-                
                 <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Ver numeros
                 </button>
-                <a class="btn btn-success">Descargar</a>
             </p>
         </div>
             
         <div class="collapse" id="collapseExample">
-            <div class="card card-body">
+            <div class="card card-body text-bg-success">
                 @for (id of magazine.idFilesList; track $index) {
-                    <button 
-                        class="btn btn-primary mt-3"
-                        (click)="chooseFile(id)">
-                        Leer Numero {{$index + 1}}
-                    </button>
+                    <ul class="list-inline form-control mt-3">
+                        <li class="list-inline-item">
+                            <button 
+                                class="btn btn-primary"
+                                (click)="chooseFile(id)">
+                                Leer Numero {{$index + 1}}
+                            </button>
+                        </li>
+                        <li class="list-inline-item">
+                            <app-download-pdf [id]="magazine.id"></app-download-pdf>
+                        </li>
+                    </ul>
                 }
             </div>
         </div>

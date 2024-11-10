@@ -9,11 +9,18 @@ import { LikeComponent } from "../like/like.component";
 import { FileService } from '../../../services/file-service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ShowAdComponent } from "../../ad/show-ad/show-ad.component";
+import { DownloadPdfComponent } from '../download-pdf/download-pdf.component';
 
 @Component({
   selector: 'app-magazine-view',
   standalone: true,
-  imports: [SubscriberHeaderComponent, RouterModule, CommentComponent, LikeComponent, ShowAdComponent],
+  imports: [
+    SubscriberHeaderComponent, 
+    RouterModule, 
+    CommentComponent, 
+    LikeComponent, 
+    ShowAdComponent,
+    DownloadPdfComponent],
   templateUrl: './magazine-view.component.html',
   styleUrl: './magazine-view.component.css'
 })

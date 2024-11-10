@@ -14,6 +14,7 @@ import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -88,4 +89,19 @@ public class FileResource {
         }
     }
 
+    @GET
+    @Path("download/{id}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadPdf(
+    @PathParam("id") int id) {
+        try {
+            ApiFile file = dBConnection.getPdf(id);
+            return Response.ok()
+                    .type(file.getContentType())
+                    .header("Content-Disposition", "attachment; filename=\"" + file.getFileName() + "\"")
+                    .build();
+        } catch (ServerException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

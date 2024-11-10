@@ -5,11 +5,12 @@ import { AuthService } from '../../../services/auth';
 import { MagazineExplorerViewComponent } from "../magazine-explorer-view/magazine-explorer-view.component";
 import { SubscriberHeaderComponent } from "../subscriber-header/subscriber-header.component";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ShowAdComponent } from "../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-explorer',
   standalone: true,
-  imports: [MagazineExplorerViewComponent, SubscriberHeaderComponent, FormsModule, ReactiveFormsModule],
+  imports: [MagazineExplorerViewComponent, SubscriberHeaderComponent, FormsModule, ReactiveFormsModule, ShowAdComponent],
   templateUrl: './explorer.component.html',
   styleUrl: './explorer.component.css'
 })

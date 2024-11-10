@@ -7,7 +7,6 @@ package backend.model.dto;
 import backend.enums.AdTime;
 import backend.enums.Global;
 import backend.exception.InvalidDataException;
-import backend.exception.ServerException;
 import java.time.LocalDate;
 
 /**

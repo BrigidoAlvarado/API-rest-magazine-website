@@ -6,11 +6,12 @@ import { AdminReportService } from '../../../../services/admin-report-service';
 import { AuthService } from '../../../../services/auth';
 import { AdminHeaderComponent } from "../../admin-header/admin-header.component";
 import { ShowAdComponent } from "../../../ad/show-ad/show-ad.component";
+import { AdmintAdExportComponent } from "../exports/admint-ad-export/admint-ad-export.component";
 
 @Component({
   selector: 'app-admin-ad-reports',
   standalone: true,
-  imports: [AdminHeaderComponent, FormsModule, ReactiveFormsModule, ShowAdComponent],
+  imports: [AdminHeaderComponent, FormsModule, ReactiveFormsModule, ShowAdComponent, AdmintAdExportComponent],
   templateUrl: './admin-ad-reports.component.html',
   styleUrl: './admin-ad-reports.component.css'
 })

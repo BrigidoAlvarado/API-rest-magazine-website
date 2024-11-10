@@ -5,11 +5,12 @@ import { AuthService } from '../../../services/auth';
 import { Profile } from '../../../entities/profile';
 import { ProfileViewComponent } from '../../user/profile-view/profile-view.component';
 import { SubscriberHeaderComponent } from "../subscriber-header/subscriber-header.component";
+import { ShowAdComponent } from "../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-autor-profile',
   standalone: true,
-  imports: [ProfileViewComponent, SubscriberHeaderComponent],
+  imports: [ProfileViewComponent, SubscriberHeaderComponent, ShowAdComponent],
   templateUrl: './autor-profile.component.html',
   styleUrl: './autor-profile.component.css'
 })

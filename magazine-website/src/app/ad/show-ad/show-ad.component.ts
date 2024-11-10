@@ -24,7 +24,7 @@ export class ShowAdComponent {
     return Math.floor(Math.random() * 3) + 1;
   }
 
-  private getType(): string {
+   getType(): string {
     switch(this.getRandomNumber()){
       case 1: return 'textAd';
 

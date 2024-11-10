@@ -100,7 +100,6 @@ public class AdResources {
     public Response getRandomAd(
             @PathParam("type") String type,
             @PathParam("url") String url) {
-        AuthTokenHandler ath = new AuthTokenHandler();
         AdController controller = new AdController();
         try {
             Ad ad = controller.getRandomAd(type, url);

@@ -5,11 +5,12 @@ import { LockAd } from '../../../../entities/lockAd';
 import { AuthService } from '../../../../services/auth';
 import { EditorReportsService } from '../../../../services/editor-reports';
 import { EditorHeaderComponent } from "../../editor-header/editor-header.component";
+import { ShowAdComponent } from "../../../ad/show-ad/show-ad.component";
 
 @Component({
   selector: 'app-editor-payment-report',
   standalone: true,
-  imports: [EditorHeaderComponent, FormsModule, ReactiveFormsModule],
+  imports: [EditorHeaderComponent, FormsModule, ReactiveFormsModule, ShowAdComponent],
   templateUrl: './editor-payment-report.component.html',
   styleUrl: './editor-payment-report.component.css'
 })
